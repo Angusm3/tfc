@@ -1,0 +1,2169 @@
+Colt45:
+	ReloadDelay: 5
+	Range: 7c0
+	Report: itanatta.aud,itanattb.aud
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+		Warhead@2Eff: CreateEffect
+			Explosion: piff
+		DeathType: 2
+		Damage: 50
+P90:
+	ReloadDelay: 8
+	Range: 7c0
+	Report: iseaatta.aud,iseaattb.aud
+	ValidTargets: Ground
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 100
+Sniper:
+	Report: RAMGUN2.AUD
+	ReloadDelay: 15
+	Range: 10c0
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Damage: 150
+		Spread: 256
+		Versus:
+			None: 100
+			Wood: 5
+			Light: 100
+			Heavy: 20
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+MiniTeslaZap:
+	ReloadDelay: 5
+	Charges: true
+	Range: 4c512
+	Report: itesatta.aud,itesat2a.aud,itesat2b.aud
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		DeathType: 4
+		Damage: 40
+		Versus:
+			Wood: 60
+LightTesla:
+	ReloadDelay: 30
+	Charges: true
+	Range: 4c512
+	Report: itesatta.aud,itesat2a.aud,itesat2b.aud
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		DeathType: 2
+		Damage: 40
+		Versus:
+			Wood: 60
+MedTesla:
+	ReloadDelay: 40
+	Charges: true
+	Range: 4c512
+	Report: itesatta.aud,itesat2a.aud,itesat2b.aud
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		DeathType: 2
+		Damage: 70
+		Versus:
+			Wood: 60
+HeavyTesla:
+	ReloadDelay: 50
+	Charges: true
+	Range: 4c512
+	Report: itesatta.aud,itesat2a.aud,itesat2b.aud
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		DeathType: 4
+		Damage: 100
+		Versus:
+			Wood: 60
+LaserSniper:
+	ReloadDelay: 20
+	Range: 10c0
+	Charges: true
+	Report: RAMGUN2.AUD
+	Projectile: LaserZap
+		BeamWidth: 1
+		HitAnim: laserfire
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 20
+			Heavy: 10
+		DeathType: 5
+		SmudgeType: Scorch
+		Damage: 100
+
+Scout:
+	Report: SV98.WAV
+	ReloadDelay: 100
+	Range: 10c0
+	Projectile: Bullet
+		Speed: 1c682
+		ContrailLength: 32
+	Warhead@1Dam: SpreadDamage
+		Damage: 100
+		Spread: 42
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+		DeathType: 1
+		Warhead@2Eff: CreateEffect
+			Explosion: piff
+
+Scout2:
+	Report: SV98.WAV
+	ReloadDelay: 40
+	Range: 12c0
+	Projectile: Bullet
+		Speed: 1c682
+		ContrailLength: 32
+	Warhead@1Dam: SpreadDamage
+		Damage: 200
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 50
+			Heavy: 0
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piff
+
+ATSniper:
+	ReloadDelay: 100
+	Range: 9c0
+	Report: Deagle.wav
+	ValidTargets: Ground
+	Projectile: Bullet
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 42
+		Image: DRAGON
+		ROT: 15
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 1c170
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 50
+			Wood: 25
+			Light: 100
+			Heavy: 20
+			Concrete: 25
+			Mech: 150
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 80
+
+ScoutCampaign:
+	Report: GUN18.AUD
+	ReloadDelay: 100
+	Range: 10c0
+	Burst: 4
+	Projectile: Bullet
+		Speed: 1c682
+		ContrailLength: 32
+	Warhead@1Dam: SpreadDamage
+		Damage: 100
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+
+SKS:
+	Report: SKS.WAV
+	ReloadDelay: 10
+	Range: 5c0
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Damage: 10
+		Spread: 42
+		Versus:
+			None: 100
+			Wood: 20
+			Light: 20
+			Heavy: 20
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piff
+
+PRifle:
+	Report: prifle.wav
+	ReloadDelay: 10
+	Burst: 3
+	Range: 5c0
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Damage: 40
+		Spread: 42
+		Versus:
+			None: 100
+			Wood: 30
+			Light: 50
+			Heavy: 30
+		DeathType: 3
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		SmudgeType: Crater
+
+TSARifle:
+	ReloadDelay: 20
+	Range: 4c0
+	Report: MGUN2.AUD
+	Projectile: Bullet
+		Speed: 1c682
+		Inaccuracy: 1
+	Warhead@1Dam: SpreadDamage
+		Spread: 64
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 30
+			Heavy: 10
+		Warhead@2Eff: CreateEffect
+			Explosion: piff
+		DeathType: 2
+		Damage: 15
+
+TSARocket:
+	ReloadDelay: 50
+	Range: 6c0
+	Report: BAZOOK1.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 15
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 597
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 30
+
+TSABurstRifle:
+	Report: SV98.WAV
+	ReloadDelay: 100
+	Range: 10c0
+	Burst: 3
+	Projectile: Bullet
+		Speed: 1c682
+		ContrailLength: 32
+	Warhead@1Dam: SpreadDamage
+		Damage: 100
+		Spread: 42
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+		DeathType: 1
+		Warhead@2Eff: CreateEffect
+			Explosion: piff
+
+OsirisMissiles:
+	ReloadDelay: 150
+	Range: 4c0
+	Burst: 6
+	Report: BAZOOK1.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 15
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 597
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 8
+
+OsirisMissiles2:
+	ReloadDelay: 100
+	Range: 4c0
+	Burst: 4
+	Report: BAZOOK1.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 15
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 597
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 8
+
+MarMG:
+	ReloadDelay: 10
+	Burst: 3
+	Range: 5c0
+	Report: MGUN11.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 50
+			Heavy: 10
+			Concrete: 0
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 10
+
+MarFlamethrower:
+	ReloadDelay: 25
+	Range: 2c0
+	Report: FLAMER2.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Versus:
+			None: 90
+			Wood: 100
+			Light: 75
+			Heavy: 25
+		DeathType: 5
+		ImpactSound: flamer2
+		SmudgeType: Scorch
+		Damage: 35
+
+MarPanzershrek:
+	ReloadDelay: 50
+	Range: 6c0
+	Report: BAZOOK1.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 15
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 597
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 30
+
+QuadCannon:
+	ReloadDelay: 5
+	Burst: 4
+	Range: 5c0
+	Report: MGUN11.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 50
+			Heavy: 30
+			Concrete: 0
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 10
+
+LeoCannon:
+	ReloadDelay: 60
+	Range: 7c0
+	Report: TNKFIRE6.AUD
+	Projectile: Bullet
+		Image: DRAGON
+		Speed: 1c0
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 100
+			Heavy: 100
+			Concrete: 50
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: med_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 120
+
+ChurchillCannon:
+	ReloadDelay: 30
+	Range: 7c0
+	Report: TNKFIRE6.AUD
+	Projectile: Bullet
+		Image: DRAGON
+		Speed: 1c0
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 100
+			Heavy: 100
+			Concrete: 50
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: med_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 60
+
+Repair:
+	ReloadDelay: 60
+	Range: 4c0
+	Report: FIXIT1.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Versus:
+			None: 0
+			Wood: 0
+			Light: 100
+			Heavy: 100
+			Concrete: 0
+		DeathType: 1
+		Damage: -20
+
+Heal:
+	ReloadDelay: 80
+	Range: 4c0
+	Report: HEAL2.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Versus:
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+		DeathType: 1
+		Damage: -50
+
+Deagle:
+	ReloadDelay: 5
+	Range: 4c0
+	Report: Deagle.wav
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 10
+			Heavy: 0
+			Concrete: 0
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piff
+		Damage: 20
+
+Glauncher:
+	ReloadDelay: 50
+	Range: 6c0
+	Report: BAZOOK1.AUD
+	ValidTargets: Ground, Air
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: false
+		Proximity: yes
+		Inaccuracy: 0
+		Image: DRAGON
+		ROT: 15
+		Trail: smokey
+		Speed: 512
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 80
+
+Flamer:
+	ReloadDelay: 50
+	Range: 5c0
+	Burst: 15
+	BurstDelay: 1
+	Projectile: Bullet
+		Speed: 170
+		Trail: fb4
+		Image: fb3
+		Angle: 62
+		Inaccuracy: 853
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Versus:
+			None: 90
+			Wood: 100
+			Light: 60
+			Heavy: 25
+			Concrete: 50
+		Warhead@2Eff: CreateEffect
+			Explosion: small_napalm
+		DeathType: 5
+		SmudgeType: Scorch
+		ImpactSound: firebl3.aud
+		Damage: 8
+
+105mmdual:
+	ReloadDelay: 50
+	Range: 4c768
+	Report: TNKFIRE4.AUD
+	Burst: 2
+	BurstDelay: 4
+	Projectile: Bullet
+		Image: 120MM
+		Speed: 682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 75
+			Heavy: 100
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 30
+
+MammothRockets:
+	ReloadDelay: 15
+	Range: 10c0
+	Report: MISSILE6
+	Burst: 10
+	BurstFire: 0
+	ValidTargets: Ground
+	Projectile: Missile
+		Speed: 256
+		Arm: 2
+		High: true
+		Shadow: false
+		Proximity: true
+		ContrailLength: 10
+		Inaccuracy: 2c85
+		Image: DRAGON
+		ROT: 10
+		RangeLimit: 40
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Versus:
+			None: 100
+			Wood: 75
+			Light: 60
+			Heavy: 33
+			Concrete: 10
+		Warhead@2Eff: CreateEffect
+			Explosion: med_explosion
+		DeathType: 2
+		SmudgeType: Crater
+		Damage: 22
+
+Tiberium2:
+	ReloadDelay: 4
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		DeathType: 6
+		Damage: -1
+		PreventProne: yes
+	Versus:
+		None: 0
+		Light: 0
+		Heavy: 0
+		Forgotten: 100
+
+TechMachineGun:
+	ReloadDelay: 15
+	Burst: 4
+	Range: 5c0
+	Report: MGUN11.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 5
+			Light: 50
+			Heavy: 5
+			Concrete: 5
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 25
+
+Dozergun:
+	ReloadDelay: 15
+	Burst: 4
+	Range: 5c0
+	Report: MGUN11.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 80
+			Light: 50
+			Heavy: 10
+			Concrete: 50
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 20
+
+TeslaZap:
+	ReloadDelay: 3
+	Charges: true
+	Range: 8c512
+	Report: TESLA1.AUD
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		DeathType: 6
+		Damage: 100
+		Versus:
+			Wood: 60
+Coaxial:
+	ReloadDelay: 40
+	Burst: 6
+	Range: 5c0
+	Report: MGUN11.AUD
+	ValidTargets: Ground
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 20
+
+Vulcan:
+	ReloadDelay: 40
+	Burst: 3
+	Range: 5c0
+	Report: infgun3.AUD
+	ValidTargets: Ground
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 20
+			Light: 20
+			Heavy: 10
+			Concrete: 0
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 10
+
+NestMachineGun:
+	ReloadDelay: 80
+	Burst: 3
+	Range: 7c0
+	Report: MGUN11.AUD
+	ValidTargets: Ground
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 25
+			Heavy: 25
+			Concrete: 10
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 25
+
+NestMachineGunAA:
+	ReloadDelay: 80
+	Burst: 3
+	Range: 7c0
+	Report: MGUN11.AUD
+	ValidTargets: Air
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 100
+			Heavy: 25
+			Concrete: 10
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 10
+
+WolverineGun:
+	ReloadDelay: 5
+	Range: 5c0
+	Burst: 10
+	Report: WLVRGUN.WAV
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 170
+		Versus:
+			Wood: 100
+			Light: 25
+			Heavy: 10
+			Concrete: 10
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		DeathType: 5
+		Damage: 8
+
+Molotov:
+	ReloadDelay: 100
+	Range: 5c0
+	Report: toss1.aud
+	Projectile: Bullet
+		Speed: 204
+		High: yes
+		Angle: 62
+		Inaccuracy: 213
+		Image: MLTV
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Versus:
+			None: 90
+			Concrete: 75
+			Light: 75
+			Heavy: 20
+		DeathType: 5
+		Warhead@2Eff: CreateEffect
+			Explosion: med_napalm
+		ImpactSound: flamer2.aud
+		SmudgeType: Scorch
+		Damage: 50
+
+LMG:
+	ReloadDelay: 10
+	Burst: 3
+	Range: 5c0
+	Report: MGUN11.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 50
+			Heavy: 10
+			Concrete: 0
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 10
+
+Laser:
+	ReloadDelay: 90
+	Range: 8c512
+	Charges: true
+	Report: obelray1.wav
+	Projectile: LaserZap
+		BeamWidth: 2
+		HitAnim: laserfire
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Versus:
+			Wood: 50
+		DeathType: 5
+		SmudgeType: Scorch
+		Damage: 200
+
+Laser2:
+	ReloadDelay: 120
+	Range: 8c512
+	Burst: 6
+	Charges: true
+	Report: OBELRAY1.AUD
+	Projectile: LaserZap
+		BeamWidth: 1
+		HitAnim: laserfire
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+		DeathType: 5
+		SmudgeType: Scorch
+		Damage: 80
+
+TurretLaser:
+	ReloadDelay: 20
+	Range: 8c512
+	Burst: 1
+	Charges: true
+	Report: OBELRAY1.AUD
+	Projectile: LaserZap
+		BeamWidth: 1
+		HitAnim: laserfire
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 20
+			Heavy: 10
+		DeathType: 5
+		SmudgeType: Scorch
+		Damage: 40
+
+125mmDual:
+	ReloadDelay: 40
+	Range: 4c768
+	Report: TNKFIRE6.AUD
+	Burst: 2
+	BurstDelay: 5
+	Projectile: Bullet
+		Image: 120MM
+		Speed: 682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 60
+
+MammothMissiles2:
+	ReloadDelay: 50
+	Range: 5c0
+	Report: ROCKET1.AUD
+	ValidTargets: Ground, Air
+	Burst: 4
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 10
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 213
+		RangeLimit: 35
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Versus:
+			None: 40
+			Wood: 75
+			Light: 75
+			Heavy: 50
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 75
+
+MortarShell:
+	ReloadDelay: 120
+	Range: 10c512
+	MinRange: 3c0
+	Charges: true
+	Report: TNKFIRE2.AUD
+	Projectile: Bullet
+		Speed: 204
+		High: yes
+		Angle: 110
+		Inaccuracy: 1c256
+		ContrailLength: 60
+		Image: 120MM
+	Warhead@1Dam: SpreadDamage
+		Damage: 150
+		Spread: 256
+		Versus:
+			None: 90
+			Wood: 50
+			Light: 60
+			Heavy: 25
+		DeathType: 3
+		Warhead@2Eff: CreateEffect
+			Explosion: poof
+		SmudgeType: Crater
+		ImpactSound: XPLOSML2.AUD
+MortarShell2:
+	ReloadDelay: 120
+	Burst: 5
+	Range: 10c512
+	MinRange: 3c0
+	Charges: true
+	Report: TNKFIRE2.AUD
+	Projectile: Bullet
+		Speed: 204
+		High: yes
+		Angle: 110
+		Inaccuracy: 1c256
+		ContrailLength: 60
+		Image: 120MM
+	Warhead@1Dam: SpreadDamage
+		Damage: 150
+		Spread: 256
+		Versus:
+			None: 90
+			Wood: 50
+			Light: 60
+			Heavy: 25
+		DeathType: 3
+		Warhead@2Eff: CreateEffect
+			Explosion: poof
+		SmudgeType: Crater
+		ImpactSound: XPLOSML2.AUD
+MachineGun2:
+	ReloadDelay: 15
+	Burst: 4
+	Range: 10c0
+	Report: MGUN11.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 75
+			Heavy: 25
+			Concrete: 25
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 25
+
+Frockets:
+	ReloadDelay: 50
+	Range: 6c0
+	Report: BAZOOK1.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 512
+		Image: DRAGON
+		ROT: 15
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 597
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 64
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 20
+
+Hrockets:
+	ReloadDelay: 100
+	Range: 6c0
+	Burst: 2
+	Report: BAZOOK1.AUD
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 15
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 597
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 30
+
+227mm.stnk:
+	ReloadDelay: 70
+	Range: 9c0
+	Report: ROCKET1.AUD
+	Burst: 4
+	BurstDelay: 10
+	ValidTargets: Ground, Air
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: true
+		Inaccuracy: 213
+		Image: DRAGON
+		ROT: 10
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 213
+		RangeLimit: 55
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 35
+			Wood: 50
+			Light: 100
+			Heavy: 90
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 60
+
+FlametankExplode:
+	Warhead@1Dam: SpreadDamage
+		Damage: 100
+		Spread: 1c0
+		Warhead@2Eff: CreateEffect
+			Explosion: big_napalm
+		DeathType: 5
+		ImpactSound: xplobig6.aud
+
+HeliCrash:
+	Warhead@1Dam: SpreadDamage
+		Damage: 40
+		Spread: 426
+		Warhead@2Eff: CreateEffect
+			Explosion: poof
+		DeathType: 4
+		ImpactSound: xplos.aud
+
+HeliExplode:
+	Warhead@1Dam: SpreadDamage
+		Warhead@2Eff: CreateEffect
+			Explosion: small_building
+		DeathType: 4
+		ImpactSound: xplos.aud
+
+UnitExplode:
+	Warhead@1Dam: SpreadDamage
+		Damage: 500
+		Spread: 426
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 60
+			Heavy: 25
+		Warhead@2Eff: CreateEffect
+			Explosion: poof
+		DeathType: 4
+		ImpactSound: xplobig6.aud
+
+UnitExplodeSmall:
+	Warhead@1Dam: SpreadDamage
+		Damage: 40
+		Spread: 426
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 60
+			Heavy: 25
+		Warhead@2Eff: CreateEffect
+			Explosion: big_frag
+		DeathType: 4
+		ImpactSound: xplobig4.aud
+
+GrenadierExplode:
+	Warhead@1Dam: SpreadDamage
+		Damage: 10
+		Spread: 384
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 60
+			Heavy: 25
+		Warhead@2Eff: CreateEffect
+			Explosion: poof
+		DeathType: 3
+		ImpactSound: xplosml2.aud
+
+Atomic:
+	ValidTargets: Ground, Air
+	Report: nukemisl.aud
+	Warhead@1Dam_impact: SpreadDamage
+		Spread: 1c0
+		Damage: 150
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		DeathType: 5
+		ValidTargets: Ground, Air
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 60
+			Heavy: 50
+	Warhead@2Eff_impact: CreateEffect
+		Explosion: nuke_explosion
+		ImpactSound: nukexplo.aud
+	Warhead@3Dam_areanukea: SpreadDamage
+		Spread: 2c512
+		Damage: 100
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		DeathType: 5
+		Delay: 3
+		ValidTargets: Ground, Air
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 60
+			Heavy: 50
+	Warhead@4Res_areanukea: DestroyResource
+		Size: 3
+		Delay: 3
+	Warhead@5Smu_areanukea: LeaveSmudge
+		SmudgeType: Scorch
+		Size: 3
+		Delay: 3
+	Warhead@6Eff_areanukea: CreateEffect
+		ImpactSound: xplobig4.aud
+		Delay: 3
+	Warhead@7Dam_areanukeb: SpreadDamage
+		Spread: 3c768
+		Damage: 50
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		DeathType: 5
+		Delay: 6
+		ValidTargets: Ground, Air
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 60
+			Heavy: 50
+	Warhead@8Res_areanukeb: DestroyResource
+		Size: 4
+		Delay: 6
+	Warhead@9Smu_areanukeb: LeaveSmudge
+		SmudgeType: Scorch
+		Size: 4
+		Delay: 6
+	Warhead@10Dam_areanukec: SpreadDamage
+		Spread: 5c0
+		Damage: 20
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		DeathType: 5
+		Delay: 9
+		ValidTargets: Ground, Air
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 60
+			Heavy: 50
+	Warhead@11Res_areanukec: DestroyResource
+		Size: 5
+		Delay: 9
+	Warhead@12Smu_areanukec: LeaveSmudge
+		SmudgeType: Scorch
+		Size: 5
+		Delay: 9
+
+IonCannon:
+	ValidTargets: Ground, Air
+	Warhead@1Dam_impact: SpreadDamage
+		Range: 0, 1c1, 2c1, 2c512
+		Damage: 100
+		Falloff: 1000, 1000, 250, 100
+		DeathType: 5
+		ValidTargets: Ground, Air
+	Warhead@2Smu_impact: LeaveSmudge
+		SmudgeType: Scorch
+	Warhead@3Smu_area: LeaveSmudge
+		SmudgeType: Scorch
+		Size: 1
+		Delay: 3
+	Warhead@4Res_area2: DestroyResource
+		Size: 2
+		Delay: 6
+	Warhead@5Smu_area2: LeaveSmudge
+		SmudgeType: Scorch
+		Size: 2,1
+		Delay: 6
+
+
+HighV:
+	ReloadDelay: 30
+	Range: 6c0
+	Report: GUN8.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Damage: 50
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 100
+			Heavy: 25
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+
+HeliAGGun:
+	ReloadDelay: 20
+	Burst: 2
+	BurstDelay: 0
+	Range: 4c0
+	ValidTargets: Ground
+	Report: gun5.aud
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Damage: 20
+		Spread: 256
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 50
+			Heavy: 25
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+
+HeliAAGun:
+	ReloadDelay: 20
+	Burst: 2
+	BurstDelay: 0
+	Range: 4c0
+	ValidTargets: Air
+	Report: gun5.aud
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Damage: 20
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 50
+			Heavy: 25
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+
+Pistol:
+	ReloadDelay: 7
+	Range: 3c0
+	Report: GUN18.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 50
+			Heavy: 25
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piff
+		Damage: 1
+
+M16:
+	ReloadDelay: 20
+	Range: 4c0
+	Report: MGUN2.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 30
+			Heavy: 10
+		Warhead@2Eff: CreateEffect
+			Explosion: piff
+		DeathType: 2
+		Damage: 15
+
+Rockets:
+	ReloadDelay: 50
+	Range: 6c0
+	Report: BAZOOK1.AUD
+	ValidTargets: Ground, Air
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 15
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 298
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 30
+
+BikeRockets:
+	ReloadDelay: 50
+	Range: 6c0
+	Report: BAZOOK1.AUD
+	ValidTargets: Ground, Air
+	Burst: 2
+	BurstDelay: 10
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 10
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 298
+		RangeLimit: 40
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 65
+			Wood: 50
+			Light: 100
+			Heavy: 100
+			Concrete: 50
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 30
+
+OrcaAGMissiles:
+	ReloadDelay: 15
+	Burst: 2
+	BurstDelay: 15
+	Range: 5c0
+	Report: BAZOOK1.AUD
+	ValidTargets: Ground
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 10
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 213
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 50
+			Wood: 100
+			Light: 100
+			Heavy: 50
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 25
+
+OrcaAAMissiles:
+	ReloadDelay: 15
+	Burst: 2
+	BurstDelay: 15
+	Range: 5c0
+	Report: BAZOOK1.AUD
+	ValidTargets: Air
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 10
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 213
+		RangeLimit: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 50
+			Wood: 100
+			Light: 100
+			Heavy: 50
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 25
+
+Flamethrower:
+	ReloadDelay: 50
+	Range: 2c512
+	Report: FLAMER2.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Versus:
+			None: 90
+			Wood: 100
+			Light: 75
+			Heavy: 25
+		Warhead@2Eff: CreateEffect
+			Explosion: small_napalm
+		DeathType: 5
+		ImpactSound: flamer2
+		SmudgeType: Scorch
+		Damage: 35
+
+BigFlamer:
+	ReloadDelay: 50
+	Range: 3c512
+	Report: FLAMER2.AUD
+	Projectile: Bullet
+		Speed: 341
+	Burst: 2
+	BurstDelay: 25
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 50
+			Heavy: 25
+		DeathType: 5
+		Warhead@2Eff: CreateEffect
+			Explosion: med_napalm
+		ImpactSound: flamer2.aud
+		SmudgeType: Scorch
+		Damage: 90
+
+Chemspray:
+	ReloadDelay: 70
+	Range: 3c0
+	Report: FLAMER2.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Damage: 80
+		Spread: 256
+		Versus:
+			None: 100
+			Wood: 75
+			Light: 75
+			Heavy: 50
+		DeathType: 6
+		Warhead@2Eff: CreateEffect
+			Explosion: chemball
+		SmudgeType: Scorch
+		ImpactSound: xplos.aud
+
+Grenade:
+	ReloadDelay: 50
+	Range: 5c0
+	Report: toss1.aud
+	Projectile: Bullet
+		Speed: 204
+		High: yes
+		Angle: 62
+		Inaccuracy: 213
+		Image: BOMB
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 75
+			Heavy: 50
+		DeathType: 3
+		Warhead@2Eff: CreateEffect
+			Explosion: small_poof
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 50
+
+70mm:
+	ReloadDelay: 38
+	Range: 4c0
+	Report: TNKFIRE3.AUD
+	Projectile: Bullet
+		Image: 120MM
+		Speed: 1c0
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 100
+			Heavy: 100
+			Concrete: 50
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 25
+
+105mm:
+	ReloadDelay: 50
+	Range: 4c768
+	Report: TNKFIRE4.AUD
+	Projectile: Bullet
+		Image: 120MM
+		Speed: 682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 75
+			Heavy: 100
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 30
+
+120mm:
+	ReloadDelay: 50
+	Range: 4c768
+	Report: TNKFIRE6.AUD
+	Projectile: Bullet
+		Image: 120MM
+		Speed: 682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 100
+			Heavy: 100
+			Concrete: 50
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 40
+
+120mmDual:
+	ReloadDelay: 60
+	Range: 4c768
+	Report: TNKFIRE6.AUD
+	Burst: 2
+	BurstDelay: 5
+	Projectile: Bullet
+		Image: 120MM
+		Speed: 682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 40
+
+TurretGun:
+	ReloadDelay: 25
+	Range: 6c0
+	Report: TNKFIRE6.AUD
+	Projectile: Bullet
+		Image: 120MM
+		Speed: 853
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 25
+			Wood: 25
+			Light: 80
+			Heavy: 100
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 50
+
+MammothMissiles:
+	ReloadDelay: 100
+	Range: 5c0
+	Report: ROCKET1.AUD
+	ValidTargets: Ground, Air
+	Burst: 2
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 10
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 213
+		RangeLimit: 35
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Versus:
+			None: 40
+			Wood: 75
+			Light: 75
+			Heavy: 50
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 75
+
+227mm:
+	ReloadDelay: 140
+	Range: 12c0
+	MinRange: 3c0
+	Burst: 4
+	BurstDelay: 4
+	Report: ROCKET1.AUD
+	ValidTargets: Ground
+	Projectile: Bullet
+		Arm: 5
+		High: yes
+		Shadow: true
+		Inaccuracy: 853
+		Angle: 62
+		Image: DRAGON
+		ROT: 2
+		ContrailLength: 10
+		Trail: smokey
+		Speed: 341
+	Warhead@1Dam: SpreadDamage
+		Spread: 640
+		Versus:
+			None: 25
+			Wood: 30
+			Light: 100
+			Heavy: 50
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: med_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 25
+
+ArtilleryShell:
+	ReloadDelay: 65
+	Range: 11c0
+	MinRange: 2c0
+	Report: TNKFIRE2.AUD
+	Projectile: Bullet
+		Speed: 204
+		High: yes
+		Angle: 56
+		Inaccuracy: 1c256
+		ContrailLength: 30
+		Image: 120MM
+	Warhead@1Dam: SpreadDamage
+		Damage: 150
+		Spread: 256
+		Versus:
+			None: 90
+			Wood: 50
+			Light: 60
+			Heavy: 25
+		DeathType: 3
+		Warhead@2Eff: CreateEffect
+			Explosion: poof
+		SmudgeType: Crater
+		ImpactSound: XPLOSML2.AUD
+
+MachineGun:
+	ReloadDelay: 20
+	Burst: 4
+	Range: 4c0
+	Report: MGUN11.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 75
+			Heavy: 25
+			Concrete: 10
+		DeathType: 2
+		Warhead@2Eff: CreateEffect
+			Explosion: piffs
+		Damage: 10
+
+BoatMissile:
+	ReloadDelay: 35
+	Range: 8c0
+	Burst: 2
+	BurstDelay: 7
+	Report: ROCKET2.AUD
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 213
+		Image: DRAGON
+		ROT: 10
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 170
+		RangeLimit: 60
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 60
+			Heavy: 25
+		DeathType: 3
+		Warhead@2Eff: CreateEffect
+			Explosion: small_poof
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 60
+
+TowerMissle:
+	ReloadDelay: 24
+	Range: 8c0
+	Report: ROCKET2.AUD
+	ValidTargets: Ground, Air
+	Burst: 2
+	BurstDelay: 16
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: false
+		Inaccuracy: 128
+		Image: DRAGON
+		ROT: 20
+		Trail: smokey
+		ContrailLength: 8
+		Speed: 298
+		RangeLimit: 40
+	Warhead@1Dam: SpreadDamage
+		Spread: 512
+		Versus:
+			None: 25
+			Wood: 25
+			Light: 100
+			Heavy: 80
+		DeathType: 3
+		Warhead@2Eff: CreateEffect
+			Explosion: med_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 45
+
+Napalm:
+	ValidTargets: Ground, Water
+	ReloadDelay: 4
+	Range: 2c0
+	Burst: 2
+	BurstDelay: 2
+	Projectile: GravityBomb
+		Image: BOMBLET
+	Warhead@1Dam: SpreadDamage
+		Spread: 853
+		Versus:
+			None: 90
+			Wood: 100
+			Light: 60
+			Heavy: 55
+		DeathType: 5
+		Warhead@2Eff: CreateEffect
+			Explosion: med_napalm
+		WaterExplosion: med_napalm
+		ImpactSound: flamer2.aud
+		SmudgeType: Scorch
+		Damage: 50
+
+Napalm.Crate:
+	Warhead@1Dam: SpreadDamage
+		Spread: 170
+		Versus:
+			None: 90
+			Wood: 100
+			Light: 60
+			Heavy: 25
+		DeathType: 5
+		Warhead@2Eff: CreateEffect
+			Explosion: med_napalm
+		ImpactSound: flamer2.aud
+		SmudgeType: Scorch
+		Damage: 500
+
+SAMMissile:
+	ReloadDelay: 15
+	Range: 10c0
+	Report: ROCKET2.AUD
+	ValidTargets: Air
+	Projectile: Missile
+		Arm: 0
+		High: yes
+		Shadow: false
+		Image: MISSILE
+		ROT: 20
+		Speed: 426
+		RangeLimit: 35
+		Trail: smokey
+		ContrailLength: 8
+	Warhead@1Dam: SpreadDamage
+		Spread: 682
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Heavy: 75
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: small_frag
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 30
+
+HonestJohn:
+	ReloadDelay: 200
+	Range: 10c0
+	Report: ROCKET1.AUD
+	Projectile: Bullet
+		Arm: 10
+		High: yes
+		Shadow: true
+		Inaccuracy: 213
+		Image: patriot
+		Trail: smokey
+		Speed: 187
+		RangeLimit: 35
+		Angle: 88
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 60
+			Heavy: 25
+		DeathType: 3
+		Warhead@2Eff: CreateEffect
+			Explosion: small_poof
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 100
+
+Tiberium:
+	ReloadDelay: 4
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		DeathType: 6
+		Damage: 1
+		PreventProne: yes
+
+APCGun:
+	ReloadDelay: 12
+	Range: 5c0
+	Report: gun20.aud
+	ValidTargets: Ground
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			None: 35
+			Wood: 50
+			Light: 100
+			Heavy: 20
+		Warhead@2Eff: CreateEffect
+			Explosion: small_poof
+		Damage: 15
+
+APCGun.AA:
+	ReloadDelay: 12
+	Range: 7c0
+	Report: gun20.aud
+	ValidTargets: Air
+	Projectile: Bullet
+		Speed: 1c682
+		High: true
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Versus:
+			Heavy: 50
+		Warhead@2Eff: CreateEffect
+			Explosion: small_poof
+		Damage: 25
+
+Patriot:
+	ReloadDelay: 30
+	Range: 10c0
+	MinRange: 1c0
+	Burst: 2
+	BurstDelay: 15
+	Report: ROCKET2.AUD
+	ValidTargets: Air
+	Projectile: Missile
+		High: yes
+		Shadow: false
+		Image: patriot
+		Trail: smokey
+		ContrailLength: 8
+		ROT: 20
+		Speed: 426
+		RangeLimit: 30
+		Angle: 88
+	Warhead@1Dam: SpreadDamage
+		Spread: 682
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Heavy: 75
+		DeathType: 4
+		Warhead@2Eff: CreateEffect
+			Explosion: poof
+		ImpactSound: xplos.aud
+		SmudgeType: Crater
+		Damage: 30
+
+Tail:
+	ReloadDelay: 30
+	Range: 1c0
+	Projectile: Bullet
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Versus:
+			None: 90
+			Wood: 10
+			Light: 30
+			Heavy: 10
+			Concrete: 10
+		DeathType: 1
+		Damage: 180
+
+Horn:
+	ReloadDelay: 20
+	Range: 1c0
+	Projectile: Bullet
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Versus:
+			None: 90
+			Wood: 10
+			Light: 30
+			Heavy: 10
+			Concrete: 10
+		DeathType: 1
+		Damage: 120
+
+Teeth:
+	ReloadDelay: 30
+	Range: 1c0
+	Projectile: Bullet
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Versus:
+			None: 90
+			Wood: 10
+			Light: 30
+			Heavy: 10
+			Concrete: 10
+		DeathType: 1
+		Damage: 180
+
+Claw:
+	ReloadDelay: 10
+	Range: 1c0
+	Projectile: Bullet
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Versus:
+			None: 90
+			Wood: 10
+			Light: 30
+			Heavy: 10
+			Concrete: 10
+		DeathType: 1
+		Damage: 60
+
