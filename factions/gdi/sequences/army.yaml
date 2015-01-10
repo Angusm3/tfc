@@ -1,0 +1,1018 @@
+#Aircraft Units
+
+orca:
+	idle:
+		Start: 0
+		Facings: 32
+	damaged-idle:
+		Start: 32
+		Facings: 32
+	icon: orcaicnh
+		Start: 0
+tran:
+	idle:
+		Start: 0
+		Facings: 32
+	rotor: lrotor
+		Start: 0
+		Length: 4
+	rotor2: rrotor
+		Start: 0
+		Length: 4
+	slow-rotor: lrotor
+		Start: 4
+		Length: 8
+	slow-rotor2: rrotor
+		Start: 4
+		Length: 8
+	open:
+		Start: 32
+		Length: 4
+	unload:
+		Start: 35
+	icon: tranicnh
+		Start: 0
+#Infantry Units
+
+e1:
+	stand:
+		Start: 0
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 64
+		Length: 8
+		Facings: 8
+	prone-stand:
+		Start: 144
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 144
+		Length: 4
+		Facings: 8
+		Tick: 100
+	# stand -> prone transition
+	liedown:
+		Start: 128
+		Length: 2
+		Facings: 8
+	# prone -> stand transition
+	standup:
+		Start: 176
+		Length: 2
+		Facings: 8
+	prone-shoot:
+		Start: 192
+		Length: 8
+		Facings: 8
+	idle1:
+		Start: 257
+		Length: 15
+		Tick: 120
+	idle2:
+		Start: 272
+		Length: 16
+		Tick: 120
+	idle3:
+		Start: 289
+		Length: 22
+		Tick: 120
+	cheer:
+		Start: 460
+		Length: 3
+		Facings: 8
+		Tick: 120
+	# Dancing
+	idle4:
+		Start: 517
+		Length: 9
+		Tick: 120
+	# Shot
+	die1:
+		Start: 381
+		Length: 9
+		Tick: 80
+	# Explode
+	die2:
+		Start: 390
+		Length: 8
+		Tick: 80
+	# Fly and explode in air
+	die3:
+		Start: 398
+		Length: 8
+		Tick: 80
+	# Fly through air squish on ground
+	die4:
+		Start: 406
+		Length: 12
+		Tick: 80
+	# Burn
+	die5:
+		Start: 418
+		Length: 18
+		Tick: 80
+	# Tib
+	die6:
+		Start: 366
+		Length: 11
+		Tick: 80
+	die-crushed: e1rot
+		Start: 16
+		Length: 4
+		Tick: 1600
+		ZOffset: -511
+	icon: e1icnh
+		Start: 0
+
+e2:
+	stand:
+		Start: 0
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 64
+		Length: 20
+		Facings: 8
+	# stand -> prone transition
+	liedown:
+		Start: 224
+		Length: 2
+		Facings: 8
+	# prone -> stand transition
+	standup:
+		Start: 272
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 240
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 240
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Start: 288
+		Length: 12
+		Facings: 8
+	idle1:
+		Start: 384
+		Length: 16
+		Tick: 120
+	idle2:
+		Start: 400
+		Length: 13
+		Tick: 120
+	cheer:
+		Start: 588
+		Length: 3
+		Facings: 8
+		Tick: 120
+	# Shot
+	die1:
+		Start: 509
+		Length: 9
+		Tick: 80
+	# Explode
+	die2:
+		Start: 518
+		Length: 8
+		Tick: 80
+	# Fly and explode in air
+	die3:
+		Start: 526
+		Length: 8
+		Tick: 80
+	# Fly through air squish on ground
+	die4:
+		Start: 534
+		Length: 12
+		Tick: 80
+	# Burn
+	die5:
+		Start: 546
+		Length: 18
+		Tick: 80
+	# Tib
+	die6:
+		Start: 494
+		Length: 11
+		Tick: 80
+	die-crushed: e2rot
+		Start: 16
+		Length: 4
+		Tick: 1600
+		ZOffset: -511
+	icon: e2icnh
+		Start: 0
+
+e3:
+	stand:
+		Start: 0
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 64
+		Length: 8
+		Facings: 8
+	# stand -> prone transition
+	liedown:
+		Start: 128
+		Length: 2
+		Facings: 8
+	# prone -> stand transition
+	standup:
+		Start: 176
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 144
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 144
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Start: 192
+		Length: 10
+		Facings: 8
+	idle1:
+		Start: 274
+		Length: 12
+		Tick: 120
+	idle2:
+		Start: 289
+		Length: 14
+		Tick: 120
+	cheer:
+		Start: 476
+		Length: 3
+		Facings: 8
+		Tick: 120	
+	# Shot
+	die1:
+		Start: 397
+		Length: 9
+		Tick: 80
+	# Explode
+	die2:
+		Start: 406
+		Length: 8
+		Tick: 80
+	# Fly and explode in air
+	die3:
+		Start: 414
+		Length: 8
+		Tick: 80
+	# Fly through air squish on ground
+	die4:
+		Start: 422
+		Length: 12
+		Tick: 80
+	# Burn
+	die5:
+		Start: 434
+		Length: 18
+		Tick: 80
+	# Tib
+	die6:
+		Start: 382
+		Length: 11
+		Tick: 80
+	die-crushed: e3rot
+		Start: 16
+		Length: 4
+		Tick: 1600
+		ZOffset: -511
+	icon: e3icnh
+		Start: 0
+e6:
+	stand:
+		Start: 0
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 100
+	# stand -> prone transition
+	liedown:
+		Start: 66
+		Length: 2
+		Facings: 8
+	# prone -> stand transition
+	standup:
+		Start: 114
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 82
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 82
+		Length: 4
+		Facings: 8
+		Tick: 100
+	idle1:
+		Start: 114
+		Length: 6
+		Tick: 120
+	idle2:
+		Start: 200
+		Length: 6
+		Tick: 120
+	cheer:
+		Start: 200
+		Length: 3
+		Facings: 8
+		Tick: 120
+	# Shot
+	die1:
+		Start: 146
+		Length: 8
+		Tick: 80
+	# Explode
+	die2:
+		Start: 154
+		Length: 8
+		Tick: 80
+	# Fly and explode in air
+	die3:
+		Start: 162
+		Length: 8
+		Tick: 80
+	# Fly through air squish on ground
+	die4:
+		Start: 170
+		Length: 12
+		Tick: 80
+	# Burn
+	die5:
+		Start: 182
+		Length: 18
+		Tick: 80
+	# Tib
+	die6:
+		Start: 130
+		Length: 4
+		Tick: 80
+	die-crushed: e1rot
+		Start: 16
+		Length: 4
+		Tick: 1600
+		ZOffset: -511
+	icon: e6icnh
+		Start: 0
+rmbo:
+	stand:
+		Start: 0
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 64
+		Length: 4
+		Facings: 8
+	# stand -> prone transition
+	liedown:
+		Start: 96
+		Length: 2
+		Facings: 8
+	# prone -> stand transition
+	standup:
+		Start: 144
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 112
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 112
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Start: 160
+		Length: 4
+		Facings: 8
+	idle1:
+		Start: 192
+		Length: 16
+		Tick: 120
+	idle2:
+		Start: 208
+		Length: 16
+		Tick: 120
+	idle3:
+		Start: 224
+		Length: 15
+		Tick: 120
+	cheer:
+		Start: 396
+		Length: 3
+		Facings: 8
+		Tick: 120
+	# Shot
+	die1:
+		Start: 318
+		Length: 8
+		Tick: 80
+	# Explode
+	die2:
+		Start: 326
+		Length: 8
+		Tick: 80
+	# Fly and explode in air
+	die3:
+		Start: 334
+		Length: 8
+		Tick: 80
+	# Fly through air squish on ground
+	die4:
+		Start: 342
+		Length: 12
+		Tick: 80
+	# Burn
+	die5:
+		Start: 354
+		Length: 18
+		Tick: 80
+	# Tib
+	die6:
+		Start: 308
+		Length: 4
+		Tick: 80
+	die-crushed: e1rot
+		Start: 16
+		Length: 4
+		Tick: 1600
+		ZOffset: -511
+	icon: rmboicnh
+		Start: 0
+medi:
+	stand:
+		Start: 0
+		Facings: 8
+	run:
+		Start: 8
+		Length: 6
+		Facings: 8
+		Tick: 100
+	heal:
+		Start: 56
+		Length: 58
+	standup:
+		Start: 114
+		Length: 2
+		Facings: 8
+	idle1:
+		Start: 163
+		Length: 14
+		Tick: 120
+	idle2:
+		Start: 178
+		Length: 14
+		Tick: 120
+	die1:
+		Start: 193
+		Length: 7
+	die2:
+		Start: 201
+		Length: 8
+	die3:
+		Start: 209
+		Length: 8
+	die4:
+		Start: 217
+		Length: 12
+	die5:
+		Start: 229
+		Length: 18
+	die6:
+		Start: 0
+		Length: *
+	die-crushed: e3rot
+		Start: 0
+		Length: 6
+		Tick: 1600
+	prone-stand:
+		Start: 130
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 130
+		Length: 4
+		Facings: 8
+		Tick: 100
+	icon: mediicon
+		Start: 0
+#Vehicle Units		
+
+mcv:
+	idle:
+		Start: 0
+		Facings: 32
+	icon: mcvicnh
+		Start: 0
+
+harv:
+	idle:
+		Start: 0
+		Facings: 32
+	harvest:
+		Start: 32
+		Length: 4
+		Facings: 8
+		Tick: 60
+	dock: harvdump
+		Start: 0
+		Length: 7
+	dock-loop: harvdump
+		Start: 7
+		Length: 1
+	icon: harvicnh
+		Start: 0
+wlvr:
+	stand:
+		Start: 96
+		Facings: 8
+	shoot: # only plays first frame, ...how?
+		Start: 104
+		Length: 4
+		Facings: -8
+	run:
+		Start: 0
+		Facings: -8
+		Length: 12
+	icon: wlvricon
+		Start: 0
+	die1:
+		Start: 96
+		Length: 1
+	die2:
+		Start: 96
+		Length: 1
+	die3:
+		Start: 96
+		Length: 1
+	die4:
+		Start: 96
+		Length: 1
+	die5:
+		Start: 96
+		Length: 1
+	die6:
+		Start: 96
+		Length: 1
+apc:
+	idle:
+		Start: 0
+		Facings: 32
+	turret: apctur
+		Start: 0
+		Facings: 32
+	muzzle: apcmuz
+		Start: 0
+		Length: 3
+		Stride: 6
+		Facings: 8
+	close:
+		Start: 32
+		Length: 3
+	unload:
+		Start: 32
+	icon: apcicnh
+		Start: 0
+msam:
+	idle:
+		Start: 0
+		Facings: 32
+	turret:
+		Start: 32
+		Facings: 32
+	aim:
+		Start: 64
+		Facings: 32
+	turret-3:
+		Start: 64
+		Facings: 32
+	icon: msamicnh
+		Start: 0
+jeep:
+	idle:
+		Start: 0
+		Facings: 32
+	turret:
+		Start: 32
+		Facings: 32
+	muzzle: minigun
+		Start: 0
+		Length: 6
+		Facings: 8
+	icon: jeepicnh
+		Start: 0
+mtnk:
+	idle:
+		Start: 0
+		Facings: 32
+	turret:
+		Start: 32
+		Facings: 32
+	muzzle: gunfire2
+		Start: 0
+		Length: *
+	icon: mtnkicnh
+		Start: 0
+htnk:
+	idle:
+		Start: 0
+		Facings: 32
+	turret:
+		Start: 32
+		Facings: 32
+	muzzle: gunfire2
+		Start: 0
+		Length: *
+	icon: htnkicnh
+		Start: 0
+#Structures
+
+fact:
+	build:
+		Start: 4
+		Length: 20
+		Tick: 100
+	idle:
+		Start: 0
+		Length: 4
+		Tick: 100
+	damaged-idle:
+		Start: 24
+		Length: 4
+		Tick: 100
+	damaged-build:
+		Start: 28
+		Length: 20
+		Tick: 100
+	dead:
+		Start: 48
+	make: factmake
+		Start: 0
+		Length: *
+		Tick: 80
+	bib: bib2
+		Start: 0
+		Length: *
+	icon: facticnh
+		Start: 0
+nuke:
+	idle:
+		Start: 0
+		Length: 4
+		Tick: 1000
+	damaged-idle:
+		Start: 4
+		Length: 4
+		Tick: 1000
+	dead:
+		Start: 8
+		Tick: 1000
+	make: nukemake
+		Start: 0
+		Length: *
+		Tick: 80
+	bib: bib3
+		Start: 0
+		Length: *
+	icon: nukeicnh
+		Start: 0
+proc:
+	idle:
+		Start: 0
+		Length: 6
+		Tick: 120
+	damaged-idle:
+		Start: 30
+		Length: 6
+		Tick: 120
+	dead:
+		Start: 60
+	make: procmake
+		Start: 0
+		Length: *
+		Tick: 80
+	resources: proctwr
+		Start: 0
+		Length: 6
+		Offset: -32,-21
+	damaged-resources: proctwr
+		Start: 6
+		Length: 6
+		Offset: -32,-21
+	bib: bib2
+		Start: 0
+		Length: *
+	icon: procicnh
+		Start: 0
+silo:
+	idle:
+		Start: 0
+		Length: 5
+		Offset: 0,-1
+	damaged-idle:
+		Start: 5
+		Length: 5
+		Offset: 0,-1
+	dead:
+		Start: 10
+		Offset: 0,-1
+	make: silomake
+		Start: 0
+		Length: *
+		Tick: 80
+		Offset: 0,-1
+	bib: mbSILO
+		Start: 0
+		Length: *
+		Offset: 0,1
+	icon: siloicnh
+		Start: 0
+pyle:
+	idle:
+		Start: 0
+		Length: 10
+		Tick: 100		
+	damaged-idle:
+		Start: 10
+		Length: 10
+		Tick: 100		
+	dead:
+		Start: 20
+		Tick: 100
+	make: pylemake
+		Start: 0
+		Length: *
+		Tick: 80
+	bib: bib3
+		Start: 0
+		Length: *
+	icon: pyleicnh
+		Start: 0
+weap:
+	idle:
+		Start: 0
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+	build-top: weap2
+		Start: 0
+		Length: 10
+	damaged-build-top: weap2
+		Start: 10
+		Length: 10
+	idle-top: weap2
+		Start: 0
+	damaged-idle-top: weap2
+		Start: 4
+	make: weapmake
+		Start: 0
+		Length: *
+		Tick: 80
+	bib: bib2
+		Start: 0
+		Length: *
+	icon: weapicnh
+		Start: 0
+hq:
+	idle:
+		Start: 0
+		Length: 16
+		Tick: 100
+	damaged-idle:
+		Start: 16
+		Length: 16
+		Tick: 100
+	dead:
+		Start: 32
+	make: hqmake
+		Start: 0
+		Length: *
+		Tick: 80
+	bib: bib3
+		Start: 0
+		Length: *
+	icon: hqicnh
+		Start: 0
+nuk2:
+	idle:
+		Start: 0
+		Length: 4
+		Tick: 1000
+	damaged-idle:
+		Start: 4
+		Length: 4
+		Tick: 1000
+	dead:
+		Start: 8
+	make: nuk2make
+		Start: 0
+		Length: *
+		Tick: 80
+	bib: bib3
+		Start: 0
+		Length: *
+	icon: nuk2icnh
+		Start: 0
+hpad:
+	idle:
+		Start: 0
+		ZOffset: -1023
+	damaged-idle:
+		Start: 7
+		ZOffset: -1023
+	active:
+		Start: 1
+		Length: 6
+		Tick: 100
+		ZOffset: -1023
+	damaged-active:
+		Start: 8
+		Length: 6
+		Tick: 100		
+		ZOffset: -1023
+	dead:
+		Start: 14
+		ZOffset: -1023
+	make: hpadmake
+		Start: 0
+		Length: *
+		Tick: 80
+	icon: hpadicnh
+		Start: 0
+fix:
+	idle:
+		Start: 0
+		ZOffset: -1c511
+	damaged-idle:
+		Start: 7
+		ZOffset: -1c511
+	active:
+		Start: 0
+		Length: 7
+		ZOffset: -1c511
+	damaged-active:
+		Start: 7
+		Length: 7
+		ZOffset: -1c511
+	dead:
+		Start: 14
+		ZOffset: -1c511
+	make: fixmake
+		Start: 0
+		Length: 14
+		Tick: 60
+	bib: mbFIX
+		Start: 0
+		Length: *
+		Offset: 0,-9
+	icon: fixicnh
+		Start: 0
+eye:
+	idle:
+		Start: 0
+		Length: 16
+		Tick: 100
+	damaged-idle:
+		Start: 16
+		Length: 16
+		Tick: 100
+	dead:
+		Start: 32
+	make: eyemake
+		Start: 0
+		Length: *
+		Tick: 80
+	bib: bib3
+		Start: 0
+		Length: *
+	icon: eyeicnh
+		Start: 0
+brik:
+	idle:
+		Start: 0
+		Length: 16
+	scratched-idle:
+		Start: 16
+		Length: 16
+	damaged-idle:
+		Start: 32
+		Length: 16
+	icon: brikicnh
+		Start: 0
+sbag:
+	idle:
+		Start: 0
+		Length: 16
+	icon: sbagicnh
+		Start: 0
+gtwr:
+	idle:
+		Start: 0
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+	make: gtwrmake
+		Start: 0
+		Length: *
+		Tick: 80
+	muzzle: minigun
+		Start: 0
+		Length: 6
+		Facings: 8
+	bib: mbGTWR
+		Start: 0
+		Length: *
+		Offset: 0,-2
+	icon: gtwricnh
+		Start: 0
+
+atwr:
+	idle:
+		Start: 0
+		Offset: 0,-1
+	damaged-idle:
+		Start: 1
+		Offset: 0,-1
+	dead:
+		Start: 2
+		Offset: 0,-1
+	make: atwrmake
+		Start: 0
+		Length: *
+		Tick: 80
+		Offset: 0,-1
+	muzzle: gunfire2
+		Start: 0
+		Length: *
+		Offset: 0,-1
+	bib: mbGTWR
+		Start: 0
+		Length: *
+		Offset: -3,0
+	icon: atwricnh
+		Start: 0
+vlcn:
+	idle:
+		Start: 0
+		Facings: 32
+	damaged-idle:
+		Start: 32
+		Facings: 32
+	make: vlcn
+		Start: 0
+		Length: 1
+		Tick: 80
+	muzzle: gunfire2
+		Start: 0
+		Length: *
+	icon: vlcnicon
+		Start: 0

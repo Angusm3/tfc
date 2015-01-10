@@ -1,7 +1,7 @@
 Metadata:
 	Title: The Forgotten Chapter
 	Description: Play as one of 3 armies in an infected world.
-	Version: 0.31
+	Version: 0.32
 	Author: Angus, Agent, Nutty
 
 Folders:
@@ -11,6 +11,7 @@ Folders:
 	./mods/tfc/bits/jungle
 	./mods/tfc/bits/ss
 	./mods/tfc/uibits
+	./mods/tfc/audio
 	~^Content/cnc
 
 MapFolders:
@@ -51,7 +52,13 @@ Rules:
 	./mods/tfc/rules/tech.yaml
 	./mods/tfc/rules/ships.yaml
 	./mods/tfc/rules/aircraft.yaml
+	./mods/tfc/rules/aircraftV.yaml
 	./mods/tfc/rules/husks.yaml
+	
+	./mods/tfc/factions/gdi/rules/army.yaml
+	./mods/tfc/factions/nod/rules/army.yaml
+	./mods/tfc/factions/tfa/rules/army.yaml
+
 
 Sequences:
 	./mods/tfc/sequences/structures.yaml
@@ -73,6 +80,11 @@ Sequences:
 	./mods/tfc/sequences/campaign.yaml
 	./mods/tfc/sequences/campaignV.yaml
 
+	./mods/tfc/factions/gdi/sequences/army.yaml
+	./mods/tfc/factions/nod/sequences/army.yaml
+	./mods/tfc/factions/tfa/sequences/army.yaml
+	
+	
 Cursors:
 	./mods/tfc/cursors.yaml
 
@@ -131,6 +143,7 @@ Translations:
 
 Voices:
 	./mods/tfc/voices.yaml
+	./mods/tfc/voicesV.yaml
 
 Notifications:
 	./mods/tfc/notifications.yaml

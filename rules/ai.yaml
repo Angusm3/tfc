@@ -3,11 +3,11 @@ Player:
 		Name: Cabal
 		BuildingCommonNames:
 			ConstructionYard: fact
-			Refinery: proc
-			Power: nuke,nuk2
-			Barracks: pyle,hand
-			VehiclesFactory: weap,afld
-			Production: pyle,hand,weap,afld,hpad
+			Refinery: proc,rfnry
+			Power: nuke,nuk2,slar,aslr
+			Barracks: pyle,hand,tent
+			VehiclesFactory: weap,afld,fsal
+			Production: pyle,hand,weap,afld,hpad,tent,fsal
 			Silo: silo
 		UnitsCommonNames:
 			Mcv: mcv
@@ -25,7 +25,7 @@ Player:
 			eye: 1
 			tmpl: 1
 			fix: 0
-			silo: 1
+			silo: 1			
 		BuildingFractions:
 			proc: 20%
 			nuke: 9%
@@ -45,6 +45,15 @@ Player:
 			silo: 0%
 			fix: 1%
 			hpad: 2%
+			
+			slar: 10%
+			aslr: 10%%
+			mgnst: 5%
+			tsla: 7%
+			tent: 5%
+			fsal: 9%
+			vlcn: 3%
+			grnh: 1%
 		UnitsToBuild:
 			e1: 14%
 			e3: 7%
@@ -64,6 +73,22 @@ Player:
 			htnk: 50%
 			heli: 5%
 			orca: 5%
+			
+			mlta: 14%
+			smaw: 7%
+			mltvinf: 7%
+			hjkr: 1%
+			medi: 1%
+			mech: 1%
+			cmbt: 3%
+			ecdr: 3%
+			mrtr: 5%
+			fharv: 1%
+			ftch: 5%
+			fhtnk: 20%
+			bdzr: 8%
+			wlvr: 5%
+			
 		SquadSize: 15
 		SupportPowerDecision@Airstrike:
 			OrderName: AirstrikePowerInfoOrder

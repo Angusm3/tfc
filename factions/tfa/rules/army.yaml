@@ -1,0 +1,1128 @@
+#Air Units
+HUEY:
+	Inherits: ^Helicopter
+	Valued:
+		Cost: 1200
+	Tooltip:
+		Name: UH-1 Huey
+		Description: Transport helicopter modified to a gunship. Carries Twin Missile launchers.\n  Strong vs Infantry, Light Vehicles\n  Weak vs Tanks
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: anyhq
+		Owner: forgotten
+	Selectable:
+		Bounds: 30,24
+	Helicopter:
+		RearmBuildings: hpad, fhpad
+		LandWhenIdle: true
+		ROT: 5
+		Speed: 140
+		InitialFacing: 0
+		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Tiberium,BlueTiberium
+	Health:
+		HP: 100
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 10c0
+	Armament@PRIMARY:
+		Weapon: Hrockets
+		LocalOffset: 128,-213,-85, 128,213,-85
+		MuzzleSequence: muzzle
+	AttackHeli:
+		FacingTolerance: 20
+	RenderUnit:
+	WithRotor:
+		Offset: 300,0,85
+	Cargo:
+		Types: Infantry
+		MaxWeight: 5
+		PipCount: 5
+	WithMuzzleFlash:
+	WithShadow:
+	LeavesHusk:
+		HuskActor: HELI.Husk
+	AutoTarget:
+	Explodes:
+		Weapon: HeliExplode
+		EmptyWeapon: HeliExplode
+TRAN:
+	Inherits: ^Helicopter
+	Valued:
+		Cost: 750
+	Tooltip:
+		Name: Chinook Transport
+		Description: Fast Infantry Transport Helicopter.\n  Unarmed
+	Buildable:
+		BuildPaletteOrder: 10
+		Prerequisites: hpad
+		Queue: Aircraft.GDI, Aircraft.Nod, Aircraft.Forgotten
+	Selectable:
+		Bounds: 41,41
+	Helicopter:
+		LandWhenIdle: true
+		ROT: 5
+		Speed: 140
+		InitialFacing: 0
+		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Tiberium,BlueTiberium
+		AltitudeVelocity: 0c100
+	Health:
+		HP: 90
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 10c0
+	RenderUnit:
+	WithRotor@PRIMARY:
+		Offset: -597,0,171
+		Sequence: rotor2
+		GroundSequence: slow-rotor2
+	WithRotor@SECONDARY:
+		Id: rotor_2
+		Offset: 597,0,85
+	WithShadow:
+	Cargo:
+		Types: Infantry
+		MaxWeight: 10
+		PipCount: 10
+	LeavesHusk:
+		HuskActor: TRAN.Husk
+	Explodes:
+		Weapon: HeliExplode
+		EmptyWeapon: HeliExplode
+#Infantry Units
+militia:
+	Inherits: ^ForgottenInfantry
+	Valued:
+		Cost: 80
+	Tooltip:
+		Name: Militia
+		Description: Rifle soldier, \n   Carries Semi Automatic Rifle
+	Buildable:
+		BuildPaletteOrder: 10
+		Queue: Infantry.Forgotten
+	Selectable:
+		Bounds: 12,17,0,-6
+	Mobile:
+		Speed: 71
+	RevealsShroud:
+		Range: 6c0
+	Health:
+		HP: 50
+	Armor:
+		Forgotten:
+	Armament:
+		Weapon: SKS
+	AttackFrontal:
+	RenderInfantry:
+		IdleAnimations: idle1,idle2
+		Scale: 0.7
+		Image: mlta
+	DetectCloaked:
+		Range: 2
+smaw:
+	Inherits: ^ForgottenInfantry
+	Valued:
+		Cost: 250
+	Tooltip:
+		Name: SMAW Launcher
+		Description: Anti-tank infantry. \n  Strong vs Tanks \n  Weak vs Infantry
+	Buildable:
+		BuildPaletteOrder: 20
+		Queue: Infantry.Forgotten
+	Selectable:
+		Bounds: 12,17,0,-6
+	Mobile:
+		Speed: 71
+	Health:
+		HP: 45
+	Armament:
+		Weapon: Frockets
+		LocalOffset: 256,43,341
+		FireDelay: 5
+	RevealsShroud:
+		Range: 6c0
+	AttackFrontal:
+	RenderInfantry:
+		IdleAnimations: idle1,idle2
+		Scale: 0.7
+	DetectCloaked:
+		Range: 2
+mltvinf:
+	Inherits: ^ForgottenInfantry
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Molotov Soldiers
+		Description: Militia armed with molotov cocktails. \n  Strong vs Buildings, Infantry\n  Weak vs Vehicles
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: anyhq
+		Queue: Infantry.Forgotten
+	Selectable:
+		Bounds: 12,17,0,-6
+	Mobile:
+		Speed: 71
+	Health:
+		HP: 50
+	Armament:
+		Weapon: Molotov
+		LocalOffset: 0,0,427
+		FireDelay: 15
+	AttackFrontal:
+	RenderInfantry:
+		IdleAnimations: idle1,idle2
+		StandAnimations: stand, stand2
+	Explodes:
+		Weapon: GrenadierExplode
+		EmptyWeapon: GrenadierExplode
+		Chance: 50
+	DetectCloaked:
+		Range: 2
+MRTR:
+	Inherits: ^ForgottenInfantry
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Forgotten Mortar
+		Description: Long Range artillery infantry. \n  Strong vs Ground \n  Weak vs Air
+	Buildable:
+		BuildPaletteOrder: 30
+		Queue: Infantry.Forgotten
+		Prerequisites: anyhq
+	Selectable:
+		Bounds: 12,17,0,-6
+	Mobile:
+		Speed: 28
+	Health:
+		HP: 150
+	Armament:
+		Weapon: MortarShell
+		LocalOffset: 256,43,341
+		FireDelay: 5
+	AttackFrontal:
+	RenderInfantry:
+		IdleAnimations: idle1,idle2
+	RenderRangeCircle:
+	DetectCloaked:
+		Range: 2
+sniper:
+	Inherits: ^ForgottenInfantry
+	Valued:
+		Cost: 0
+	Tooltip:
+		Name: Scout
+		Description: Elite Scout, \n   Carries Bolt Action Rifle
+	Buildable:
+		BuildPaletteOrder: 40
+		Queue: Infantry.Forgotten
+	Selectable:
+		Bounds: 12,17,0,-6
+	Mobile:
+		Speed: 99
+	RevealsShroud:
+		Range: 6c0
+	Health:
+		HP: 500
+	Armor:
+		Forgotten:
+	Armament@PRIMARY:
+		Weapon: Scout
+	AttackFrontal:
+	RenderInfantry:
+		IdleAnimations: idle1,idle2
+		Scale: 0.7
+		Image: snpr
+	Cloak:
+		InitialDelay: 250
+		CloakDelay: 100
+		CloakSound:
+		UncloakSound:
+		UncloakOnMove: no
+	DetectCloaked:
+		Range: 4
+	Transforms:
+		IntoActor: sniperd
+
+sniperD:
+	Inherits: sniper
+	Tooltip:
+		Name: Scout (Prone)
+	-Buildable:
+	Mobile:
+		Speed: 28
+	Health:
+		HP: 1000
+	Armament@PRIMARY:
+		Weapon: Scout2
+	RevealsShroud:
+		Range: 12c0
+	RenderInfantry:
+		Image: snprd
+	Cloak:
+		InitialDelay: 0
+		CloakDelay: 25
+	DetectCloaked:
+		Range: 5
+	Transforms:
+		IntoActor: sniper
+cmbt:
+	Inherits: ^ForgottenInfantry
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Combat Engineer
+		Description: Combat Engineer, \n   Wields Dual 50. Caliber pistols \n Captures buildings
+	Buildable:
+		BuildPaletteOrder: 40
+		Queue: Infantry.Forgotten
+		Prerequisites: anyhq
+	Selectable:
+		Bounds: 12,17,0,-6
+	Mobile:
+		Speed: 42
+	RevealsShroud:
+		Range: 6c0
+	Health:
+		HP: 400
+	Armor:
+		Forgotten, Heavy:
+	Armament@1:
+		Weapon: Deagle
+	Armament@2:
+		Weapon: Deagle
+	AttackFrontal:
+	RenderInfantry:
+		IdleAnimations: idle1,idle2
+		Scale: 0.7
+	DetectCloaked:
+		Range: 2
+	ExternalCaptures:
+
+hjkr:
+	Inherits: ^ForgottenInfantry
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Hijacker
+		Description: Infiltrates and captures enemy vehicles.\n  Strong vs Nothing\n  Weak vs Everything
+	Buildable:
+		BuildPaletteOrder: 30
+		Queue: Infantry.Forgotten
+		Prerequisites: anyhq
+		BuildLimit: 2
+	Selectable:
+		Bounds: 12,17,0,-6
+		Voice: HijackerVoice
+	Mobile:
+		Speed: 71
+	Health:
+		HP: 100
+	Passenger:
+		PipType: Yellow
+	EngineerRepair:
+	RepairsBridges:
+	Captures:
+		CaptureTypes: tank, vehicle, husk
+		Sabotage: false
+	-AutoTarget:
+	AttackMove:
+	RenderInfantry:
+		IdleAnimations: idle1,idle2
+		StandAnimations: stand
+		Scale: 0.7
+	-GainsExperience:
+#Vehicle Units
+
+FMCV:
+	Inherits: ^Vehicle
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Mobile Construction Vehicle
+		Description: Deploys into another Construction Yard.\n  Unarmed
+	Buildable:
+		BuildPaletteOrder: 100
+		Prerequisites: anyhq
+		Queue: Vehicle.Forgotten
+	Selectable:
+		Priority: 3
+	Mobile:
+		Speed: 71
+	Health:
+		HP: 750
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 8c0
+	Transforms:
+		IntoActor: fact
+		Offset: -1,-1
+		Facing: 108
+		TransformSounds: constru2.aud, hvydoor1.aud
+		NoTransformSounds: deploy1.aud
+	RenderUnit:
+	MustBeDestroyed:
+	AttackMove:
+	BaseBuilding:
+	LeavesHusk:
+		HuskActor: MCV.Husk
+	-GainsExperience:
+	-Cloak:
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+
+FHARV:
+	Inherits: ^Tank
+	Valued:
+		Cost: 1200
+	Tooltip:
+		Name: Harvester
+		Description: Collects Tiberium for processing.\n  Unarmed
+	Buildable:
+		BuildPaletteOrder: 10
+		Prerequisites: salvage
+		Queue: Vehicle.Forgotten
+		InitialActivity: FindResources
+	Selectable:
+		Priority: 7
+		Bounds: 36,36
+	Harvester:
+		Resources: Tiberium, BlueTiberium
+		PipCount: 7
+		Capacity: 20
+		LoadTicksPerBale: 6
+		UnloadTicksPerBale: 12
+		SearchFromProcRadius: 24
+		SearchFromOrderRadius: 12
+	Mobile:
+		Speed: 85
+	Health:
+		HP: 600
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 4c0
+
+	LeavesHusk:
+		HuskActor: HARV.Husk
+	-GainsExperience:
+	RenderHarvester:
+	Explodes:
+		Weapon: TiberiumExplosion
+FTCH:
+	Inherits: ^Vehicle
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Technical
+		Description: Lightweight Scout Truck\n  Strong vs Infantry, Air\n  Weak vs Everything else
+	Buildable:
+		BuildPaletteOrder: 20
+		Queue: Vehicle.Forgotten
+	Mobile:
+		Speed: 213
+	Health:
+		HP: 100
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 6c0
+	Turreted:
+		ROT: 5
+		Offset: -360,0,210
+	Armament:
+		Weapon: TechMachineGun
+		Recoil: 64
+		RecoilRecovery: 26
+		LocalOffset: 0,0,0
+		MuzzleSequence: muzzle
+	AttackTurreted:
+	WithMuzzleFlash:
+	RenderUnit:
+	WithTurret:
+	AutoTarget:
+	LeavesHusk:
+		HuskActor: FTCH.Husk
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+	Selectable:
+		Bounds: 28,28
+FHTNK:
+	Inherits: ^Tank
+	Valued:
+		Cost: 900
+	Tooltip:
+		Name: Heavy Tank
+		Description: Heavy Duty Forgotten Tank.\n  Strong vs Tanks, Vehicles\n  Weak vs Infantry, Aircraft
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: anyhq
+		Queue: Vehicle.Forgotten
+	Mobile:
+		Speed: 71
+	Health:
+		HP: 400
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 6c0
+	Turreted:
+		ROT: 4
+	Armament:
+		Weapon: 105mmdual
+		Recoil: 128
+		RecoilRecovery: 26
+		LocalOffset: 768,0,90
+		MuzzleSequence: muzzle
+	AttackTurreted:
+	WithMuzzleFlash:
+	RenderUnit:
+	WithTurret:
+	AutoTarget:
+	LeavesHusk:
+		HuskActor: FHTNK.Husk
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+	Selectable:
+		Bounds: 28,28
+	JamsMissiles:
+		Range: 2
+BDZR:
+	Inherits: ^Tank
+	Valued:
+		Cost: 900
+	Tooltip:
+		Name: WarDozer
+		Description: Extremely Heavy Armour bolted in\n Fires Two Anti-Material 50. Cal Machine Guns independently\n  Strong vs Infantry, Light Vehicles\n  Weak vs Tanks, Artillery
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: anyhq
+		Queue: Vehicle.Forgotten
+	Mobile:
+		Speed: 42
+	Health:
+		HP: 1000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 6c0
+	Turreted:
+		ROT: 5
+	Turreted@PRIMARY:
+		Turret: primary
+		Offset: -864,0,128
+		ROT: 3
+	Turreted@SECONDARY:
+		Turret: secondary
+		Offset: 768,0,128
+		ROT: 3
+	Armament@PRIMARY:
+		Turret: primary
+		Weapon: Dozergun
+		LocalOffset: 480,-100,40, 480,100,40
+		Recoil: 171
+		RecoilRecovery: 34
+		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: secondary
+		Turret: secondary
+		Weapon: Dozergun
+		LocalOffset: 480,-100,40, 480,100,40
+		Recoil: 171
+		RecoilRecovery: 34
+		MuzzleSequence: muzzle
+	AttackTurreted:
+	WithMuzzleFlash:
+	RenderUnit:
+		Scale: 1
+	WithTurret:
+	AutoTarget:
+	LeavesHusk:
+		HuskActor: BDZR.Husk
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+	Selectable:
+		Bounds: 28,28
+#Structures
+
+FACT:
+	Inherits: ^BaseBuilding
+	Buildable:
+		Queue: Building.GDI, Building.Nod
+		BuildPaletteOrder: 1000
+		Prerequisites: ~disabled
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Construction Yard
+		Description: Builds structures
+	Building:
+		Footprint: xxx xxx
+		Dimensions: 3,2
+	Health:
+		HP: 1400
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 10c0
+	Bib:
+	Production:
+		Produces: Building.GDI, Building.Nod, Defence.GDI, Defence.Nod, Building.Forgotten, Defence.Forgotten
+	Transforms:
+		IntoActor: mcv
+		Offset: 1,1
+		Facing: 108
+	ProductionQueue@GDIBuilding:
+		Type: Building.GDI
+		Race: gdi
+		RequireOwner: false
+		Group: Building
+		BuildSpeed: .4
+		LowPowerSlowdown: 2
+		QueuedAudio: Building
+		ReadyAudio: ConstructionComplete
+	ProductionQueue@NodBuilding:
+		Type: Building.Nod
+		Race: nod
+		RequireOwner: false
+		Group: Building
+		BuildSpeed: .4
+		LowPowerSlowdown: 2
+		QueuedAudio: Building
+		ReadyAudio: ConstructionComplete
+	ProductionQueue@GDIDefense:
+		Type: Defence.GDI
+		Race: gdi
+		RequireOwner: false
+		Group: Defence
+		BuildSpeed: .4
+		LowPowerSlowdown: 3
+		QueuedAudio: Building
+		ReadyAudio: ConstructionComplete
+	ProductionQueue@NodDefense:
+		Type: Defence.Nod
+		Race: nod
+		RequireOwner: false
+		Group: Defence
+		BuildSpeed: .4
+		LowPowerSlowdown: 3
+		QueuedAudio: Building
+		ReadyAudio: ConstructionComplete
+	ProductionQueue@ForgottenBuilding:
+		Type: Building.Forgotten
+		Race: forgotten
+		RequireOwner: false
+		Group: Building
+		BuildSpeed: .4
+		LowPowerSlowdown: 2
+		QueuedAudio: Building
+		ReadyAudio: ConstructionComplete
+	ProductionQueue@ForgottenDefense:
+		Type: Defence.Forgotten
+		Race: forgotten
+		RequireOwner: false
+		Group: Defence
+		BuildSpeed: .4
+		LowPowerSlowdown: 3
+		QueuedAudio: Building
+		ReadyAudio: ConstructionComplete
+	BaseBuilding:
+	ProductionBar@BuildingGDI:
+		ProductionType: Building.GDI
+	ProductionBar@BuildingNod:
+		ProductionType: Building.Nod
+	ProductionBar@DefenceGDI:
+		ProductionType: Defence.GDI
+	ProductionBar@DefenceNod:
+		ProductionType: Defence.Nod
+	ProductionBar@BuildingForgotten:
+		ProductionType: Building.Forgotten
+	ProductionBar@DefenceForgotten:
+		ProductionType: Defence.Forgotten
+	BaseProvider:
+		Cooldown: 75
+		Range: 14
+	WithBuildingPlacedAnimation:
+	Power:
+		Amount: 0
+
+SLAR:
+	Inherits: ^ForgottenBuilding
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Solar Array
+		Description: Generates power
+	ProvidesCustomPrerequisite:
+		Prerequisite: anypower
+	Buildable:
+		BuildPaletteOrder: 10
+		Queue: Building.Forgotten
+		Prerequisites: fact
+	Building:
+		Power: 50
+		Footprint: xx
+		Dimensions: 2,1
+	Health:
+		HP: 150
+	RevealsShroud:
+		Range: 4c0
+	Bib:
+ASLR:
+	Inherits: ^ForgottenBuilding
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Solar Array
+		Description: Generates power
+	Buildable:
+		BuildPaletteOrder: 40
+		Queue: Building.Forgotten
+		Prerequisites: anyhq
+	Building:
+		Power: 100
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 300
+	RevealsShroud:
+		Range: 4c0
+	Bib:
+RFNRY:
+	Inherits: ^ForgottenBuilding
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Tiberium Refinery
+		Description: Processes raw Tiberium\ninto useable resources
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: anypower
+		Queue: Building.Forgotten
+	Building:
+		Power: -30
+		Footprint: _x_ xxx ===
+		Dimensions: 3,3
+	Health:
+		HP: 900
+	RevealsShroud:
+		Range: 6c0
+	Bib:
+	TiberiumRefinery:
+		DockOffset: 0,2
+		TickRate: 15
+	StoresResources:
+		PipColor: Green
+		PipCount: 15
+		Capacity: 1500
+	Selectable:
+		Bounds: 73,72
+	CustomSellValue:
+		Value: 300
+	FreeActor:
+		Actor: HARV
+		InitialActivity: FindResources
+		SpawnOffset: 1,2
+		Facing: 64
+	WithResources:
+TENT:
+	Inherits: ^ForgottenBuilding
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Tent Barracks
+		Description: Trains infantry
+	ProvidesCustomPrerequisite:
+		Prerequisite: barracks
+	Buildable:
+		BuildPaletteOrder: 40
+		Queue: Building.Forgotten
+	Building:
+		Power: -5
+		Footprint: __ xx xx
+		Dimensions: 2,3
+	Health:
+		HP: 300
+	RevealsShroud:
+		Range: 5c0
+	Bib:
+	RallyPoint:
+	Exit@1:
+		SpawnOffset: 512,1024,0
+		ExitCell: 1,2
+	Production:
+		Produces: Infantry.Forgotten
+	ProductionQueue:
+		Type: Infantry.Forgotten
+		Group: Infantry
+		RequireOwner: False
+		BuildSpeed: .4
+		LowPowerSlowdown: 1
+	ProductionBar:
+FSAL:
+	Inherits: ^ForgottenBuilding
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Forgotten Salvage
+		Description: Assembly point for\nvehicle reinforcements\nrepairs allied vehicles near it
+	ProvidesCustomPrerequisite:
+		Prerequisite: salvage
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: barracks
+		Queue: Building.Forgotten
+	Building:
+		Power: -15
+		Footprint: ___ xxx xxx
+		Dimensions: 3,3
+	Health:
+		HP: 1000
+	Armament:
+		Weapon: Repair
+	RevealsShroud:
+		Range: 4c0
+	Bib:
+	-RenderBuilding:
+	RenderBuildingWarFactory:
+	RallyPoint:
+	Exit@1:
+		SpawnOffset: -341,-341,0
+		ExitCell: 0,2
+	Production:
+		Produces: Vehicle.Forgotten
+	ProductionQueue:
+		Type: Vehicle.Forgotten
+		Group: Vehicle
+		RequireOwner: False
+		BuildSpeed: .4
+		LowPowerSlowdown: 1
+	ProductionBar:
+	RenderRangeCircle:
+	AttackTurreted:
+	Turreted:
+		ROT: 255
+	AutoHeal:
+	WithMakeAnimation:
+MGNST:
+	Inherits: ^ForgottenBuilding
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Machine Gun Nest
+		Description: Anti-Infantry base Defence.\n  Strong vs Infantry\n  Weak vs Tanks
+	Buildable:
+		BuildPaletteOrder: 10
+		Queue: Defence.Forgotten
+	Building:
+		Power: -0
+	GivesBuildableArea:
+	Health:
+		HP: 500
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 7c0
+	Turreted:
+		ROT: 12
+		InitialFacing: 50
+	RenderBuildingTurreted:
+	Armament@1:
+		Weapon: NestMachineGun
+		LocalOffset: 512,0,112
+		MuzzleSequence: muzzle
+	AttackTurreted:
+	WithMuzzleFlash:
+	AutoTarget:
+	-RenderBuilding:
+	DeadBuildingState:
+	RenderRangeCircle:
+	RenderDetectionCircle:
+	DetectCloaked:
+		Range: 5
+	WithMakeAnimation:
+FHPD:
+	Inherits: ^ForgottenBuilding
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Slab of Concrete
+		Description: Produces and\nrepairs helicopters
+	Buildable:
+		BuildPaletteOrder: 60
+		Prerequisites: barracks
+		Queue: Building.Forgotten
+	Building:
+		Power: -10
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 400
+	RevealsShroud:
+		Range: 5c0
+	Exit@1:
+		SpawnOffset: 0,-256,0
+	Production:
+		Produces: Aircraft.Forgotten
+	Reservable:
+	RepairsUnits:
+	RallyPoint:
+	ProductionQueue:
+		Type: Aircraft.Forgotten
+		Group: Aircraft
+		RequiresOwner: False
+		BuildSpeed: .4
+		LowPowerSlowdown: 1
+	ProductionBar:
+	RenderBuilding:
+		Image: HPAD
+	WithMakeAnimation:
+RDST:
+	RequiresPower:
+	Inherits: ^ForgottenBuilding
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Radio Station
+		Description: Provides an overview of the battlefield.\n  Requires power to operate.
+	ProvidesCustomPrerequisite:
+		Prerequisite: anyhq
+	Buildable:
+		BuildPaletteOrder: 70
+		Prerequisites: salvage
+		Queue: Building.Forgotten
+	Building:
+		Footprint: __ xx xx
+		Dimensions: 2,3
+	Power:
+		Amount: -20
+	Health:
+		HP: 750
+	RevealsShroud:
+		Range: 10c0
+	Bib:
+	ProvidesRadar:
+	RenderDetectionCircle:
+	DetectCloaked:
+		Range: 8
+	AirstrikePower:
+		Icon: airstrike
+		ChargeTime: 180
+		SquadSize: 3
+		QuantizedFacings: 8
+		Description: Air Strike
+		LongDesc: Deploy an aerial napalm strike.\nBurns buildings and infantry along a line.
+		EndChargeSound: airredy1.aud
+		SelectTargetSound: select1.aud
+		IncomingSound: enemya.aud
+		UnitType: a10
+	SupportPowerChargeBar:
+	DisabledOverlay:
+TSLA:
+	Inherits: ^ForgottenBuilding
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: grnh
+		Queue: Defence.Forgotten
+	Valued:
+		Cost: 1200
+	Tooltip:
+		Name: Tesla Coil
+		Description: Advanced base Defence. Requires power\nto operate.\n  Strong vs Tanks, Infantry\n  Weak vs Aircraft
+	Building:
+		Power: -200
+		Footprint: _ x
+		Dimensions: 1,2
+	GivesBuildableArea:
+	Health:
+		HP: 500
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 8c0
+	RenderBuildingCharge:
+		ChargeAudio: tslachg2.aud
+	-RenderBuilding:
+	Armament:
+		Weapon: TeslaZap
+		LocalOffset: 0,0,427
+	AttackCharge:
+		ReloadTime: 120
+	RenderRangeCircle:
+	AutoTarget:
+	WithMakeAnimation:
+SILO:
+	Inherits: ^Building
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Tiberium Silo
+		Description: Stores processed Tiberium
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: anyhq
+		Queue: Defence.GDI, Defence.Nod, Defence.Forgotten
+	Building:
+		Power: -10
+		Footprint: xx
+		Dimensions: 2,1
+	GivesBuildableArea:
+	Health:
+		HP: 400
+	RevealsShroud:
+		Range: 4c0
+	RenderBuildingSilo:
+	StoresResources:
+		PipCount: 10
+		PipColor: Green
+		Capacity: 2400
+	Selectable:
+		Bounds: 49,30
+	-RenderBuilding:
+	-EmitInfantryOnSell:
+	WithMakeAnimation:
+BRIK:
+	Inherits: ^Wall
+	Valued:
+		Cost: 100
+	CustomSellValue:
+		Value: 0
+	Tooltip:
+		Name: Concrete Barrier
+		Description: Stop units and blocks enemy fire.
+	Buildable:
+		BuildPaletteOrder: 30
+		Queue: Defence.GDI, Defence.Nod, Defence.Forgotten
+	Health:
+		HP: 250
+	Armor:
+		Type: Heavy
+	Crushable:
+		CrushClasses: heavywall
+		-CrushSound:
+	SoundOnDamageTransition:
+		DestroyedSound: crumble.aud
+GRNH:
+	Inherits: ^ForgottenBuilding
+	Valued:
+		Cost: 2000
+	SeedsResource:
+		ResourceType: Tiberium
+		Interval: 200
+	Tooltip:
+		Name: Tiberium Greenhouse
+		Description: Tiberium festers within\n  Very Little Power Required.
+	ProvidesCustomPrerequisite:
+		Prerequisite: grnh
+	Buildable:
+		BuildPaletteOrder: 100
+		Prerequisites: anyhq
+		Queue: Building.Forgotten
+	Building:
+		Power: -50
+		Footprint: ___ xxx xxx
+		Dimensions: 3,3
+	RequiresPower:
+	Health:
+		HP: 2000
+	RevealsShroud:
+		Range: 6c0
+	Bib:
+	# RallyPoint:
+	# Exit@1:
+		# SpawnOffset: 512,1024,0
+		# ExitCell: 1,2
+	# Production:
+		# Produces: Infantry.Forgotten
+	# ProductionQueue:
+		# Type: Infantry.Forgotten
+		# Group: Infantry
+		# RequireOwner: False
+		# BuildSpeed: .4
+		# LowPowerSlowdown: 1
+	# ProductionBar:
+	RenderBuilding:
+		Scale: 1
+	NukePower:
+		Icon: abomb
+		ChargeTime: 300
+		Description: RTM Strike
+		LongDesc: Launch a Red Tiberium Missile.\nApplies heavy damage over a large area.
+		BeginChargeSound:
+		EndChargeSound: nukavail.aud
+		SelectTargetSound: select1.aud
+		LaunchSound: nuklnch1.aud
+		IncomingSound: nuke1.aud
+		MissileWeapon: atomic
+	SupportPowerChargeBar:
+	DisabledOverlay:
+	WithMakeAnimation:
+FSAM:
+	Inherits: ^ForgottenBuilding
+	RequiresPower:
+	Valued:
+		Cost: 750
+	Tooltip:
+		Name: SAM Site
+		Description: Anti-Air base Defence.\n  Strong vs Aircraft\n  Weak vs Infantry, Tanks
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: anyhq
+		Queue: Defence.Forgotten
+	Building:
+		Power: -20
+		Footprint: xx
+		Dimensions: 2,1
+	GivesBuildableArea:
+	Health:
+		HP: 400
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 5c0
+	Turreted:
+		ROT: 10
+		InitialFacing: 0
+	RenderBuildingTurreted:
+	Armament:
+		Weapon: SAMMissile
+		MuzzleSequence: muzzle
+	AttackTurreted:
+	WithMuzzleFlash:
+	AutoTarget:
+	-RenderBuilding:
+	RenderRangeCircle:
+	DisabledOverlay:
+	WithMakeAnimation:
+SPORETREE:
+	Inherits: ^ForgottenBuilding
+	RenderBuilding:
+		Image: SILO
+	SeedsResource:
+		ResourceType: Tiberium
+		Interval: 2
+	Burns:
+		Interval: 20
+	RadarColorFromTerrain:
+		Terrain: Tiberium
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Tib farm
+		Description: provides tiberium
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: grnh
+		Queue: Defence.Forgotten
+	Building:
+		Power: -20
+		Footprint: xx
+		Dimensions: 2,1
+	Health:
+		HP: 100
+	WithMakeAnimation:
