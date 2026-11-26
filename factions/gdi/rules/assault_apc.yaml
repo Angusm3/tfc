@@ -1,0 +1,149 @@
+# Assault APC passenger variants, restored from rules/assault_apc.yaml (0.26 - 0.29b, fgtn 20141029).
+# The loadouts the file listed were: {1,1,1} {1,1,2} {1,1,3} {1,2,2} {1,2,3} {1,3,3} {2,2,2} {2,2,3} {2,3,3} {3,3,3}
+# The base APC is in factions/gdi/rules/army.yaml. The old file also gave the base APC this trigger, which
+# swapped it for APC.E1 when a minigunner (e1) boarded. It is NOT enabled here because that would change
+# how the existing APC behaves; add it to APC to switch the variants on:
+#	TransformOnPassenger@e1:
+#		PassengerTypes: e1
+#		OnEnter: apc.e1
+#		OnExit: apc
+
+APC.E1:
+	Inherits: APC
+	Tooltip:
+		Name: APC (1 minigunner)
+	AutoTarget:
+	RenderUnit:
+		Image: apc
+	-Buildable:
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+	AttackTurreted:
+
+APC.E1E1:
+	Inherits: APC
+	Tooltip:
+		Name: APC (1 minigunner)
+	AutoTarget:
+	RenderUnit:
+		Image: apc
+	-Buildable:
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+	AttackTurreted:
+
+APC.E1E1E1:
+	Inherits: APC
+	Tooltip:
+		Name: APC (1 minigunner)
+	AutoTarget:
+	RenderUnit:
+		Image: apc
+	-Buildable:
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+	AttackTurreted:
+
+APC.E1E1E3:
+	Inherits: APC
+	Tooltip:
+		Name: APC (1 minigunner)
+	AutoTarget:
+	RenderUnit:
+		Image: apc
+	-Buildable:
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+	AttackTurreted:
+
+APC.E1E3:
+	Inherits: APC
+	Tooltip:
+		Name: APC (1 minigunner)
+	AutoTarget:
+	RenderUnit:
+		Image: apc
+	-Buildable:
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+	AttackTurreted:
+
+APC.E1E3E3:
+	Inherits: APC
+	Tooltip:
+		Name: APC (1 minigunner)
+	AutoTarget:
+	RenderUnit:
+		Image: apc
+	-Buildable:
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+	AttackTurreted:
+
+APC.E3:
+	Inherits: APC
+	Tooltip:
+		Name: APC (1 minigunner)
+	AutoTarget:
+	RenderUnit:
+		Image: apc
+	-Buildable:
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+	AttackTurreted:
+
+APC.E3E1:
+	Inherits: APC
+	Tooltip:
+		Name: APC (1 minigunner)
+	AutoTarget:
+	RenderUnit:
+		Image: apc
+	-Buildable:
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+	AttackTurreted:
+
+APC.E3E3:
+	Inherits: APC
+	Tooltip:
+		Name: APC (1 minigunner)
+	AutoTarget:
+	RenderUnit:
+		Image: apc
+	-Buildable:
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+	AttackTurreted:
+
+APC.E3E3E3:
+	Inherits: APC
+	Tooltip:
+		Name: APC (1 minigunner)
+	AutoTarget:
+	RenderUnit:
+		Image: apc
+	-Buildable:
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+	AttackTurreted:
