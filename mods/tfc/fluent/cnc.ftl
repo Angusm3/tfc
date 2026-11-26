@@ -1,0 +1,3 @@
+
+## CncLoadScreen
+loadscreen-loading = Loading
