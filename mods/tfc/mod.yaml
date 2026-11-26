@@ -1,0 +1,314 @@
+Metadata:
+	Title: mod-title
+	Version: port-20250330-dev
+	Website: https://github.com/Angusm3/tfc
+	WindowTitle: mod-windowtitle
+
+PackageFormats: Mix
+
+FileSystem: ContentInstallerFileSystem
+	SystemPackages:
+		^EngineDir
+		$tfc: tfc
+		^EngineDir|mods/common: common
+		~^SupportDir|Content/cnc: content
+		common|scripts
+		tfc|scripts
+		tfc|uibits
+	ContentPackages:
+		content|speech.mix
+		content|conquer.mix
+		content|sounds.mix
+		content|tempicnh.mix
+		content|temperat.mix
+		content|winter.mix
+		content|desert.mix
+		~content|movies
+		~content|scores.mix
+		~content|scores2.mix
+		~content|scores-covertops.mix
+		~content|transit.mix
+		~content|general.mix
+		# Below are mod-provided (system) packages that need to be loaded after the content packages so they can override content assets.
+		tfc|bits/snow.mix
+		tfc|bits
+		tfc|bits/jungle
+		tfc|bits/desert
+		tfc|bits/ss
+	ContentInstallerMod: cnc-content
+
+MapFolders:
+	tfc|maps: System
+	~^SupportDir|maps/tfc/{DEV_VERSION}: User
+
+Rules:
+	tfc|rules/misc.yaml
+	tfc|rules/ai.yaml
+	tfc|rules/player.yaml
+	tfc|rules/world.yaml
+	tfc|rules/palettes.yaml
+	tfc|rules/defaults.yaml
+	tfc|rules/structures.yaml
+	tfc|rules/infantry.yaml
+	tfc|rules/vehicles.yaml
+	tfc|rules/trees.yaml
+	tfc|rules/civilian.yaml
+	tfc|rules/civilian-desert.yaml
+	tfc|rules/tech.yaml
+	tfc|rules/ships.yaml
+	tfc|rules/aircraft.yaml
+	tfc|rules/husks.yaml
+	tfc|rules/tfc-stock-2014-pins.yaml
+	tfc|factions/gdi/rules/army.yaml
+	tfc|factions/gdi/rules/assault_apc.yaml
+	tfc|factions/nod/rules/army.yaml
+	tfc|factions/tfa/rules/army.yaml
+	tfc|rules/tfc-overrides.yaml
+	tfc|rules/tfc-world.yaml
+	tfc|rules/tfc-ai.yaml
+
+Sequences:
+	tfc|sequences/structures.yaml
+	tfc|sequences/vehicles.yaml
+	tfc|sequences/infantry.yaml
+	tfc|sequences/aircraft.yaml
+	tfc|sequences/decorations.yaml
+	tfc|sequences/misc.yaml
+	tfc|sequences/funpark.yaml
+	tfc|sequences/civilian.yaml
+	tfc|sequences/campaign.yaml
+	tfc|factions/gdi/sequences/army.yaml
+	tfc|factions/nod/sequences/army.yaml
+	tfc|factions/tfa/sequences/army.yaml
+	tfc|sequences/tfc-overrides.yaml
+
+TileSets:
+	tfc|tilesets/desert.yaml
+	tfc|tilesets/winter.yaml
+	tfc|tilesets/snow.yaml
+	tfc|tilesets/temperat.yaml
+	tfc|tilesets/jungle.yaml
+
+Weapons:
+	tfc|weapons/explosions.yaml
+	tfc|weapons/ballistics.yaml
+	tfc|weapons/missiles.yaml
+	tfc|weapons/other.yaml
+	tfc|weapons/smallcaliber.yaml
+	tfc|weapons/superweapons.yaml
+	tfc|weapons/tfc-retuned.yaml
+	tfc|weapons/tfc-gdi.yaml
+	tfc|weapons/tfc-nod.yaml
+	tfc|weapons/tfc-tfa.yaml
+
+Cursors:
+	tfc|cursors.yaml
+
+Chrome:
+	tfc|chrome.yaml
+	tfc|chrome/tfc-chrome.yaml
+
+Assemblies: OpenRA.Mods.Common.dll, OpenRA.Mods.Cnc.dll
+
+ChromeLayout:
+	tfc|chrome/mainmenu.yaml
+	tfc|chrome/mainmenu-prompts.yaml
+	tfc|chrome/playerprofile.yaml
+	tfc|chrome/encyclopedia.yaml
+	tfc|chrome/multiplayer-browser.yaml
+	tfc|chrome/multiplayer-browserpanels.yaml
+	tfc|chrome/multiplayer-createserver.yaml
+	tfc|chrome/multiplayer-directconnect.yaml
+	tfc|chrome/lobby.yaml
+	tfc|chrome/lobby-mappreview.yaml
+	tfc|chrome/lobby-players.yaml
+	tfc|chrome/lobby-options.yaml
+	tfc|chrome/lobby-music.yaml
+	tfc|chrome/lobby-servers.yaml
+	tfc|chrome/lobby-kickdialogs.yaml
+	tfc|chrome/connection.yaml
+	tfc|chrome/color-picker.yaml
+	tfc|chrome/mapchooser.yaml
+	tfc|chrome/replaybrowser.yaml
+	tfc|chrome/gamesave-browser.yaml
+	tfc|chrome/gamesave-loading.yaml
+	tfc|chrome/ingame.yaml
+	tfc|chrome/ingame-chat.yaml
+	common|chrome/ingame-transients.yaml
+	tfc|chrome/ingame-menu.yaml
+	tfc|chrome/ingame-debug.yaml
+	common|chrome/ingame-debug-hpf.yaml
+	tfc|chrome/ingame-infochat.yaml
+	tfc|chrome/ingame-info.yaml
+	tfc|chrome/ingame-infobriefing.yaml
+	common|chrome/ingame-infoscripterror.yaml
+	tfc|chrome/ingame-infoobjectives.yaml
+	tfc|chrome/ingame-infostats.yaml
+	tfc|chrome/ingame-info-lobby-options.yaml
+	tfc|chrome/ingame-debuginfo.yaml
+	tfc|chrome/music.yaml
+	tfc|chrome/settings.yaml
+	tfc|chrome/settings-display.yaml
+	tfc|chrome/settings-audio.yaml
+	tfc|chrome/settings-input.yaml
+	tfc|chrome/settings-hotkeys.yaml
+	tfc|chrome/settings-advanced.yaml
+	tfc|chrome/credits.yaml
+	tfc|chrome/dialogs.yaml
+	tfc|chrome/tooltips.yaml
+	tfc|chrome/assetbrowser.yaml
+	tfc|chrome/missionbrowser.yaml
+	tfc|chrome/editor.yaml
+	common|chrome/text-notifications.yaml
+	tfc|chrome/tfc-layout.yaml
+
+FluentMessages:
+	common|fluent/common.ftl
+	common|fluent/hotkeys.ftl
+	common|fluent/rules.ftl
+	tfc|fluent/cnc.ftl
+	tfc|fluent/chrome.ftl
+	tfc|fluent/hotkeys.ftl
+	tfc|fluent/rules.ftl
+	tfc|fluent/tfc-mod.ftl
+	tfc|fluent/tfc-rules-shared.ftl
+	tfc|fluent/tfc-rules-gdi.ftl
+	tfc|fluent/tfc-rules-nod.ftl
+	tfc|fluent/tfc-rules-tfa.ftl
+	tfc|fluent/tfc-factions.ftl
+	tfc|fluent/tfc-chrome.ftl
+	tfc|fluent/tfc-campaign.ftl
+	tfc|fluent/tfc-lua.ftl
+
+AllowUnusedFluentMessagesInExternalPackages: false
+
+Voices:
+	tfc|audio/voices.yaml
+	tfc|audio/tfc-voices.yaml
+
+Notifications:
+	tfc|audio/notifications.yaml
+	tfc|audio/tfc-notifications.yaml
+
+Music:
+	tfc|audio/music.yaml
+	tfc|audio/tfc-music.yaml
+
+Hotkeys:
+	common|hotkeys/game.yaml
+	common|hotkeys/observer.yaml
+	common|hotkeys/production-common.yaml
+	common|hotkeys/supportpowers.yaml
+	common|hotkeys/viewport.yaml
+	common|hotkeys/chat.yaml
+	common|hotkeys/editor.yaml
+	common|hotkeys/control-groups.yaml
+	tfc|hotkeys.yaml
+
+LoadScreen: CncLoadScreen
+	Image: tfc|uibits/chrome.png
+	Image2x: tfc|uibits/chrome-2x.png
+	Image3x: tfc|uibits/chrome-3x.png
+
+ServerTraits:
+	LobbyCommands
+	SkirmishLogic
+	PlayerPinger
+	MasterServerPinger
+	LobbySettingsNotification
+
+ChromeMetrics:
+	common|metrics.yaml
+	tfc|metrics.yaml
+	tfc|chrome/tfc-metrics.yaml
+
+Fonts:
+	Tiny:
+		Font: common|FreeSans.ttf
+		Size: 10
+		Ascender: 8
+	TinyBold:
+		Font: common|FreeSansBold.ttf
+		Size: 10
+		Ascender: 8
+	Small:
+		Font: common|FreeSans.ttf
+		Size: 12
+		Ascender: 9
+	Regular:
+		Font: common|FreeSans.ttf
+		Size: 14
+		Ascender: 11
+	Bold:
+		Font: common|FreeSansBold.ttf
+		Size: 14
+		Ascender: 11
+	MediumBold:
+		Font: common|FreeSansBold.ttf
+		Size: 18
+		Ascender: 14
+	BigBold:
+		Font: common|FreeSansBold.ttf
+		Size: 24
+		Ascender: 18
+	Title:
+		Font: common|FreeSansBold.ttf
+		Size: 32
+		Ascender: 24
+
+Missions:
+	tfc|missions.yaml
+
+MapGrid:
+	TileSize: 24,24
+	Type: Rectangular
+
+DefaultOrderGenerator: UnitOrderGenerator
+
+SupportsMapsFrom: cnc
+
+SoundFormats: Aud, Wav
+
+SpriteFormats: ShpTD, TmpTD, ShpTS, TmpRA
+
+VideoFormats: Vqa, Wsa
+
+TerrainFormat: DefaultTerrain
+
+SpriteSequenceFormat: ClassicTilesetSpecificSpriteSequence
+
+AssetBrowser:
+	SpriteExtensions: .shp, .tem, .win, .sno, .des, .jun
+	AudioExtensions: .aud, .wav, .v00, .v01, .v02, .v03, .var
+	VideoExtensions: .vqa, .wsa
+
+GameSpeeds:
+	DefaultSpeed: default
+	Speeds:
+		slowest:
+			Name: options-game-speed.slowest
+			Timestep: 80
+			OrderLatency: 2
+		slower:
+			Name: options-game-speed.slower
+			Timestep: 50
+			OrderLatency: 3
+		default:
+			Name: options-game-speed.normal
+			Timestep: 40
+			OrderLatency: 3
+		fast:
+			Name: options-game-speed.fast
+			Timestep: 35
+			OrderLatency: 4
+		faster:
+			Name: options-game-speed.faster
+			Timestep: 30
+			OrderLatency: 4
+		fastest:
+			Name: options-game-speed.fastest
+			Timestep: 20
+			OrderLatency: 6
+
+DiscordService:
+	ApplicationId: 699223250181292033
