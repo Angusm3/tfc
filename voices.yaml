@@ -7,6 +7,46 @@ HijackerVoice:
 		Build: jackmeup
 
 		
+TanyaVoice:
+	Voices:
+		Select: itansea,itanseb,itansec,itansed,itansee
+		Move: itanmoa,itanmob,itanmoc,itanmod,itanmoe,itanmof
+		Attack: itanatc,itanatd
+		Die: iseadib,iseadia,iseadic
+		Build: itanatb
+		Demolish: itanata
+		Burned: itandia
+		Zapped: itandia
+SealVoice:
+	Voices:
+		Select: iseaseb,iseased
+		Move: iseamoa,iseamob,iseamoc
+		Attack: iseaata,iseaatb,iseaatc
+		Die: iseadib,iseadia,iseadic
+		Build: iseasea
+		Demolish: iseasec
+		Burned: iseadia
+		Zapped: iseadib
+ShockVoice:
+	Voices:
+		Select: itessea,itessec,itessed,itessee
+		Move: itesmoa,itesmob,itesmoc,itesmod,itesmoe,itesmof
+		Attack: itesata,itesatb,itesatc,itesatd,itesate
+		Die: itesdib,itesdia,itesdic,itesdid
+		Build: itessea
+		Demolish: itessec
+		Burned: itesdia
+		Zapped: itesdib
+IvanVoice:
+	Voices:
+		Select: icrasea,icrasec,icrased,icrasee,icrasef,icraseb
+		Move: icramoa,icramob,icramoc,icramod,icramof
+		Attack: icraata,icraatb,icraatc,icraatd
+		Die: icradib,icradia
+		Build: icrasea
+		Demolish: icrasec
+		Burned: icradia
+		Zapped: icradib
 GenericVoice: 
 	Variants:
 		forgotten: .v01,.v03
