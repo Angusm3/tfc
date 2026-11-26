@@ -1,0 +1,131 @@
+﻿--- Liberal(A: Cost empty ; B: Cost 7)
+U:
+	Cost: 7
+	X: 1
+--- Liberal(A: Cost 5 ; B: Cost empty)
+U:
+	Cost: 5
+--- Liberal(top-level value) A: U: a ; B: U: b
+U: a
+dupA threw MiniYaml.Merge, duplicate values found for the following keys: W: [W (at <no filename available>:1),W (at <no filename available>:3)]
+--- Liberal(A empty ; B dup W)
+W:
+	R: 1
+
+W:
+	S: 2
+ToDictionary dup threw: An item with the same key has already been added.
+--- INHERIT: child overrides value, removes Foo and Cloak/Req
+Inherits: P
+
+Health:
+	HP: 99
+	Radius: 5
+
+Cloak:
+	-Req:
+	Delay: 90
+
+Foo@2:
+	X: 2
+--- INHERIT: child key order (child adds Z first)
+Inherits: P
+
+Z:
+	V: 1
+
+Health:
+	HP: 99
+	Radius: 5
+
+Cloak:
+	Req: cloak
+	Delay: 90
+
+Foo:
+	X: 1
+
+Foo@2:
+	X: 2
+--- INHERIT: child defines Foo and -Foo
+Inherits: P
+
+Health:
+	HP: 10
+	Radius: 5
+
+Cloak:
+	Req: cloak
+	Delay: 90
+
+Foo@2:
+	X: 2
+--- INHERIT: child -Foo then Foo (order)
+Inherits: P
+
+Health:
+	HP: 10
+	Radius: 5
+
+Cloak:
+	Req: cloak
+	Delay: 90
+
+Foo@2:
+	X: 2
+--- INHERIT: -Foo that removes nothing
+threw: Bogus yaml removals: [Nope, False]
+--- INHERIT: -Foo@2 only removes the suffixed key
+Inherits: P
+
+Health:
+	HP: 10
+	Radius: 5
+
+Cloak:
+	Req: cloak
+	Delay: 90
+
+Foo:
+	X: 1
+--- INHERIT: empty child value does not blank parent
+Inherits: P
+
+Health:
+	HP: 10
+	Radius: 5
+
+Cloak:
+	Req: cloak
+	Delay: 90
+
+Foo:
+	X: 1
+
+Foo@2:
+	X: 2
+--- INHERIT: three levels, middle removes, last re-adds
+Inherits: M
+
+Health:
+	HP: 1
+
+Cloak:
+	Req: cloak
+	Delay: 90
+
+Foo@2:
+	X: 2
+--- INHERIT: Inherits@x (suffixed) ignored?
+Inherits@1: P
+
+Health:
+	HP: 99
+--- INHERIT: unknown parent
+threw: Bogus inheritance -- actor type Nope does not exist
+--- INHERIT: case: Inherits: p vs P
+threw: Bogus inheritance -- actor type p does not exist
+--- two files: earlier C has Foo, later C has -Foo,-Bar; merged-then-inherited:
+Inherits: P
+--- reversed order (the -Foo file first):
+Inherits: P
