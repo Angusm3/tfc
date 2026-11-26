@@ -1309,3 +1309,45 @@ CYCL:
 		Types: chain
 	RenderBuildingWall:
 		Type: chain
+HQNOD:
+	RequiresPower:
+	CanPowerDown:
+	Inherits: ^BaseBuilding
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Communications Center
+		Description: Provides an overview of the battlefield.\n  Requires power to operate.
+	ProvidesCustomPrerequisite:
+		Prerequisite: anyhq
+	Buildable:
+		BuildPaletteOrder: 70
+		Prerequisites: proc
+		Queue: Building.Nod
+	Building:
+		Footprint: x_ xx
+		Dimensions: 2,2
+	Power:
+		Amount: -40
+	Health:
+		HP: 750
+	RevealsShroud:
+		Range: 10c0
+	Bib:
+	ProvidesRadar:
+	RenderDetectionCircle:
+	DetectCloaked:
+		Range: 8
+	ParatroopersPower:
+		Icon: paratroopers
+		ChargeTime: 360
+		Description: Paratroopers
+		LongDesc: A Badger drops a squad of infantry \nanywhere on the map.
+		Prerequisites: anyhq
+		DropItems: E1,E1,E1,E1,E1,E1,E3,E3,E3,BGGY,BGGY,LTNK
+		UnitType: pdc17
+		EndChargeSound: airredy1.aud
+		SelectTargetSound: select1.aud
+		IncomingSound: enemya.aud
+	SupportPowerChargeBar:
+	DisabledOverlay:

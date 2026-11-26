@@ -56,6 +56,7 @@ Rules:
 	./mods/tfc/rules/husks.yaml
 	
 	./mods/tfc/factions/gdi/rules/army.yaml
+	./mods/tfc/factions/gdi/rules/assault_apc.yaml
 	./mods/tfc/factions/nod/rules/army.yaml
 	./mods/tfc/factions/tfa/rules/army.yaml
 
