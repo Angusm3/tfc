@@ -1205,3 +1205,45 @@ SBAG:
 		Types: sandbag
 	RenderBuildingWall:
 		Type: sandbag
+HQGDI:
+	RequiresPower:
+	CanPowerDown:
+	Inherits: ^BaseBuilding
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Communications Center
+		Description: Provides an overview of the battlefield.\n  Requires power to operate.
+	ProvidesCustomPrerequisite:
+		Prerequisite: anyhq
+	Buildable:
+		BuildPaletteOrder: 70
+		Prerequisites: proc
+		Queue: Building.GDI
+	Building:
+		Footprint: x_ xx
+		Dimensions: 2,2
+	Power:
+		Amount: -40
+	Health:
+		HP: 750
+	RevealsShroud:
+		Range: 10c0
+	Bib:
+	ProvidesRadar:
+	RenderDetectionCircle:
+	DetectCloaked:
+		Range: 8
+	AirstrikePower:
+		Icon: airstrike
+		ChargeTime: 180
+		SquadSize: 3
+		QuantizedFacings: 8
+		Description: Air Strike
+		LongDesc: Deploy an aerial napalm strike.\nBurns buildings and infantry along a line.
+		EndChargeSound: airredy1.aud
+		SelectTargetSound: select1.aud
+		IncomingSound: enemya.aud
+		UnitType: a10
+	SupportPowerChargeBar:
+	DisabledOverlay:

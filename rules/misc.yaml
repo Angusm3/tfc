@@ -61,4 +61,21 @@ CAMERA.small:
 		Range: 6c0
 	BodyOrientation:
 
-
+FLARE:
+	Immobile:
+		OccupiesSpace: false
+	Health:
+		HP: 10
+	Burns:
+		Damage: 1
+		Interval: 24
+	RevealsShroud:
+		Range: 3c0
+	RenderFlare:
+		Image: smokland
+	HiddenUnderFog:
+	Tooltip:
+		Name: Flare
+	ProximityCaptor:
+		Types: Flare
+	BodyOrientation:

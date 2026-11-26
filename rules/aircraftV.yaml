@@ -39,6 +39,47 @@ C17:
 		Offset: -261,650,0
 		TrailLength: 15
 
+PDC17:
+	ParaDrop:
+		LZRange: 4
+	Inherits: ^Plane
+	Tooltip:
+		Name: Supply Aircraft
+		Description: Drops vehicle reinforcements on Airstrips
+	Valued:
+		Cost: 2000
+	Plane:
+		ROT: 5
+		Speed: 326
+	Health:
+		HP: 25
+	Armor:
+		Type: Heavy
+	RenderUnit:
+		Image: c17
+	WithShadow:
+	Cargo:
+		MaxWeight: 10
+		PipCount: 10
+	Invulnerable:
+	-Selectable:
+	-TargetableUnit:
+	-GainsExperience:
+	FlyAwayOnIdle:
+	RejectsOrders:
+	Contrail@1:
+		Offset: -261,-650,0
+		TrailLength: 15
+	Contrail@2:
+		Offset: -85,-384,0
+		TrailLength: 16
+	Contrail@3:
+		Offset: -85,384,0
+		TrailLength: 16
+	Contrail@4:
+		Offset: -261,650,0
+		TrailLength: 15
+
 A10:
 	Inherits: ^Plane
 	Tooltip:
