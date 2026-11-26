@@ -1,0 +1,75 @@
+--- MergeLiberal(A=tfc, B=stock)  [loader does Aggregate(seed, MergeLiberal): acc=Liberal(acc, nextFile)]
+Vulcan:
+	ReloadDelay: 40
+	Burst: 3
+	Warhead@1Dam: SpreadDamage
+		Damage: 10
+		Versus:
+			None: 100
+			Concrete: 0
+			Heavy: 35
+	Range: 6c0
+
+OnlyStock:
+	Range: 1c0
+--- MergeLiberal(A=stock, B=tfc)
+Vulcan:
+	ReloadDelay: 2
+	Range: 6c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 100
+		Versus:
+			None: 50
+			Heavy: 35
+			Concrete: 0
+	Burst: 3
+
+OnlyStock:
+	Range: 1c0
+--- MergeStrict(tfc, stock)
+Vulcan:
+	ReloadDelay: 40
+	Burst: 3
+	Warhead@1Dam: SpreadDamage
+		Damage: 10
+		Versus:
+			None: 100
+			Concrete: 0
+			Heavy: 35
+	Range: 6c0
+
+OnlyStock:
+	Range: 1c0
+--- -Removals: Liberal(f1 defines Foo,Cloak.A ; f2 has -Foo, Cloak/-A)
+U:
+	Cloak:
+		A: 1
+		B: 2
+		-A:
+	Foo:
+		X: 1
+	-Foo:
+--- -Removals: Liberal(f2, f1)
+U:
+	-Foo:
+	Cloak:
+		-A:
+		B: 2
+--- case: Liberal(Tail, tail)
+Tail:
+	Range: 1c0
+
+tail:
+	Range: 2c0
+--- duplicate key within one file (FromString only)
+W:
+	Range: 1
+
+W:
+	Reload: 2
+--- MergeLiberal(Cost: 5 ; Cost: <empty>)
+U:
+	Cost: 5
+--- MergeLiberal(Cost: 5 ; Cost: 7)
+U:
+	Cost: 5

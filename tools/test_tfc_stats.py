@@ -42,10 +42,13 @@ class ActorTests(unittest.TestCase):
         self.check("E1", cost="100", hp="50", armor="None", speed="56", sight_range="5c0",
                    weapons="M16", queue="Infantry.GDI, Infantry.Nod", build_palette_order="10", buildable="yes")
 
-    def test_RMBO_later_file_override(self):  # infantry.yaml (Cost 0, Queue empty) overridden by gdi army.yaml
-        self.check("RMBO", cost="1000", hp="150", speed="71", sight_range="6c0", queue="Infantry.GDI",
+    def test_RMBO_earlier_file_wins(self):
+        # rules/infantry.yaml is listed BEFORE the gdi army.yaml, so its Cost 0, HP 500, ScanRadius 5 win;
+        # the gdi file only fills gaps: its Queue fills infantry.yaml's empty Queue, Prerequisites is new.
+        self.check("RMBO", cost="0", hp="500", speed="71", sight_range="6c0", queue="Infantry.GDI",
                    prerequisites="eye, ~techlevel.high", weapons="Sniper")
-        self.assertIn("Buildable.BuildLimit=1", actor("RMBO")["extras"])  # kept from infantry.yaml
+        self.assertIn("AutoTarget.ScanRadius=5", actor("RMBO")["extras"])
+        self.assertIn("Buildable.BuildLimit=1", actor("RMBO")["extras"])
         self.assertEqual(actor("RMBO")["source"], "rules/infantry.yaml+factions/gdi/rules/army.yaml")
 
     def test_MTNK_gdi_tank(self):
@@ -54,7 +57,7 @@ class ActorTests(unittest.TestCase):
 
     def test_ORCA_and_TRAN_aircraft(self):
         self.check("ORCA", cost="1200", hp="90", armor="Light", speed="186", rot="4", sight_range="10c0",
-                   weapons="OrcaAGMissiles;OrcaAAMissiles", locomotor="Helicopter", queue="Aircraft.GDI")
+                   weapons="OrcaAAMissiles;OrcaAGMissiles", locomotor="Helicopter", queue="Aircraft.GDI")
         self.check("TRAN", cost="750", hp="90", armor="Light", speed="140", rot="5", weapons="",
                    other_weapons="HeliExplode", queue="Aircraft.GDI, Aircraft.Nod, Aircraft.Forgotten")
 
@@ -66,7 +69,7 @@ class ActorTests(unittest.TestCase):
         self.check("SPC", cost="600", hp="150", armor="light", speed="128", rot="8", sight_range="7c0")
         cloak = B["actors"]["SPC"].children["Cloak"]
         self.assertNotIn("RequiresUpgrade", cloak.children)
-        self.assertNotIn("-RequiresUpgrade", cloak.children)
+        self.assertIn("-RequiresUpgrade", cloak.children)  # inert leftover, exactly as the engine keeps it
         self.assertEqual(cloak.children["InitialDelay"].value, "90")
         self.assertIn("RequiresUpgrade", B["actors"]["^Tank"].children["Cloak"].children)  # parent untouched
 
@@ -115,22 +118,23 @@ class WeaponTests(unittest.TestCase):
         for k, v in exp.items():
             self.assertEqual(w[k], v, "%s.%s" % (name, k))
 
-    def test_Sniper_weaponsV_over_weapons(self):  # field-by-field override, untouched Versus keys survive
-        self.check("Sniper", range="6c0", reload_delay="40", damage="100", spread="42",
+    def test_Sniper_weapons_over_weaponsV(self):  # weapons.yaml is first so it wins; weaponsV only adds ValidTargets
+        self.check("Sniper", range="10c0", reload_delay="15", damage="150", spread="256",
                    valid_targets="Infantry", vs_None="100", vs_Wood="5", vs_Light="100", vs_Heavy="20",
                    vs_Concrete="", projectile="Bullet", projectile_speed="1c682", source="weapons.yaml+weaponsV.yaml")
 
-    def test_Heal_override(self):
-        self.check("Heal", range="4c0", reload_delay="4", damage="-1", spread="42", vs_None="",
+    def test_Heal_first_file_wins(self):
+        self.check("Heal", range="4c0", reload_delay="80", damage="-50", spread="213", vs_None="",
                    vs_Wood="0", vs_Light="0", vs_Heavy="0", vs_Concrete="0")
 
-    def test_120mm_override_and_extra_warheads(self):
-        self.check("120mm", range="4c768", reload_delay="40", damage="40", spread="128", projectile_speed="682",
-                   vs_None="25", vs_Wood="100", vs_Light="100", vs_Heavy="100", vs_Concrete="50", warhead_count="3")
+    def test_120mm_first_file_wins_and_extra_warheads_added(self):
+        # reload 50 and Versus None 30 / Wood 75 from weapons.yaml; weaponsV.yaml adds Warhead@2Smu and @3Eff
+        self.check("120mm", range="4c768", reload_delay="50", damage="40", spread="128", projectile_speed="682",
+                   vs_None="30", vs_Wood="75", vs_Light="100", vs_Heavy="100", vs_Concrete="50", warhead_count="3")
 
-    def test_Vulcan_keeps_burst(self):  # Burst 3 only in weapons.yaml, rest overridden in weaponsV.yaml
-        self.check("Vulcan", burst="3", reload_delay="2", range="6c0", damage="100", spread="426",
-                   valid_targets="Ground, Water", vs_None="100", vs_Wood="25", vs_Light="100", vs_Heavy="35",
+    def test_Vulcan_tfc_values(self):  # weapons.yaml (TFC) first: ReloadDelay 40, not weaponsV's 2
+        self.check("Vulcan", burst="3", reload_delay="40", range="5c0", damage="10", spread="128",
+                   valid_targets="Ground", vs_None="100", vs_Wood="20", vs_Light="20", vs_Heavy="10",
                    vs_Concrete="0")
 
     def test_Tail_projectile_speed_from_V(self):
@@ -144,8 +148,13 @@ class WeaponTests(unittest.TestCase):
     def test_P90_valid_targets(self):
         self.check("P90", range="7c0", reload_delay="8", damage="100", valid_targets="Ground")
 
-    def test_Tiberium_override(self):
-        self.check("Tiberium", reload_delay="16", damage="2", spread="42", death_type="6")
+    def test_Tiberium_first_file_wins(self):
+        self.check("Tiberium", reload_delay="4", damage="1", spread="42", death_type="6")
+
+    def test_nested_Warhead_effects_are_not_warheads(self):
+        # Colt45: Warhead@2Eff sits inside Warhead@1Dam, so the engine (top-level Warhead* only) never sees it.
+        self.assertEqual(weapon("Colt45")["warhead_count"], "1")
+        self.assertIn("NESTED(Warhead@2Eff in Warhead@1Dam)", weapon("Colt45")["warhead_other"])
 
 
 class ResolverTests(unittest.TestCase):
@@ -160,22 +169,98 @@ class ResolverTests(unittest.TestCase):
     def test_removal_is_scoped_to_the_resolved_actor(self):
         tree = T.parse_text("^P:\n\tA:\n\t\tX: 1\n\tB:\n\t\tY: 2\nC:\n\tInherits: ^P\n\t-A:\n\tB:\n\t\t-Y:\n\t\tZ: 3\n")
         r = T.Resolver(tree).resolve_all()
-        self.assertEqual(list(r["C"].children), ["B"])
-        self.assertEqual(list(r["C"].children["B"].children), ["Z"])
+        self.assertEqual(list(r["C"].children), ["Inherits", "B"])
+        self.assertEqual(list(r["C"].children["B"].children), ["-Y", "Z"])  # Y gone, inert -Y left (engine behaviour)
         self.assertEqual(list(r["^P"].children), ["A", "B"])
 
-    def test_later_file_overrides_and_self_merge(self):
-        a = T.parse_text("U:\n\tHealth:\n\t\tHP: 10\n\t\tRadius: 5\n")
-        b = T.parse_text("U:\n\tHealth:\n\t\tHP: 20\nU:\n\tValued:\n\t\tCost: 7\n")
-        m = T.merge_files([a, b])
-        self.assertEqual(m.children["U"].children["Health"].children["HP"].value, "20")
-        self.assertEqual(m.children["U"].children["Health"].children["Radius"].value, "5")
-        self.assertEqual(m.children["U"].children["Valued"].children["Cost"].value, "7")
-
     def test_unresolved_inherits_is_an_error(self):
-        tree = T.parse_text("A:\n\tInherits: ^Nope\n")
+        for src in ("A:\n\tInherits: ^Nope\n", "^P:\n\tX:\n\nA:\n\tInherits: ^p\n"):  # missing, wrong case
+            with self.assertRaises(T.ParseError):
+                T.Resolver(T.parse_text(src)).resolve_all()
+
+    def test_removing_something_that_does_not_exist_is_an_engine_error(self):
+        tree = T.parse_text("P:\n\tX:\nC:\n\tInherits: P\n\t-Nope:\n")
         with self.assertRaises(T.ParseError):
             T.Resolver(tree).resolve_all()
+
+    def test_duplicate_keys_in_one_file_are_an_error(self):
+        with self.assertRaises(T.ParseError):
+            T.parse_text("W:\n\tR: 1\nW:\n\tS: 2\n")
+
+
+# The tiny files below are the ones run through the real OpenRA.Game.exe (probe1.cs / probe2.cs, see
+# CONTRIBUTING.md); the expected values are the engine's own output.
+PROBE_TFC = ("Vulcan:\n\tReloadDelay: 40\n\tBurst: 3\n\tWarhead@1Dam: SpreadDamage\n\t\tDamage: 10\n"
+             "\t\tVersus:\n\t\t\tNone: 100\n\t\t\tConcrete: 0\n")
+PROBE_STOCK = ("Vulcan:\n\tReloadDelay: 2\n\tRange: 6c0\n\tWarhead@1Dam: SpreadDamage\n\t\tDamage: 100\n"
+               "\t\tVersus:\n\t\t\tNone: 50\n\t\t\tHeavy: 35\nOnlyStock:\n\tRange: 1c0\n")
+PROBE_PARENT = ("P:\n\tHealth:\n\t\tHP: 10\n\t\tRadius: 5\n\tCloak:\n\t\tReq: cloak\n\t\tDelay: 90\n"
+                "\tFoo:\n\t\tX: 1\n\tFoo@2:\n\t\tX: 2\n")
+
+
+def flat(node):
+    return T.flat_lines(node, 0)
+
+
+class EnginePrecedenceTests(unittest.TestCase):
+    """Pins the merge rules that were proven against the real 2014 engine."""
+
+    def test_earlier_file_wins_and_nested_children_merge(self):
+        # engine: MergeLiberal(tfc, stock) => ReloadDelay 40 (first file), Range 6c0 added, Versus merged
+        m = T.merge_files([T.parse_text(PROBE_TFC), T.parse_text(PROBE_STOCK)])
+        self.assertEqual(flat(m.children["Vulcan"]), [
+            "ReloadDelay: 40", "Burst: 3", "Warhead@1Dam: SpreadDamage", "\tDamage: 10", "\tVersus: <null>",
+            "\t\tNone: 100", "\t\tConcrete: 0", "\t\tHeavy: 35", "Range: 6c0"])
+        self.assertEqual(list(m.children), ["Vulcan", "OnlyStock"])
+
+    def test_listing_order_decides(self):
+        # engine: MergeLiberal(stock, tfc) => ReloadDelay 2 (first file is now stock), Burst 3 added
+        m = T.merge_files([T.parse_text(PROBE_STOCK), T.parse_text(PROBE_TFC)])
+        self.assertEqual(flat(m.children["Vulcan"]), [
+            "ReloadDelay: 2", "Range: 6c0", "Warhead@1Dam: SpreadDamage", "\tDamage: 100", "\tVersus: <null>",
+            "\t\tNone: 50", "\t\tHeavy: 35", "\t\tConcrete: 0", "Burst: 3"])
+
+    def test_empty_value_is_filled_from_later_file_but_not_the_reverse(self):
+        m = T.merge_files([T.parse_text("U:\n\tCost:\n\tX: 1\n"), T.parse_text("U:\n\tCost: 7\n")])
+        self.assertEqual(m.children["U"].children["Cost"].value, "7")
+        m = T.merge_files([T.parse_text("U:\n\tCost: 5\n"), T.parse_text("U:\n\tCost:\n")])
+        self.assertEqual(m.children["U"].children["Cost"].value, "5")
+
+    def test_removals_across_files_and_inheritance(self):
+        # engine: earlier file defines Foo, later file says -Foo -Bar: Foo is removed even though C defined it itself
+        f1 = T.parse_text("P:\n\tFoo:\n\t\tX: 1\n\tBar:\n\t\tY: 1\nC:\n\tInherits: P\n\tFoo:\n\t\tX: 9\n")
+        f2 = T.parse_text("C:\n\t-Foo:\n\t-Bar:\n")
+        for order in ((f1, f2), (f2, f1)):
+            r = T.Resolver(T.merge_files(list(order))).resolve_all()
+            self.assertEqual(flat(r["C"]), ["Inherits: P"])
+
+    def _inherit(self, text, child="C"):
+        return flat(T.Resolver(T.parse_text(PROBE_PARENT + text)).resolve_all()[child])
+
+    def test_inherit_child_wins_removes_and_orders(self):
+        self.assertEqual(self._inherit("C:\n\tInherits: P\n\tHealth:\n\t\tHP: 99\n\t-Foo:\n\tCloak:\n\t\t-Req:\n"),
+                         ["Inherits: P", "Health: <null>", "\tHP: 99", "\tRadius: 5", "Cloak: <null>",
+                          "\t-Req: <null>", "\tDelay: 90", "Foo@2: <null>", "\tX: 2"])
+
+    def test_inherit_own_definition_and_removal_of_same_key_removes_it(self):
+        want = ["Inherits: P", "Health: <null>", "\tHP: 10", "\tRadius: 5", "Cloak: <null>", "\tReq: cloak",
+                "\tDelay: 90", "Foo@2: <null>", "\tX: 2"]
+        self.assertEqual(self._inherit("C:\n\tInherits: P\n\tFoo:\n\t\tX: 5\n\t-Foo:\n"), want)
+        self.assertEqual(self._inherit("C:\n\tInherits: P\n\t-Foo:\n\tFoo:\n\t\tX: 5\n"), want)
+
+    def test_inherit_suffixed_removal_and_empty_value(self):
+        out = self._inherit("C:\n\tInherits: P\n\t-Foo@2:\n")
+        self.assertIn("Foo: <null>", out)
+        self.assertNotIn("Foo@2: <null>", out)
+        out = self._inherit("C:\n\tInherits: P\n\tHealth:\n\t\tHP:\n")
+        self.assertIn("\tHP: 10", out)  # an empty child value does not blank the parent
+
+    def test_inherit_three_levels_and_suffixed_Inherits_ignored(self):
+        out = self._inherit("M:\n\tInherits: P\n\t-Foo:\n\t-Health:\n\nC:\n\tInherits: M\n\tHealth:\n\t\tHP: 1\n")
+        self.assertEqual(out, ["Inherits: M", "Health: <null>", "\tHP: 1", "Cloak: <null>", "\tReq: cloak",
+                               "\tDelay: 90", "Foo@2: <null>", "\tX: 2"])
+        self.assertEqual(self._inherit("C:\n\tInherits@1: P\n\tHealth:\n\t\tHP: 99\n"),
+                         ["Inherits@1: P", "Health: <null>", "\tHP: 99"])
 
 
 class CsvAndCompareTests(unittest.TestCase):

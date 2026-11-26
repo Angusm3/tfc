@@ -16,17 +16,16 @@ Commands
       Run the built-in tests (they need the mod at commit ed02790 or the
       frozen CSVs; see tools/test_tfc_stats.py for the resolver checks).
 
-How the 2014 engine resolves rules (re-implemented here, no engine source
-was available, so this follows MiniYaml.cs of release-20141029 as known):
-  * Files are read in the order mod.yaml lists them (section Rules, Weapons).
-  * Inside one file, repeated keys at the same level are merged.
-  * Across files, a later file's node with the same key overrides the
-    earlier one field by field (children merged recursively, a non-empty
-    value replaces the earlier value).
-  * `Inherits: Parent` (also `Inherits@x`) is resolved recursively; parents
-    are applied first, then the node's own children on top.
-  * A child key `-Trait` (or `-Trait@Id`) removes that key from what was
-    inherited.
+How the 2014 engine resolves rules (PROVEN against the engine's own code by
+calling OpenRA.Game.exe's MiniYaml methods, see CONTRIBUTING.md):
+  * Files are read in the order mod.yaml lists them (Rules, Weapons) and folded
+    with Aggregate(MergeLiberal): the EARLIER file wins every conflict; fields
+    only in the later file are added. Nested nodes merge field by field.
+  * `Inherits: Parent` (exact key only, case-sensitive name) is resolved
+    recursively; the child wins over the parent; `-Key` deletes Key from the
+    merged result at that level (also the child's own Key).
+  * Weapons have no Inherits. Weapon and actor lookup is case-insensitive
+    (names are lower-cased); armour types in `Versus` are case-sensitive.
 """
 import csv
 import os
@@ -54,8 +53,8 @@ class ParseError(Exception):
 
 
 def parse_text(text, source="<text>"):
-    """Parse MiniYaml text into an ordered list of (key, Node) top level pairs,
-    with repeated keys at one level merged (MergeSelfPartial)."""
+    """Parse MiniYaml text into a root Node (children keep file order). A key repeated at
+    one level is an error."""
     root = Node()
     stack = [(-1, root)]
     for lineno, raw in enumerate(text.replace("\r\n", "\n").replace("\r", "\n").split("\n"), 1):
@@ -98,61 +97,78 @@ def parse_text(text, source="<text>"):
         if node is None:
             node = Node(value)
             parent.children[key] = node
-        else:  # repeated key in the same file: merge
-            if value is not None:
-                node.value = value
+        else:  # the engine throws on repeated keys at one level (MiniYaml.Merge / ToDictionary)
+            raise ParseError("%s:%d: duplicate key %r at the same level" % (source, lineno, key))
         stack.append((depth, node))
     return root
 
 
-def merge_into(base, over, apply_removals=False, warn=None, path=""):
-    """Merge `over` on top of `base` (both Nodes). Mutates base.
+def liberal(a, b):
+    """OpenRA 20141029 MiniYaml.MergeLiberal(a, b) on two Nodes; returns a new Node.
 
-    With apply_removals, a child key `-Key` (at any depth) removes `Key` from
-    what has been accumulated so far and is itself dropped; otherwise `-Key`
-    nodes are kept as literal keys (needed while files are merged, before
-    inheritance is resolved)."""
-    if over.value is not None:
-        base.value = over.value
-    for k, v in over.children.items():
-        if apply_removals and k.startswith("-"):
-            if warn is not None:
-                if k[1:] in over.children:
-                    warn("%s: defines %s and also %s (ambiguous)" % (path or "(top)", k[1:], k))
-                if k[1:] not in base.children:
-                    warn("%s: %s removes nothing" % (path or "(top)", k))
-            base.children.pop(k[1:], None)
-        elif k in base.children:
-            merge_into(base.children[k], v, apply_removals, warn, path + "/" + k)
-        else:
-            c = Node(None)
-            base.children[k] = c
-            merge_into(c, v, apply_removals, warn, path + "/" + k)
+    The FIRST argument wins: for a key in both, children are merged
+    recursively; a value is taken from `a` unless it is empty, then from `b`.
+    Keys only in `b` are appended after a's keys. `-Key` nodes are kept as
+    literal keys. Proven against the engine, see CONTRIBUTING.md."""
+    out = Node(a.value if a.value is not None else b.value)
+    for k, v in a.children.items():
+        out.children[k] = liberal(v, b.children[k]) if k in b.children else v.copy()
+    for k, v in b.children.items():
+        if k not in a.children:
+            out.children[k] = v.copy()
+    return out
 
 
 def merge_files(nodes):
-    out = Node()
+    """Fold the file list the way RulesetCache.LoadYamlRules does:
+    Aggregate(seed=empty, MergeLiberal), i.e. acc = liberal(acc, next_file).
+    So the EARLIER file in mod.yaml wins every conflict."""
+    acc = Node()
     for n in nodes:
-        merge_into(out, n)
+        acc = liberal(acc, n)
+    return acc
+
+
+def strict(child, parent, path, warn=None):
+    """OpenRA 20141029 MiniYaml.MergeStrict(child, parent), as ActorInfo.MergeWithParent uses it.
+
+    Child wins like `liberal`. In addition, at every level, a child key `-X`
+    deletes the key X from the merged result, including X defined by the child
+    itself. Removing a key that exists in neither is an engine error ("Bogus yaml
+    removals"). Nested `-X` nodes are left behind as inert leftovers."""
+    out = Node(child.value if child.value is not None else parent.value)
+    removed = set(k[1:] for k in child.children if k.startswith("-"))
+    for r in removed:
+        if r not in child.children and r not in parent.children:
+            raise ParseError("Bogus yaml removals: %s: -%s removes nothing" % (path, r))
+    for k, v in child.children.items():
+        if k in removed:
+            continue
+        out.children[k] = strict(v, parent.children[k], path + "/" + k) if k in parent.children else v.copy()
+    for k, v in parent.children.items():
+        if k not in child.children and k not in removed:
+            out.children[k] = v.copy()
     return out
 
 
 class Resolver:
-    def __init__(self, tree, what="actor"):
-        self.tree = tree          # Node whose children are the definitions
+    """Resolves `Inherits` (actors) the way ActorInfo.MergeWithParent does.
+
+    Only the exact key `Inherits` counts (`Inherits@x` is ignored by the
+    engine), the parent name is matched case-sensitively, and a missing parent
+    is an engine error."""
+
+    def __init__(self, tree, what="actor", inherit=True):
+        self.tree = tree
         self.what = what
+        self.inherit = inherit
         self.resolved = {}
         self.warnings = []
-        self.lower = {k.lower(): k for k in tree.children}
-
-    def _find(self, name, who):
-        if name in self.tree.children:
-            return name
-        alt = self.lower.get(name.lower())
-        if alt:
-            self.warnings.append("%s %s inherits %r: matched case-insensitively to %r" % (self.what, who, name, alt))
-            return alt
-        return None
+        if inherit:
+            for name, node in tree.children.items():
+                for k in node.children:
+                    if k.startswith("Inherits@"):
+                        self.warnings.append("%s %s: %s is ignored by the 2014 engine (only plain Inherits counts)" % (what, name, k))
 
     def resolve(self, name, _stack=()):
         if name in self.resolved:
@@ -160,19 +176,15 @@ class Resolver:
         if name in _stack:
             raise ParseError("Inherits cycle: %s" % " -> ".join(_stack + (name,)))
         node = self.tree.children[name]
-        result = Node(node.value)
-        own = OrderedDict()
-        for k, v in node.children.items():
-            if k == "Inherits" or k.startswith("Inherits@"):
-                parent = v.value
-                pk = self._find(parent, name) if parent else None
-                if pk is None:
-                    raise ParseError("unresolved Inherits: %s -> %s" % (name, parent))
-                merge_into(result, self.resolve(pk, _stack + (name,)))
-            else:
-                own[k] = v
-        own_node = Node(None, own)
-        merge_into(result, own_node, True, lambda m, n=name: self.warnings.append("%s %s %s" % (self.what, n, m)), "")
+        pn = node.children["Inherits"].value if (self.inherit and "Inherits" in node.children) else None
+        if not pn:
+            result = node
+        else:
+            if pn not in self.tree.children:
+                raise ParseError("Bogus inheritance -- actor type %s does not exist (from %s)" % (pn, name))
+            result = strict(node, self.resolve(pn, _stack + (name,)), name)
+            for k in [k for k in result.children if k.startswith("-")]:  # RemoveAll of leftover top-level removals
+                del result.children[k]
         self.resolved[name] = result
         return result
 
@@ -374,7 +386,7 @@ def actor_row(name, defn, raw_node, known_weapons):
     for _, t in traits(defn, "Mobile"):
         if "TerrainSpeeds" in t.children:
             ts = flatten(t.children["TerrainSpeeds"])
-    r["terrain_speeds"] = ";".join(ts)
+    r["terrain_speeds"] = ";".join(sorted(ts))
     amounts = []
     for _, t in traits(defn, "Power"):
         if "Amount" in t.children and t.children["Amount"].value is not None:
@@ -388,7 +400,7 @@ def actor_row(name, defn, raw_node, known_weapons):
         w = t.children.get("Weapon")
         if w is not None and w.value:
             arm.append(w.value)
-    r["weapons"] = ";".join(uniq(arm))
+    r["weapons"] = ";".join(sorted(uniq(arm)))
     other = []
     for tk, t in defn.children.items():
         if tk == "Armament" or tk.startswith("Armament@"):
@@ -396,10 +408,10 @@ def actor_row(name, defn, raw_node, known_weapons):
         for fn in ("Weapon", "EmptyWeapon"):
             if fn in t.children and t.children[fn].value:
                 other.append(t.children[fn].value)
-    r["other_weapons"] = ";".join(uniq(other))
+    r["other_weapons"] = ";".join(sorted(uniq(other)))
     r["inherits"] = ";".join(v.value for k, v in raw_node.children.items()
                              if (k == "Inherits" or k.startswith("Inherits@")) and v.value)
-    r["traits"] = ";".join(defn.children.keys())
+    r["traits"] = ";".join(sorted(k for k in defn.children if k != "Inherits" and not k.startswith("-")))
     ex = []
     done = set()
     for tn, fn in EXTRA_FIELDS:
@@ -411,7 +423,7 @@ def actor_row(name, defn, raw_node, known_weapons):
         for tk, t in traits(defn, tn):
             if fn in t.children and t.children[fn].value is not None:
                 ex.append("%s.%s=%s" % (tk, fn, t.children[fn].value))
-    r["extras"] = ";".join(ex)
+    r["extras"] = ";".join(sorted(ex))
     return r
 
 
@@ -514,7 +526,7 @@ def build(moddir, quiet=False):
     wfiles, wtree, wsrc = load_section(moddir, "Weapons")
     res = Resolver(rtree, "actor")
     resolved = res.resolve_all()
-    wres = Resolver(wtree, "weapon")
+    wres = Resolver(wtree, "weapon", inherit=False)
     wresolved = wres.resolve_all()
     rows = []
     for name, defn in resolved.items():
@@ -583,6 +595,37 @@ def cmd_baseline(args):
         print("warning: " + w)
     print("wrote " + ap)
     print("wrote " + wp)
+    return 0
+
+
+# --------------------------------------------------------------------------
+# dump command (used to prove the resolver against the engine's own output)
+# --------------------------------------------------------------------------
+
+
+def flat_lines(node, depth=1):
+    out = []
+    for k, v in node.children.items():
+        out.append("%s%s: %s" % ("\t" * depth, k, v.value if v.value is not None else "<null>"))
+        out.extend(flat_lines(v, depth + 1))
+    return out
+
+
+def cmd_dump(args):
+    """dump MODDIR OUTDIR: write resolved-actors.txt / resolved-weapons.txt in the same flat
+    format as the engine-side probe (see tools/probe/ and CONTRIBUTING.md)."""
+    if len(args) != 2:
+        print(__doc__)
+        return 2
+    b = build(args[0])
+    os.makedirs(args[1], exist_ok=True)
+    for fname, defs in (("resolved-actors.txt", b["actors"]), ("resolved-weapons.txt", b["weapons"])):
+        with open(os.path.join(args[1], fname), "w", newline="\n", encoding="utf-8") as f:
+            for name, node in defs.items():
+                f.write("@@ %s" % name + "\n")
+                for ln in flat_lines(node):
+                    f.write(ln + "\n")
+    print("wrote resolved-actors.txt and resolved-weapons.txt in " + args[1])
     return 0
 
 
@@ -658,6 +701,8 @@ def main(argv):
     cmd, rest = argv[1], argv[2:]
     if cmd == "baseline":
         return cmd_baseline(rest)
+    if cmd == "dump":
+        return cmd_dump(rest)
     if cmd == "compare":
         return cmd_compare(rest)
     if cmd == "selftest":
