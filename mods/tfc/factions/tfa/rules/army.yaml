@@ -937,7 +937,7 @@ MGNST:
 		Name: actor-mgnst.name
 	Buildable:
 		BuildPaletteOrder: 10
-		Queue: Defence.Forgotten
+		Queue: Support.Forgotten
 		Description: actor-mgnst.description
 	Building:
 	Health:
@@ -1103,7 +1103,7 @@ TSLA:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: grnh
-		Queue: Defence.Forgotten
+		Queue: Support.Forgotten
 		Description: actor-tsla.description
 	Valued:
 		Cost: 1200
@@ -1205,7 +1205,7 @@ FSAM:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: anyhq
-		Queue: Defence.Forgotten
+		Queue: Support.Forgotten
 		Description: actor-fsam.description
 	Building:
 		Footprint: xx
@@ -1260,7 +1260,7 @@ SPORETREE:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: grnh
-		Queue: Defence.Forgotten
+		Queue: Support.Forgotten
 		Description: actor-sporetree.description
 	Building:
 		Footprint: xx
@@ -1292,7 +1292,7 @@ TFSR:
 	Tooltip:
 		Name: actor-tfsr.name
 	Buildable:
-		Queue: Defence.Forgotten
+		Queue: Support.Forgotten
 		BuildPaletteOrder: 50
 		Prerequisites: grnh
 		Description: actor-tfsr.description

@@ -98,7 +98,7 @@ VLCN:
 	Buildable:
 		BuildPaletteOrder: 45
 		Prerequisites: barracks
-		Queue: Defence.GDI
+		Queue: Support.GDI
 		Description: actor-vlcn.description
 	Building:
 	GivesBuildableArea:
