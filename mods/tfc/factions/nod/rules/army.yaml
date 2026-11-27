@@ -1,1 +1,254 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# Lane 4b: Nod. The TFC actors that 0.32 defined in factions/nod/rules/army.yaml and that stock 20250330
+# does not have: MECH, ECDR, SPC, HQNOD, plus PDC17 (0.32 rules/aircraftV.yaml, used only by HQNOD's paradrop).
+# Values are the 0.32 effective values from tools/baseline-0.32-actors.csv (HP x100, turn speeds x4, ranges WDist).
+# The 0.32 file also redefined stock Nod actors (E1, E3, TRAN, HQ, ...): those belong to lanes 4e and 4g.
+
+MECH:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@DECORATIONS: ^InfantryExperienceHospitalHazmatOverrides
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: actor-mech.name
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 70
+		Prerequisites: anyhq
+		Queue: Infantry.Nod
+		Description: actor-mech.description
+	Health:
+		HP: 8000
+	Mobile:
+		Speed: 56
+	RevealsShroud:
+		Range: 3c0
+	DetectCloaked:
+		Range: 1c0
+	# Modern healing mechanic, modelled on the Red Alert mechanic: repairs only damaged allied vehicles
+	# (Targetable@REPAIR from lane 4e's scaffolding on ^Vehicle). Weapon Repair is lane 4d's.
+	Armament:
+		Weapon: Repair
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Repair
+		InvalidTargets: NoAutoTarget
+	AttackFrontal:
+		Voice: Action
+		FacingTolerance: 0
+	AttackMove:
+		Voice: Action
+	CaptureManager:
+	Captures@CAPTURESHUSK:
+		CaptureTypes: husk
+		PlayerExperience: 10
+		ValidRelationships: Enemy, Neutral, Ally
+	WithInfantryBody:
+		IdleSequences: idle1,idle2
+		StandSequences: stand
+		DefaultAttackSequence: heal
+
+ECDR:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@DECORATIONS: ^InfantryExperienceHospitalHazmatOverrides
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: actor-ecdr.name
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 80
+		Prerequisites: anyhq
+		Queue: Infantry.Nod
+		Description: actor-ecdr.description
+	Health:
+		HP: 80000
+	Mobile:
+		Speed: 71
+	RevealsShroud:
+		Range: 6c0
+	DetectCloaked:
+		Range: 2c0
+	AutoTarget:
+		ScanRadius: 4
+	Armament:
+		Weapon: PRifle
+	AttackFrontal:
+		Voice: Attack
+		FacingTolerance: 0
+	AttackMove:
+		Voice: Attack
+	WithInfantryBody:
+		IdleSequences: idle1,idle2
+		StandSequences: stand
+		DefaultAttackSequence: shoot
+
+# Q-A default (a): the 0.32 armour name 'light' is lower case and matches no Versus entry, so in 0.32 every
+# weapon did 100 percent damage to the SPC. 20250330 compares armour names case-sensitively too
+# (DamageWarhead.cs), so the same lower-case 'light' keeps that behaviour. Change to 'Light' for Q-A (b).
+SPC:
+	Inherits: ^Tank
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@TRANSPORT: ^Transport
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: actor-spc.name
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: anyhq
+		Queue: Vehicle.Nod
+		Description: actor-spc.description
+	Mobile:
+		Locomotor: tracked
+		TurnSpeed: 32
+		Speed: 128
+		PauseOnCondition: notmobile
+	Health:
+		HP: 15000
+	Armor:
+		Type: light
+	RevealsShroud:
+		Range: 7c0
+	Cloak:
+		InitialDelay: 90
+		CloakDelay: 90
+		CloakSound: trans1.aud
+		UncloakSound: trans1.aud
+		CloakStyle: Palette
+		CloakedPalette: cloak
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock
+	Cargo:
+		Types: Infantry
+		MaxWeight: 4
+		UnloadVoice: Unload
+		LoadingCondition: notmobile
+	SpawnActorOnDeath:
+		Actor: APC.Husk
+		OwnerType: InternalName
+		EffectiveOwnerFromOwner: true
+	FireWarheadsOnDeath:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+
+# Nod Communications Center: radar, detection and the Paratroopers support power.
+# Shape and bib follow stock HQ (the modern way to draw the same building).
+HQNOD:
+	Inherits: ^BaseBuilding
+	Inherits@IDISABLE: ^DisabledOverlay
+	Inherits@POWERDOWN: ^TfcPowerDown
+	HitShape:
+		TargetableOffsets: 0,0,0, 0,512,0, 420,-598,256
+		Type: Rectangle
+			TopLeft: -1024, -384
+			BottomRight: 1024, 1024
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: actor-hqnod.name
+	ProvidesPrerequisite:
+		Prerequisite: anyhq
+	Buildable:
+		BuildPaletteOrder: 70
+		Prerequisites: proc
+		Queue: Building.Nod
+		Description: actor-hqnod.description
+	Building:
+		Footprint: X_ xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	Selectable:
+		Bounds: 2048, 1706, 0, 384
+		DecorationBounds: 2048, 2261, 0, -170
+	WithSpriteBody:
+		PauseOnCondition: lowpower || powerdown
+	Health:
+		HP: 75000
+	RevealsShroud:
+		Range: 10c0
+	WithBuildingBib:
+	ProvidesRadar:
+		RequiresCondition: !lowpower && !powerdown
+	RenderDetectionCircle:
+	DetectCloaked:
+		Range: 8c0
+		RequiresCondition: !lowpower && !powerdown
+	ParatroopersPower:
+		PauseOnCondition: lowpower || powerdown
+		Prerequisites: anyhq
+		IconImage: icon-nod
+		Icon: paratroopers
+		ChargeInterval: 9000
+		Name: actor-hqnod.paratrooperspower-name
+		Description: actor-hqnod.paratrooperspower-description
+		UnitType: pdc17
+		DropItems: E1,E1,E1,E1,E1,E1,E3,E3,E3,BGGY,BGGY,LTNK
+		QuantizedFacings: 8
+		EndChargeSpeechNotification: AirstrikeReady
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		IncomingSpeechNotification: EnemyPlanesApproaching
+		SupportPowerPaletteOrder: 20
+	SupportPowerChargeBar:
+	Power:
+		Amount: -40
+
+# The supply aircraft of HQNOD's paradrop. Modelled on stock C17 (no Selectable, flies off when idle),
+# without its cloak, with the 0.32 numbers: 25 HP (x100), Heavy armour, speed 326, ROT 5 (x4 = 20).
+PDC17:
+	Inherits: ^Plane
+	Interactable:
+	RenderSprites:
+		Image: c17
+	Tooltip:
+		Name: actor-pdc17.name
+	Valued:
+		Cost: 2000
+	UpdatesPlayerStatistics:
+		AddToAssetsValue: false
+	Health:
+		HP: 2500
+	HitShape:
+	Armor:
+		Type: Heavy
+	Aircraft:
+		TurnSpeed: 20
+		Speed: 326
+		Repulsable: False
+		MaximumPitch: 36
+	HiddenUnderFog:
+		AlwaysVisibleRelationships: None
+		Type: CenterPosition
+	Cargo:
+		MaxWeight: 10
+	ParaDrop:
+		DropRange: 4c0
+	DamageMultiplier@INVULNERABLE:
+		Modifier: 0
+	Contrail@1:
+		Offset: -261,-650,0
+		TrailLength: 15
+		StartColorAlpha: 128
+	Contrail@2:
+		Offset: -85,-384,0
+		TrailLength: 16
+		StartColorAlpha: 128
+	Contrail@3:
+		Offset: -85,384,0
+		TrailLength: 16
+		StartColorAlpha: 128
+	Contrail@4:
+		Offset: -261,650,0
+		TrailLength: 15
+		StartColorAlpha: 128
+	-MapEditorData:
