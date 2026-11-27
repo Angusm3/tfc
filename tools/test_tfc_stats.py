@@ -296,11 +296,697 @@ class CsvAndCompareTests(unittest.TestCase):
                 sys.stdout = old
 
 
+
+# ==========================================================================
+# The port side (20250330): conversions, extractor, compare options, check
+# ==========================================================================
+import csv  # noqa: E402
+import shutil  # noqa: E402
+
+REPO = os.path.dirname(HERE)
+ENGINE = os.path.join(REPO, "engine")
+HAVE_ENGINE = T.engine_command(ENGINE) is not None and os.path.isfile(os.path.join(REPO, "mods", "tfc", "mod.yaml"))
+NEED_ENGINE = "engine not built (run make.cmd all): skipping the engine-backed tests"
+BASE_A = os.path.join(HERE, "baseline-0.32-actors.csv")
+BASE_W = os.path.join(HERE, "baseline-0.32-weapons.csv")
+
+
+def quiet(fn, *a, **k):
+    old = sys.stdout
+    sys.stdout = io.StringIO()
+    try:
+        rc = fn(*a, **k)
+        return rc, sys.stdout.getvalue()
+    finally:
+        sys.stdout = old
+
+
+def od(d):
+    return T.OrderedDict(d)
+
+
+class ConversionTests(unittest.TestCase):
+    def test_divide_and_fmt(self):
+        self.assertEqual(T.divide("5000", 100), "50")
+        self.assertEqual(T.divide("-5000", 100), "-50")
+        self.assertEqual(T.divide("1023", 4), "255.75")
+        self.assertEqual(T.divide("20", 4), "5")
+        self.assertEqual(T.divide("60", 100), "0.6")
+        self.assertEqual(T.divide("150", 100), "1.5")
+        self.assertEqual(T.divide("", 100), "")
+        self.assertEqual(T.divide(None, 4), "")
+        self.assertEqual(T.divide("abc", 4), "<bad:abc>")
+
+    def test_wdist_written_the_way_the_baseline_writes_it(self):
+        self.assertEqual(T.wdist("4c768"), "4c768")
+        self.assertEqual(T.wdist("5c0"), "5c0")
+        self.assertEqual(T.wdist("5120"), "5c0")      # a bare integer is a WDist
+        self.assertEqual(T.wdist("0c512"), "512")     # below one cell: a plain integer
+        self.assertEqual(T.wdist("1c682"), "1c682")
+        self.assertEqual(T.wdist("213"), "213")
+        self.assertEqual(T.wdist(""), "")
+
+    def test_every_baseline_wdist_cell_is_already_canonical(self):
+        # the canonical form must reproduce the baseline's own spelling, or compare would invent differences
+        with open(BASE_W, newline="", encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
+        for col in ("range", "min_range", "spread", "projectile_speed", "projectile_inaccuracy"):
+            for r in rows:
+                self.assertEqual(T.wdist(r[col]), r[col], "%s.%s" % (r["name"], col))
+
+    def test_cells_or_wdist(self):
+        self.assertEqual(T.cells_or_wdist("2c0"), "2")
+        self.assertEqual(T.cells_or_wdist("2c512"), "2c512")
+
+    def test_death_names_follow_the_design_note_table(self):
+        self.assertEqual([T.DEATH_TYPES[n] for n in ("BulletDeath", "RippedApartDeath", "SmallExplosionDeath",
+                                                       "ExplosionDeath", "FireDeath", "TiberiumDeath")],
+                         ["1", "2", "3", "4", "5", "6"])
+        self.assertEqual(T.DEATH_TYPES["DefaultDeath"], "1")
+
+
+STOCK_WORLD = (
+    "Locomotor@TRACKED:\n\tName: tracked\n\tCrushes: wall, crate, infantry\n\tTerrainSpeeds:\n\t\tClear: 80\n\t\tRough: 70\n"
+    "\t\tRoad: 100\n\t\tBridge: 100\n\t\tTiberium: 70\n\t\t\tPathingCost: 300\n\t\tBeach: 70\n"
+    "Locomotor@NAVAL:\n\tName: naval\n\tTerrainSpeeds:\n\t\tWater: 100\n")
+STOCK_MTNK = (
+    "Tooltip:\n\tGenericName: meta-tank\n\tName: actor-mtnk.name\n"
+    "Mobile:\n\tLocomotor: tracked\n\tTurnSpeed: 20\n\tSpeed: 85\n"
+    "Valued:\n\tCost: 800\nBuildable:\n\tBuildDuration: -1\n\tBuildDurationModifier: 60\n\tQueue: Vehicle.GDI\n"
+    "\tPrerequisites: anyhq, ~techlevel.medium\n\tBuildPaletteOrder: 40\n"
+    "Health:\n\tHP: 45000\nArmor:\n\tType: Heavy\nRevealsShroud:\n\tRange: 6c0\n"
+    "Turreted:\n\tTurnSpeed: 20\n\tInitialFacing: 200\n"
+    "Armament:\n\tWeapon: 120mm\nFireWarheadsOnDeath:\n\tWeapon: UnitExplodeSmall\n\tEmptyWeapon: UnitExplodeSmall\n"
+    "SpawnActorOnDeath:\n\tActor: MTNK.Husk\nSpawnActorOnDeath@VICE:\n\tProbability: 5\n\tActor: vice\n"
+    "ChangesHealth@ELITE:\n\tStep: 200\n\tDelay: 100\n\tRequiresCondition: rank-elite\n"
+    "ProductionQueue@A:\n\tType: Vehicle.GDI\n\tLowPowerModifier: 200\n"
+    "ProductionQueue@B:\n\tType: Vehicle.Nod\n\tBuildDurationModifier: 150\n")
+STOCK_ORCA = ("Aircraft:\n\tCanHover: True\n\tVTOL: true\n\tTurnSpeed: 28\n\tSpeed: 186\n"
+              "AttackAircraft:\n\tFacingTolerance: 80\nRepairable:\n\tRepairActors: hpad\nRearmable:\n\tRearmActors: hpad\n"
+              "AmmoPool:\n\tAmmo: 6\nReloadAmmoPool:\n\tDelay: 100\n\tCount: 2\n")
+STOCK_120MM = (
+    "ReloadDelay: 40\nRange: 4c768\nProjectile: Bullet\n\tImage: 120MM\n\tSpeed: 682\n\tInaccuracy: 813\n"
+    "Warhead@1Dam: SpreadDamage\n\tSpread: 128\n\tDamage: 4000\n\tVersus:\n\t\tNone: 25\n\t\tHeavy: 100\n"
+    "\tDamageTypes: Prone50Percent, TriggerProne, ExplosionDeath\n"
+    "Warhead@3Eff: CreateEffect\n\tExplosions: small_frag\n"
+    "BurstDelays: 15, 20\nBurst: 2\nMinRange: 0\n")
+
+
+class PortRowTests(unittest.TestCase):
+    """port_actor_row / port_weapon_rows on small hand-written resolved text (no engine). The expected values were
+    worked out by hand from the conversion table."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.locos = T.world_locomotors(T.parse_text(STOCK_WORLD))
+        cls.msgs = {"actor-mtnk": {"": "", "attrs": {"name": "Medium Tank"}}, "meta-tank": {"": "Tank", "attrs": {}}}
+        cls.mtnk = T.port_actor_row("MTNK", T.parse_text(STOCK_MTNK), {"MTNK": ["rules/vehicles.yaml"]},
+                                    {"MTNK": ["^Tank"]}, cls.locos, cls.msgs)
+        cls.orca = T.port_actor_row("ORCA", T.parse_text(STOCK_ORCA), {}, {}, cls.locos, cls.msgs)
+
+    def test_actor_numbers_are_back_in_2014_units(self):
+        r = self.mtnk
+        self.assertEqual((r["hp"], r["rot"], r["speed"], r["cost"], r["armor"], r["sight_range"]),
+                         ("450", "5", "85", "800", "Heavy", "6c0"))
+        self.assertEqual((r["tooltip"], r["kind"], r["buildable"], r["locomotor"]), ("Medium Tank", "actor", "yes", "Mobile"))
+        self.assertEqual((r["queue"], r["prerequisites"], r["build_palette_order"]),
+                         ("Vehicle.GDI", "anyhq, ~techlevel.medium", "40"))
+        self.assertEqual(r["source"], "rules/vehicles.yaml")
+        self.assertEqual(r["inherits"], "^Tank")
+
+    def test_default_build_time_fields_are_empty_cells(self):
+        self.assertEqual((self.mtnk["build_duration"], self.mtnk["build_duration_modifier"]), ("", ""))
+        r = T.port_actor_row("X", T.parse_text("Buildable:\n\tBuildDuration: 2080\n\tBuildDurationModifier: 50\n"),
+                             {}, {}, self.locos, self.msgs)
+        self.assertEqual((r["build_duration"], r["build_duration_modifier"]), ("2080", "50"))
+
+    def test_terrain_speeds_come_from_the_world_locomotor_and_drop_bridge(self):
+        self.assertEqual(self.mtnk["terrain_speeds"],
+                         "Beach=70;Clear=80;Road=100;Rough=70;Tiberium.PathingCost=300;Tiberium=70")
+        self.assertIn("Mobile.Crushes=wall, crate, infantry", self.mtnk["extras"])
+
+    def test_missing_locomotor_is_loud(self):
+        r = T.port_actor_row("X", T.parse_text("Mobile:\n\tLocomotor: nope\n"), {}, {}, self.locos, self.msgs)
+        self.assertEqual(r["terrain_speeds"], "<missing-locomotor:nope>")
+
+    def test_extras_conversions(self):
+        ex = T.split_items(self.mtnk["extras"])
+        self.assertEqual(ex["Turreted.ROT"], "5")
+        self.assertEqual(ex["Turreted.InitialFacing"], "50")
+        self.assertEqual(ex["SelfHealing@ELITE.Step"], "2")
+        self.assertEqual(ex["SelfHealing@ELITE.Ticks"], "100")
+        self.assertEqual(ex["Explodes.Weapon"], "UnitExplodeSmall")
+        self.assertEqual(ex["LeavesHusk.HuskActor"], "MTNK.Husk")   # the Probability one is the Vice mutation, skipped
+        self.assertNotIn("LeavesHusk@VICE.HuskActor", ex)
+        self.assertEqual(ex["Tooltip.GenericName"], "Tank")
+        self.assertEqual(ex["ProductionQueue@A.LowPowerSlowdown"], "2")
+        self.assertEqual(ex["ProductionQueue@A.BuildSpeed"], ".4")
+        self.assertEqual(ex["ProductionQueue@B.LowPowerSlowdown"], "1")
+        self.assertEqual(ex["ProductionQueue@B.BuildSpeed"], "BuildDurationModifier=150")
+        self.assertEqual(self.mtnk["other_weapons"], "UnitExplodeSmall")
+
+    def test_aircraft(self):
+        r = self.orca
+        self.assertEqual((r["locomotor"], r["rot"], r["speed"]), ("Helicopter", "7", "186"))
+        ex = T.split_items(r["extras"])
+        self.assertEqual(ex["AttackHeli.FacingTolerance"], "20")
+        self.assertEqual((ex["Helicopter.RepairBuildings"], ex["Helicopter.RearmBuildings"]), ("hpad", "hpad"))
+        self.assertEqual((ex["LimitedAmmo.Ammo"], ex["Reloads.Count"], ex["Reloads.Period"]), ("6", "2", "100"))
+        plane = T.port_actor_row("P", T.parse_text("Aircraft:\n\tTurnSpeed: 20\n\tSpeed: 300\n"), {}, {}, self.locos, self.msgs)
+        self.assertEqual(plane["locomotor"], "Plane")
+        self.assertEqual(T.split_items(plane["extras"])["Plane.ROT"], "5")
+
+    def test_unmapped_columns_carry_the_marker(self):
+        self.assertEqual(self.mtnk["faction_owner"], T.MARKER)
+        cols, rows = T.port_weapon_rows(od({"120mm": T.parse_text(STOCK_120MM)}), {"120mm": ["weapons/x.yaml"]})
+        for c in ("charges", "projectile_other", "warhead_other"):
+            self.assertEqual(rows[0][c], T.MARKER)
+
+    def test_weapon_numbers_are_back_in_2014_units(self):
+        cols, rows = T.port_weapon_rows(od({"120mm": T.parse_text(STOCK_120MM)}), {"120mm": ["weapons/x.yaml"]})
+        r = rows[0]
+        self.assertEqual((r["range"], r["reload_delay"], r["damage"], r["spread"], r["death_type"]),
+                         ("4c768", "40", "40", "128", "4"))
+        self.assertEqual((r["projectile"], r["projectile_speed"], r["projectile_inaccuracy"]), ("Bullet", "682", "813"))
+        self.assertEqual((r["burst"], r["burst_delay"], r["min_range"]), ("2", "15", ""))   # first BurstDelays entry
+        self.assertEqual((r["warhead_type"], r["warhead_count"], r["damaging_warheads"]), ("SpreadDamage", "2", "1"))
+        self.assertEqual((r["vs_None"], r["vs_Heavy"]), ("25", "100"))
+        self.assertEqual(r["source"], "weapons/x.yaml")
+
+    def test_weapon_defaults_are_empty_cells(self):
+        cols, rows = T.port_weapon_rows(od({"W": T.parse_text("Burst: 1\nMinRange: 0\n")}), {})
+        self.assertEqual((rows[0]["burst"], rows[0]["min_range"]), ("", ""))
+
+
+class FluentTests(unittest.TestCase):
+    def test_later_file_wins_and_attributes_resolve(self):
+        with tempfile.TemporaryDirectory() as d:
+            repo, eng = os.path.join(d, "repo"), os.path.join(d, "engine")
+            os.makedirs(os.path.join(repo, "mods", "tfc", "fluent"))
+            os.makedirs(os.path.join(eng, "mods", "common", "fluent"))
+            with open(os.path.join(repo, "mods", "tfc", "mod.yaml"), "w", newline="\n") as f:
+                f.write("FluentMessages:\n\tcommon|fluent/a.ftl\n\ttfc|fluent/b.ftl\n\ttfc|fluent/missing.ftl\n")
+            with open(os.path.join(eng, "mods", "common", "fluent", "a.ftl"), "w", newline="\n") as f:
+                f.write("# c\nactor-e1 =\n    .name = Old Name\n    .description = d\nmeta-tank = Tank\n")
+            with open(os.path.join(repo, "mods", "tfc", "fluent", "b.ftl"), "w", newline="\n") as f:
+                f.write("actor-e1 =\n    .name = Minigunner\nmeta-long = first\n    second\n")
+            msgs = T.load_fluent(repo, eng)
+            self.assertEqual(T.fluent_text(msgs, "actor-e1.name"), "Minigunner")
+            self.assertEqual(T.fluent_text(msgs, "meta-tank"), "Tank")
+            self.assertEqual(T.fluent_text(msgs, "meta-long"), "first second")
+            self.assertEqual(T.fluent_text(msgs, "actor-e1.description"), "<fluent:actor-e1.description>")  # whole message replaced
+            self.assertEqual(T.fluent_text(msgs, "nope.name"), "<fluent:nope.name>")
+
+
+def write_pair(d, prefix, arows, wcols, wrows):
+    a, w = os.path.join(d, prefix + "-a.csv"), os.path.join(d, prefix + "-w.csv")
+    T.write_csv(a, T.ACTOR_COLUMNS, arows)
+    T.write_csv(w, wcols, wrows)
+    return a, w
+
+
+class CompareOptionTests(unittest.TestCase):
+    """compare on the frozen baseline edited by hand."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.ac, cls.ar = T.read_csv(BASE_A)
+        cls.wc, cls.wr = T.read_csv(BASE_W)
+
+    def rows(self):
+        return [T.OrderedDict(r) for r in self.ar.values()], [T.OrderedDict(r) for r in self.wr.values()]
+
+    def run_compare(self, arows, wrows, *opts):
+        with tempfile.TemporaryDirectory() as d:
+            a, w = write_pair(d, "n", arows, self.wc, wrows)
+            return quiet(T.cmd_compare, [BASE_A, BASE_W, a, w] + list(opts))
+
+    def test_identical_sets_are_unchanged_with_headline(self):
+        ar, wr = self.rows()
+        rc, out = self.run_compare(ar, wr)
+        self.assertEqual(rc, 0)
+        self.assertIn("changed values: 0 in 0 row(s)", out)
+        self.assertIn("actors    baseline 273 | present 273 | missing   0 | present and differing   0 | present and identical 273", out)
+        self.assertIn("weapons   baseline 100 | present 100 | missing   0", out)
+
+    def test_changed_value_is_reported_with_both_values_and_counted_per_column(self):
+        ar, wr = self.rows()
+        next(r for r in ar if r["name"] == "MTNK")["hp"] = "460"
+        rc, out = self.run_compare(ar, wr)
+        self.assertEqual(rc, 0)
+        self.assertIn("MTNK", out)
+        self.assertIn("'450' -> '460'", out)
+        self.assertIn("present and differing   1", out)
+        self.assertRegex(out, r"\n  hp +1\n")
+
+    def test_ignore_and_only(self):
+        ar, wr = self.rows()
+        next(r for r in ar if r["name"] == "MTNK")["hp"] = "460"
+        next(r for r in ar if r["name"] == "E1")["cost"] = "101"
+        rc, out = self.run_compare(ar, wr, "--ignore", "hp")
+        self.assertNotIn("'450' -> '460'", out)
+        self.assertIn("'100' -> '101'", out)
+        with tempfile.TemporaryDirectory() as d:
+            lst = os.path.join(d, "l.txt")
+            with open(lst, "w") as f:
+                f.write("# lane\nMTNK\n120mm\n")
+            rc, out = self.run_compare(ar, wr, "--only", lst)
+            self.assertIn("'450' -> '460'", out)
+            self.assertNotIn("'100' -> '101'", out)
+            self.assertIn("Actors: baseline 1, new", out)
+            self.assertIn("Weapons: baseline 1, new", out)
+
+    def test_missing_name_fails_even_with_only(self):
+        ar, wr = self.rows()
+        ar = [r for r in ar if r["name"] != "MTNK"]
+        with tempfile.TemporaryDirectory() as d:
+            lst = os.path.join(d, "l.txt")
+            with open(lst, "w") as f:
+                f.write("MTNK\nE1\n")
+            rc, out = self.run_compare(ar, wr, "--only", lst)
+            self.assertEqual(rc, 1)
+            self.assertIn("  - MTNK", out)
+        rc, out = self.run_compare(ar, wr)
+        self.assertEqual(rc, 1)
+
+    def test_missing_name_mentions_a_case_only_near_miss(self):
+        ar, wr = self.rows()
+        next(r for r in ar if r["name"] == "MTNK")["name"] = "mtnk"
+        rc, out = self.run_compare(ar, wr)
+        self.assertEqual(rc, 1)
+        self.assertIn("the new set has 'mtnk'", out)
+
+    def test_marker_cells_are_not_changes(self):
+        ar, wr = self.rows()
+        for r in ar:
+            r["faction_owner"] = T.MARKER
+        rc, out = self.run_compare(ar, wr)
+        self.assertEqual(rc, 0)
+        self.assertIn("changed values: 0 in 0 row(s)", out)
+        self.assertIn("not comparable (no modern counterpart): 1 value(s)", out)   # only HUEY has a faction_owner
+
+    def test_extras_and_terrain_are_compared_per_key(self):
+        ar, wr = self.rows()
+        m = next(r for r in ar if r["name"] == "MTNK")
+        m["extras"] = m["extras"].replace("Cloak.CloakDelay=90", "Cloak.CloakDelay=91") + ";Selectable.Priority=10"
+        m["terrain_speeds"] = m["terrain_speeds"].replace("Clear=80", "Clear=100")
+        rc, out = self.run_compare(ar, wr)
+        self.assertIn("extras.Cloak.CloakDelay", out)
+        self.assertIn("'90' -> '91'", out)
+        self.assertIn("terrain_speeds.Clear", out)
+        self.assertIn("keys only the port has (extras / terrain_speeds, not counted as changes): 1", out)
+        self.assertIn("+ MTNK  extras.Selectable.Priority = '10'", out)
+        self.assertIn("present and differing   1", out)
+
+    def test_unmapped_extras_key_missing_from_the_port_is_not_a_change(self):
+        ar, wr = self.rows()
+        e = next(r for r in ar if r["name"] == "E1")
+        self.assertIn("Health.Radius", e["extras"])
+        e["extras"] = ";".join(i for i in e["extras"].split(";") if not i.startswith("Health.Radius"))
+        rc, out = self.run_compare(ar, wr)
+        self.assertIn("changed values: 0 in 0 row(s)", out)
+        self.assertIn("not comparable (no modern counterpart): 1 value(s)", out)
+
+    def test_blank_armour_column_means_100_on_both_sides(self):
+        ar, wr = self.rows()
+        w = next(r for r in wr if r["name"] == "Heal")
+        self.assertEqual(w["vs_None"], "")
+        w["vs_None"] = "100"
+        rc, out = self.run_compare(ar, wr)
+        self.assertIn("changed values: 0 in 0 row(s)", out)
+
+    def test_actor_and_weapon_names_compare_ignoring_case(self):
+        ar, wr = self.rows()
+        m = next(r for r in ar if r["name"] == "MTNK")
+        m["weapons"] = "120MM"
+        m["extras"] = m["extras"].replace("MTNK.Husk", "mtnk.husk")
+        rc, out = self.run_compare(ar, wr)
+        self.assertIn("changed values: 0 in 0 row(s)", out)
+
+    def test_headline_counts_templates_separately(self):
+        ar, wr = self.rows()
+        ar = [r for r in ar if r["name"] != "^Tank"]
+        rc, out = self.run_compare(ar, wr)
+        self.assertEqual(rc, 1)
+        self.assertIn("templates baseline  25 | present  24 | missing   1", out)
+        self.assertIn("actors    baseline 273 | present 273 | missing   0", out)
+
+
+class CheckCommandTests(unittest.TestCase):
+    def test_unknown_name_is_exit_2(self):
+        rc, out = quiet(T.cmd_check, ["NOT_AN_ACTOR"])
+        self.assertEqual(rc, 2)
+        self.assertIn("not in the baseline", out)
+
+    def test_no_names_is_exit_2(self):
+        rc, out = quiet(T.cmd_check, [])
+        self.assertEqual(rc, 2)
+
+    def test_names_are_case_sensitive(self):
+        rc, out = quiet(T.cmd_check, ["mtnk"])
+        self.assertEqual(rc, 2)
+
+    def test_engine_not_built_is_exit_2_with_a_message(self):
+        with tempfile.TemporaryDirectory() as d:
+            os.makedirs(os.path.join(d, "mods", "tfc"))
+            with open(os.path.join(d, "mods", "tfc", "mod.yaml"), "w") as f:
+                f.write("Rules:\n\ttfc|rules/a.yaml\n")
+            rc, out = quiet(T.cmd_check, ["E1", "--repo", d])
+            self.assertEqual(rc, 2)
+            self.assertIn("engine not built", out)
+
+    def test_names_list_file(self):
+        with tempfile.TemporaryDirectory() as d:
+            lst = os.path.join(d, "l.txt")
+            with open(lst, "w") as f:
+                f.write("# comment\nNOPE_ONE\n")
+            rc, out = quiet(T.cmd_check, ["--list", lst])
+            self.assertEqual(rc, 2)
+            self.assertIn("NOPE_ONE", out)
+
+
+@unittest.skipUnless(HAVE_ENGINE, NEED_ENGINE)
+class EngineBackedStockTests(unittest.TestCase):
+    """Runs the real 20250330 engine on this repo's mods/tfc (a few calls)."""
+
+    def test_E1_on_stock_matches_the_baseline_after_conversion(self):
+        arows, wcols, wrows, errors, st = T.extract_port(REPO, ENGINE, ["E1", "MTNK", "World"], ["Sniper"], 3)
+        self.assertEqual(errors, {})
+        e1 = next(r for r in arows if r["name"] == "E1")
+        self.assertEqual((e1["hp"], e1["cost"], e1["armor"], e1["weapons"]), ("50", "100", "None", "M16"))  # stock 5000 / 100
+        self.assertEqual(e1["tooltip"], "Minigunner")
+        self.assertEqual(wrows[0]["name"], "Sniper")
+
+    def test_names_are_collected_with_case_and_sources(self):
+        names, sources, inherits = T.port_names(REPO, ENGINE, "Rules")
+        self.assertIn("E1", names)
+        self.assertTrue(any(n.startswith("^") for n in names))
+        self.assertTrue(sources["E1"][0].startswith("rules/") or sources["E1"][0].startswith("factions/"))
+
+    def test_check_passes_for_a_present_name_and_fails_for_a_missing_one(self):
+        rc, out = quiet(T.cmd_check, ["E1", "--summary", "--jobs", "2"])
+        self.assertEqual(rc, 0, out)
+        self.assertIn("OK: every listed name is present", out)
+        rc, out = quiet(T.cmd_check, ["Colt45", "--summary", "--jobs", "2"])   # not a stock 20250330 weapon
+        self.assertEqual(rc, 1, out)
+        self.assertIn("  - Colt45", out)
+
+    def test_port_command_writes_the_two_csvs(self):
+        with tempfile.TemporaryDirectory() as d:
+            rc, out = quiet(T.cmd_port, ["--actors", "E1", "--weapons", "Sniper", "--out-dir", d, "--jobs", "2"])
+            self.assertEqual(rc, 0, out)
+            ac, ar = T.read_csv(os.path.join(d, "port-actors.csv"))
+            self.assertEqual(list(ac), T.ACTOR_COLUMNS)
+            self.assertEqual(list(ar), ["E1"])
+            wc, wr = T.read_csv(os.path.join(d, "port-weapons.csv"))
+            self.assertEqual(list(wr), ["Sniper"])
+            self.assertEqual(wc[:3], ["name", "range", "min_range"])
+
+
+# --- the round-trip proof ---------------------------------------------------------------------------------------
+# Take stock actors and weapons, write their 0.32 baseline values into a throwaway override file in a scratch copy of
+# the mod (using the design note's conversions BY HAND, below: no tfc_stats code is used to make the override), run
+# the extractor, and require compare to show them unchanged. Then break one value on purpose and require compare to
+# report exactly that.
+
+RT_ACTORS = ["E1", "MTNK", "ARTY", "LTNK", "FTNK", "NUKE", "ORCA", "BIKE"]
+RT_WEAPONS = ["Sniper", "Vulcan", "Laser", "227mm.stnk", "HighV", "Grenade", "120mm", "Rockets"]
+DEATH_NAMES = {"1": "BulletDeath", "2": "RippedApartDeath", "3": "SmallExplosionDeath", "4": "ExplosionDeath",
+               "5": "FireDeath", "6": "TiberiumDeath"}
+# Columns the override cannot reach, and why; they are excluded from the round-trip compare and printed.
+RT_IGNORE = {
+    "traits": "not a value", "inherits": "not a value", "source": "not a value", "faction_owner": "unmapped",
+    "tooltip": "Fluent text, not rules", "extras.Tooltip.GenericName": "Fluent text, not rules",
+    "weapons": "the Armament weapon names are lane 4g's job, not a unit conversion",
+    "other_weapons": "FireWarheadsOnDeath weapon names are not a unit conversion",
+    "extras.Explodes.Weapon": "weapon names", "extras.Explodes.EmptyWeapon": "weapon names",
+    "extras.LeavesHusk.HuskActor": "husk actor names", "buildable": "cannot remove a Buildable trait here",
+    "prerequisites": "a list cannot be emptied by an override", "queue": "a list cannot be emptied by an override",
+    "build_palette_order": "only written when the baseline has one", "locomotor": "trait class, not a unit conversion",
+    "warhead_count": "extra CreateEffect warheads are left modern (note 3.7)",
+    "valid_targets": "a list cannot be emptied by an override", "invalid_targets": "a list cannot be emptied by an override",
+    "projectile": "projectile type is not changed by an override",
+    "extras.Helicopter.RearmBuildings": "stock ORCA has no Rearmable trait; an override cannot add one",
+}
+
+
+def hand_actor_override(row, stock_node):
+    """YAML lines for one actor from a baseline row. Conversions written out by hand from the design note 3.2."""
+    out = [row["name"] + ":"]
+    ex = {}
+    for item in row["extras"].split(";"):
+        if item:
+            k, _, v = item.partition("=")
+            ex[k] = v
+
+    def has(key):
+        return key in stock_node.children
+
+    blocks = T.OrderedDict()
+
+    def add(trait, **fields):
+        blocks.setdefault(trait, T.OrderedDict()).update({k: v for k, v in fields.items() if v is not None})
+
+    if row["cost"]:
+        add("Valued", Cost=row["cost"])
+    if row["hp"]:
+        add("Health", HP=int(row["hp"]) * 100)                         # HP x100
+    if row["armor"]:
+        add("Armor", Type=row["armor"])
+    if row["rot"] or row["speed"]:
+        t = "Mobile" if row["locomotor"] == "Mobile" else "Aircraft"
+        add(t, Speed=row["speed"] or None, TurnSpeed=int(row["rot"]) * 4 if row["rot"] else None)   # ROT x4
+    if row["sight_range"]:
+        add("RevealsShroud", Range=row["sight_range"])
+    for key in sorted(ex):
+        v = ex[key]
+        trait, _, field = key.partition(".")
+        base = trait.split("@")[0]
+        if base == "SelfHealing" and has("ChangesHealth" + trait[len("SelfHealing"):]):
+            inst = "ChangesHealth" + trait[len("SelfHealing"):]
+            if field == "Step":
+                add(inst, Step=int(v) * 100, PercentageStep=0)         # step x100 (the elite step is a flat amount)
+            else:
+                add(inst, Delay=v)
+        elif base == "DetectCloaked" and field == "Range" and has("DetectCloaked"):
+            add("DetectCloaked", Range="%sc0" % v)                      # cells to WDist
+        elif base == "Cloak" and has("Cloak"):
+            add("Cloak", **{field: v})
+        elif base == "AutoTarget" and has("AutoTarget"):
+            add("AutoTarget", ScanRadius=v)
+        elif base == "Crushable" and field == "CrushSound" and has("Crushable"):
+            add("Crushable", CrushSound=v)
+        elif base == "Selectable" and has("Selectable"):
+            add("Selectable", Priority=v)
+        elif base == "Turreted" and field == "ROT" and has(trait):
+            add(trait, TurnSpeed=int(round(float(v) * 4)))
+        elif base == "TakeCover" and has("TakeCover"):
+            add("TakeCover", SpeedModifier=int(round(float(v) * 100)))
+        elif base == "RepairableBuilding" and has("RepairableBuilding"):
+            add("RepairableBuilding", RepairPercent=v)
+    for trait, fields in blocks.items():
+        if fields:
+            out.append("	%s:" % trait)
+            for k, v in fields.items():
+                out.append("		%s: %s" % (k, v))
+    return out if len(out) > 1 else []
+
+
+def hand_world_override(rows_by_loco):
+    """World locomotor terrain speeds from baseline rows: {locomotor: row}."""
+    out = ["World:"]
+    for loco, row in sorted(rows_by_loco.items()):
+        out.append("\tLocomotor@%s:" % loco.upper())
+        ts = {}
+        for item in row["terrain_speeds"].split(";"):
+            k, _, v = item.partition("=")
+            t, _, sub = k.partition(".")
+            ts.setdefault(t, {})[sub or "speed"] = v
+        out.append("\t\tTerrainSpeeds:")
+        for t in sorted(ts):
+            out.append("\t\t\t%s: %s" % (t, ts[t]["speed"]))
+            if "PathingCost" in ts[t]:
+                out.append("\t\t\t\tPathingCost: %s" % ts[t]["PathingCost"])
+        crushes = [i.split("=", 1)[1] for i in row["extras"].split(";") if i.startswith("Mobile.Crushes=")]
+        if crushes:
+            out.append("\t\tCrushes: %s" % crushes[0])
+    return out
+
+
+def hand_weapon_override(row):
+    out = [row["name"] + ":"]
+    if row["range"]:
+        out.append("\tRange: %s" % row["range"])
+    out.append("\tMinRange: %s" % (row["min_range"] or "0"))             # blank = the default 0
+    out.append("\tBurst: %s" % (row["burst"] or "1"))                     # blank = the default 1
+    if row["reload_delay"]:
+        out.append("\tReloadDelay: %s" % row["reload_delay"])
+    out.append("	BurstDelays: %s" % (row["burst_delay"] or "5"))          # blank = the default 5 ticks
+    if row["valid_targets"]:
+        out.append("\tValidTargets: %s" % row["valid_targets"])
+    if row["invalid_targets"]:
+        out.append("\tInvalidTargets: %s" % row["invalid_targets"])
+    if row["projectile_speed"] or row["projectile_inaccuracy"]:
+        out.append("\tProjectile: %s" % row["projectile"])
+        if row["projectile_speed"]:
+            out.append("\t\tSpeed: %s" % row["projectile_speed"])
+        if row["projectile_inaccuracy"]:
+            out.append("\t\tInaccuracy: %s" % row["projectile_inaccuracy"])
+    out.append("\tWarhead@1Dam: %s" % row["warhead_type"])
+    out.append("\t\tDamage: %d" % (int(row["damage"]) * 100))             # damage x100
+    if row["spread"]:
+        out.append("\t\tSpread: %s" % row["spread"])
+    out.append("\t\tVersus:")
+    for armour in ("None", "Wood", "Light", "Heavy", "Concrete"):
+        out.append("\t\t\t%s: %s" % (armour, row.get("vs_" + armour) or "100"))   # blank = 100, written explicitly
+    if row["death_type"]:
+        out.append("\t\tDamageTypes: Prone50Percent, TriggerProne, %s" % DEATH_NAMES[row["death_type"]])
+    return out
+
+
+@unittest.skipUnless(HAVE_ENGINE, NEED_ENGINE)
+class RoundTripTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        root = os.environ.get("TFC_STATS_SCRATCH")
+        cls._tmp = None
+        if root:
+            cls.root = os.path.join(root, "roundtrip")
+            if os.path.isdir(cls.root):
+                shutil.rmtree(cls.root)
+            os.makedirs(cls.root)
+        else:
+            cls._tmp = tempfile.TemporaryDirectory(prefix="tfc-roundtrip-")
+            cls.root = cls._tmp.name
+        cls.repo = os.path.join(cls.root, "repo")
+        shutil.copytree(os.path.join(REPO, "mods", "tfc"), os.path.join(cls.repo, "mods", "tfc"),
+                        ignore=shutil.ignore_patterns("maps"))
+        shutil.copy(os.path.join(REPO, "mod.config"), cls.repo)
+        # throwaway override files, listed LAST so that they win over whatever any lane has put in the real files
+        mod = os.path.join(cls.repo, "mods", "tfc", "mod.yaml")
+        with open(mod, newline="") as f:
+            text = f.read().replace("\r\n", "\n")
+        text = cls._append(text, "Rules", "tfc|rules/zz-roundtrip.yaml")
+        text = cls._append(text, "Weapons", "tfc|weapons/zz-roundtrip.yaml")
+        text = "\n".join(l for l in text.split("\n") if not l.strip().startswith("tfc|maps"))  # the copy has no maps
+        with open(mod, "w", newline="\n") as f:
+            f.write(text)
+        cls.ac, cls.ar = T.read_csv(BASE_A)
+        cls.wc, cls.wr = T.read_csv(BASE_W)
+        cls.put_files("", "")  # listed in mod.yaml, so they must exist; empty = pure stock
+        eng = T.Engine(cls.repo, ENGINE, cache=False, jobs=4)
+        stock, errs = eng.resolve("Rules", RT_ACTORS)
+        assert not errs, errs
+        cls.stock = stock
+        cls.locos = {}
+        for n in RT_ACTORS:
+            ln = T.pfield(stock[n], "Mobile", "Locomotor")
+            if ln:
+                prev = cls.locos.get(ln)
+                assert prev is None or cls.ar[prev]["terrain_speeds"] == cls.ar[n]["terrain_speeds"], (
+                    "actors %s and %s share locomotor %s but 0.32 gave them different terrain speeds" % (prev, n, ln))
+                cls.locos.setdefault(ln, n)
+        cls.write_override()
+
+    @classmethod
+    def tearDownClass(cls):
+        if cls._tmp is not None:
+            cls._tmp.cleanup()
+
+    @staticmethod
+    def _append(text, section, entry):
+        inside, last = False, None
+        lines = text.split("\n")
+        for i, l in enumerate(lines):
+            if l and l[0] not in " \t#":
+                inside = l.split(":")[0].strip() == section
+            elif inside and l.strip():
+                last = i
+        lines.insert(last + 1, "\t" + entry)
+        return "\n".join(lines)
+
+    @classmethod
+    def write_override(cls, wrong=None):
+        actors = []
+        for n in RT_ACTORS:
+            actors += hand_actor_override(cls.ar[n], cls.stock[n])
+        world = hand_world_override({ln: cls.ar[n] for ln, n in cls.locos.items()})
+        text = "\n".join(actors + world) + "\n"
+        weapons = []
+        for n in RT_WEAPONS:
+            weapons += hand_weapon_override(cls.wr[n])
+        wtext = "\n".join(weapons) + "\n"
+        if wrong:
+            assert wrong[0] in text, wrong
+            text = text.replace(*wrong)
+        cls.actor_yaml, cls.weapon_yaml = text, wtext
+        cls.put_files(text, wtext)
+
+    @classmethod
+    def put_files(cls, text, wtext):
+        with open(os.path.join(cls.repo, "mods", "tfc", "rules", "zz-roundtrip.yaml"), "w", newline="\n") as f:
+            f.write(text)
+        with open(os.path.join(cls.repo, "mods", "tfc", "weapons", "zz-roundtrip.yaml"), "w", newline="\n") as f:
+            f.write(wtext)
+
+    @classmethod
+    def extract_and_compare(cls):
+        arows, wcols, wrows, errors, st = T.extract_port(cls.repo, ENGINE, RT_ACTORS, RT_WEAPONS, 4, cache=False)
+        assert not errors, errors
+        d = os.path.join(cls.root, "out")
+        os.makedirs(d, exist_ok=True)
+        a, w = write_pair(d, "port", arows, wcols, wrows)
+        names = os.path.join(cls.root, "names.txt")
+        with open(names, "w") as f:
+            f.write("\n".join(RT_ACTORS + RT_WEAPONS) + "\n")
+        return quiet(T.cmd_compare, [BASE_A, BASE_W, a, w, "--ignore", ",".join(sorted(RT_IGNORE)), "--only", names])
+
+    def test_1_stock_alone_differs_so_the_proof_is_not_vacuous(self):
+        self.put_files("", "")
+        try:
+            rc, out = self.extract_and_compare()
+        finally:
+            self.write_override()
+        with open(os.path.join(self.root, "roundtrip-before-override.txt"), "w", newline="\n") as f:
+            f.write(out)
+        self.assertIn("MTNK", out)
+        self.assertIn("actors    baseline %3d | present %3d | missing   0 | present and differing %3d" % (
+            len(RT_ACTORS), len(RT_ACTORS), len(RT_ACTORS)), out)
+
+    def test_2_baseline_values_written_by_hand_come_back_unchanged(self):
+        rc, out = self.extract_and_compare()
+        with open(os.path.join(self.root, "roundtrip-compare.txt"), "w", newline="\n") as f:
+            f.write("ignored columns (and why):\n" + "\n".join("  %-30s %s" % kv for kv in sorted(RT_IGNORE.items())) + "\n\n")
+            f.write("override rules/zz-roundtrip.yaml:\n" + self.actor_yaml + "\noverride weapons/zz-roundtrip.yaml:\n" + self.weapon_yaml + "\n")
+            f.write(out)
+        self.assertEqual(rc, 0, out)
+        self.assertEqual(out.count("changed values: 0 in 0 row(s)"), 2, out)   # actors and weapons
+        self.assertIn("actors    baseline %3d | present %3d | missing   0 | present and differing   0" % (len(RT_ACTORS), len(RT_ACTORS)), out)
+        self.assertIn("weapons   baseline %3d | present %3d | missing   0 | present and differing   0" % (len(RT_WEAPONS), len(RT_WEAPONS)), out)
+
+    def test_3_one_deliberately_wrong_value_is_reported(self):
+        self.write_override(wrong=("\t\tHP: 45000\n", "\t\tHP: 46000\n"))   # MTNK 450 -> 460
+        try:
+            rc, out = self.extract_and_compare()
+        finally:
+            self.write_override()
+        with open(os.path.join(self.root, "roundtrip-wrong-value.txt"), "w", newline="\n") as f:
+            f.write(out)
+        self.assertIn("MTNK", out)
+        self.assertIn("'450' -> '460'", out)
+        self.assertIn("present and differing   1", out)
+        self.assertIn("changed values: 1 in 1 row(s)", out)
+
+
 def run(argv=()):
     global B, MODDIR
     if argv:
         MODDIR = argv[0]
+    elif not os.path.isfile(os.path.join(MODDIR, "mod.yaml")) and os.path.isfile(os.path.join(MODDIR, "legacy-0.32", "mod.yaml")):
+        MODDIR = os.path.join(MODDIR, "legacy-0.32")  # the port branch keeps the 2014 mod here
     B = T.build(MODDIR)
+    if not HAVE_ENGINE:
+        print(NEED_ENGINE)
     suite = unittest.defaultTestLoader.loadTestsFromModule(sys.modules[__name__])
     res = unittest.TextTestRunner(verbosity=1).run(suite)
     print("selftest: %d run, %d failed, %d errors, %d skipped" % (
