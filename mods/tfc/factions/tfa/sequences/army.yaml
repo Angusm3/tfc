@@ -1,1 +1,1076 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+huey:
+	Defaults:
+		Filename: huey.shp
+	idle:
+		Facings: 32
+		UseClassicFacings: True
+	rotor:
+		Filename: lrotor.shp
+		Length: 4
+	slow-rotor:
+		Filename: lrotor.shp
+		Start: 4
+		Length: 8
+	muzzle:
+		Filename: minigun.shp
+		Length: 6
+		Facings: 8
+	open:
+		Start: 29
+		Length: 2
+	unload:
+		Start: 31
+	icon:
+		Filename: hueyicon.shp
+
+mlta:
+	Defaults:
+		Filename: mlta.shp
+		Scale: 0.7
+	stand:
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 64
+		Length: 8
+		Facings: 8
+	liedown:
+		Start: 96
+		Length: 2
+		Facings: 8
+	standup:
+		Start: 176
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 144
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 144
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Start: 192
+		Length: 8
+		Facings: 8
+	idle1:
+		Start: 256
+		Length: 16
+		Tick: 120
+	idle2:
+		Start: 272
+		Length: 16
+		Tick: 120
+	idle3:
+		Start: 224
+		Length: 15
+		Tick: 120
+	cheer:
+		Start: 396
+		Length: 3
+		Facings: 8
+		Tick: 120
+	die1:
+		Start: 288
+		Length: 8
+	die2:
+		Start: 288
+		Length: 8
+	die3:
+		Start: 288
+		Length: 8
+	die4:
+		Start: 288
+		Length: 8
+	die5:
+		Start: 288
+		Length: 8
+	die6:
+		Start: 288
+		Length: 8
+	die-crushed:
+		Filename: e1rot.shp
+		Start: 16
+		Length: 4
+		Tick: 1600
+	icon:
+		Filename: mltaicon.shp
+
+smaw:
+	Defaults:
+		Filename: smaw.shp
+		Scale: 0.7
+	stand:
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 120
+	shoot:
+		Start: 64
+		Length: 8
+		Facings: 8
+	liedown:
+		Start: 128
+		Length: 2
+		Facings: 8
+	standup:
+		Start: 176
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 144
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 144
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Start: 192
+		Length: 10
+		Facings: 8
+	idle1:
+		Start: 272
+		Length: 14
+		Tick: 120
+	idle2:
+		Start: 287
+		Length: 16
+		Tick: 120
+	cheer:
+		Start: 272
+		Length: 14
+		Tick: 120
+	die1:
+		Start: 304
+		Length: 8
+	die2:
+		Filename: e3rot.shp
+		Start: 16
+		Length: 4
+	die3:
+		Filename: e3rot.shp
+		Start: 16
+		Length: 4
+	die4:
+		Filename: e3rot.shp
+		Start: 16
+		Length: 4
+	die5:
+		Filename: e3rot.shp
+		Start: 16
+		Length: 4
+	die6:
+		Filename: e3rot.shp
+		Start: 16
+		Length: 4
+	die-crushed:
+		Filename: e3rot.shp
+		Start: 16
+		Length: 4
+		Tick: 1600
+	icon:
+		Filename: smawicon.shp
+
+mltvinf:
+	Defaults:
+		Filename: mltvinf.shp
+	stand:
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 64
+		Length: 20
+		Facings: 8
+	liedown:
+		Start: 224
+		Length: 2
+		Facings: 8
+	standup:
+		Start: 272
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 240
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 240
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Start: 288
+		Length: 12
+		Facings: 8
+	idle1:
+		Start: 384
+		Length: 16
+		Tick: 120
+	idle2:
+		Start: 400
+		Length: 13
+		Tick: 120
+	cheer:
+		Start: 588
+		Length: 3
+		Facings: 8
+		Tick: 120
+	die1:
+		Start: 509
+		Length: 9
+		Tick: 80
+	die2:
+		Start: 518
+		Length: 8
+		Tick: 80
+	die3:
+		Start: 526
+		Length: 8
+		Tick: 80
+	die4:
+		Start: 534
+		Length: 12
+		Tick: 80
+	die5:
+		Start: 546
+		Length: 18
+		Tick: 80
+	die6:
+		Start: 494
+		Length: 11
+		Tick: 80
+	die-crushed:
+		Filename: e2rot.shp
+		Start: 16
+		Length: 4
+		Tick: 1600
+	icon:
+		Filename: mltvinficon.shp
+
+mrtr:
+	Defaults:
+		Filename: mrtr.shp
+	stand:
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 120
+	shoot:
+		Start: 64
+		Length: 8
+		Facings: 8
+	liedown:
+		Start: 128
+		Length: 2
+		Facings: 8
+	standup:
+		Start: 176
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 144
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 144
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Start: 192
+		Length: 10
+		Facings: 8
+	idle1:
+		Start: 272
+		Length: 14
+		Tick: 120
+	idle2:
+		Start: 287
+		Length: 16
+		Tick: 120
+	cheer:
+		Start: 272
+		Length: 14
+		Tick: 120
+	die1:
+		Start: 304
+		Length: 8
+	die2:
+		Start: 312
+		Length: 8
+	die3:
+		Start: 320
+		Length: 8
+	die4:
+		Start: 328
+		Length: 12
+	die5:
+		Start: 340
+		Length: 18
+	die6:
+		Length: *
+	die-crushed:
+		Filename: e3rot.shp
+		Start: 16
+		Length: 4
+		Tick: 1600
+	icon:
+		Filename: mrtricon.shp
+
+snpr:
+	Defaults:
+		Filename: snpr.shp
+		Scale: 0.7
+	stand:
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 64
+		Length: 16
+		Facings: 8
+	liedown:
+		Start: 96
+		Length: 2
+		Facings: 8
+	standup:
+		Start: 240
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 208
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 208
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Start: 256
+		Length: 16
+		Facings: 8
+	idle1:
+		Start: 384
+		Length: 14
+		Tick: 120
+	idle2:
+		Start: 399
+		Length: 16
+		Tick: 120
+	idle3:
+		Start: 224
+		Length: 15
+		Tick: 120
+	cheer:
+		Start: 396
+		Length: 3
+		Facings: 8
+		Tick: 120
+	die1:
+		Start: 416
+		Length: 8
+	die2:
+		Start: 424
+		Length: 8
+	die3:
+		Start: 432
+		Length: 8
+	die4:
+		Start: 440
+		Length: 12
+	die5:
+		Start: 452
+		Length: 18
+	die6:
+		Start: 308
+		Length: 4
+		Tick: 80
+	die-crushed:
+		Filename: e1rot.shp
+		Start: 16
+		Length: 4
+		Tick: 1600
+	icon:
+		Filename: snpricon.shp
+
+snprd:
+	Defaults:
+		Filename: snprd.shp
+		Scale: 0.7
+	stand:
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 208
+		Length: 4
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 256
+		Length: 16
+		Facings: 8
+	liedown:
+		Start: 96
+		Length: 2
+		Facings: 8
+	standup:
+		Start: 240
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 208
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 208
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Start: 256
+		Length: 16
+		Facings: 8
+	idle1:
+		Start: 384
+		Length: 14
+		Tick: 120
+	idle2:
+		Start: 399
+		Length: 16
+		Tick: 120
+	idle3:
+		Start: 224
+		Length: 15
+		Tick: 120
+	cheer:
+		Start: 396
+		Length: 3
+		Facings: 8
+		Tick: 120
+	die1:
+		Start: 416
+		Length: 8
+	die2:
+		Start: 424
+		Length: 8
+	die3:
+		Start: 432
+		Length: 8
+	die4:
+		Start: 440
+		Length: 12
+	die5:
+		Start: 452
+		Length: 18
+	die6:
+		Start: 308
+		Length: 4
+		Tick: 80
+	die-crushed:
+		Filename: e1rot.shp
+		Start: 16
+		Length: 4
+		Tick: 1600
+	icon:
+		Filename: snpricon.shp
+
+cmbt:
+	Defaults:
+		Filename: cmbt.shp
+		Scale: 0.7
+	stand:
+		Facings: 8
+	stand2:
+		Start: 8
+		Facings: 8
+	run:
+		Start: 9
+		Length: 6
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 165
+		Length: 5
+		Facings: 8
+	prone-stand:
+		Start: 144
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 261
+		Length: 2
+		Facings: 8
+		Tick: 100
+	liedown:
+		Start: 87
+		Length: 2
+		Facings: 1
+	standup:
+		Start: 176
+		Length: 2
+		Facings: 8
+	prone-shoot:
+		Start: 213
+		Length: 5
+		Facings: 8
+	idle1:
+		Start: 57
+		Length: 29
+		Tick: 120
+	idle2:
+		Start: 57
+		Length: 29
+		Tick: 120
+	idle3:
+		Start: 57
+		Length: 29
+		Tick: 120
+	cheer:
+		Start: 57
+		Length: 29
+		Tick: 120
+	idle4:
+		Start: 57
+		Length: 29
+		Tick: 120
+	die1:
+		Start: 135
+		Length: 14
+		Tick: 80
+	die2:
+		Start: 150
+		Length: 14
+		Tick: 80
+	die3:
+		Start: 135
+		Length: 14
+		Tick: 80
+	die4:
+		Start: 135
+		Length: 14
+		Tick: 80
+	die5:
+		Start: 135
+		Length: 14
+		Tick: 80
+	die6:
+		Start: 135
+		Length: 14
+		Tick: 80
+	die-crushed:
+		Filename: e1rot.shp
+		Start: 16
+		Length: 4
+		Tick: 1600
+	icon:
+		Filename: cmbticon.shp
+
+hjkr:
+	Defaults:
+		Filename: hjkr.shp
+		Scale: 0.7
+	stand:
+		Facings: 8
+	run:
+		Start: 8
+		Length: 6
+		Facings: 8
+		Tick: 100
+	liedown:
+		Start: 261
+		Length: 2
+		Facings: 8
+	standup:
+		Start: 277
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 82
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 87
+		Length: 6
+		Facings: 8
+		Tick: 100
+	idle1:
+		Start: 57
+		Length: 15
+		Tick: 120
+	idle2:
+		Start: 72
+		Length: 15
+		Tick: 120
+	cheer:
+		Start: 57
+		Length: 30
+		Facings: 8
+		Tick: 120
+	die1:
+		Start: 135
+		Length: 15
+		Tick: 80
+	die2:
+		Start: 150
+		Length: 15
+		Tick: 80
+	die3:
+		Start: 135
+		Length: 15
+		Tick: 80
+	die4:
+		Start: 150
+		Length: 15
+		Tick: 80
+	die5:
+		Start: 135
+		Length: 15
+		Tick: 80
+	die6:
+		Start: 150
+		Length: 15
+		Tick: 80
+	die-crushed:
+		Filename: e1rot.shp
+		Start: 16
+		Length: 4
+		Tick: 1600
+	icon:
+		Filename: hjkricon.shp
+
+fmcv:
+	idle:
+		Filename: mcv.shp
+		Facings: 32
+		UseClassicFacings: True
+	icon:
+		Filename: mcvicnh.tem
+
+fharv:
+	idle:
+		Filename: harv.shp
+		Facings: 32
+		UseClassicFacings: True
+	harvest:
+		Filename: harv.shp
+		Start: 32
+		Length: 4
+		Facings: 8
+		Tick: 60
+	dock:
+		Filename: harvdump.shp
+		Length: 7
+	dock-loop:
+		Filename: harvdump.shp
+		Start: 7
+		Length: 1
+	icon:
+		Filename: harvicnh.tem
+
+ftch:
+	Defaults:
+		Filename: ftch.shp
+	idle:
+		Facings: 32
+		UseClassicFacings: True
+	turret:
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: minigun.shp
+		Length: 6
+		Facings: 8
+	icon:
+		Filename: ftchicon.shp
+
+fhtnk:
+	Defaults:
+		Filename: fhtnk.shp
+	idle:
+		Facings: 32
+		UseClassicFacings: True
+	turret:
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: gunfire2.shp
+		Length: *
+	icon:
+		Filename: fhtnkicon.shp
+
+bdzr:
+	Defaults:
+		Filename: bdzr.shp
+	idle:
+		Facings: 32
+		UseClassicFacings: True
+	turret:
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: minigun.shp
+		Length: 6
+		Facings: 8
+	icon:
+		Filename: bdzricon.shp
+
+slar:
+	Defaults:
+		Filename: slar.shp
+	idle:
+		Length: 1
+		Tick: 1000
+	damaged-idle:
+		Length: 1
+		Tick: 1000
+	dead:
+		Tick: 1000
+	make:
+		Filename: slar.shp
+		Length: *
+		Tick: 80
+	bib:
+		TilesetFilenames:
+			DESERT: bib3.des
+			WINTER: bib3.win
+			SNOW: bib3.sno
+			TEMPERAT: bib3.tem
+			JUNGLE: bib3.jun
+		Length: *
+	icon:
+		Filename: slaricon.shp
+
+aslr:
+	Defaults:
+		Filename: aslr.shp
+	idle:
+		Length: 1
+		Tick: 1000
+	damaged-idle:
+		Length: 1
+		Tick: 1000
+	dead:
+		Tick: 1000
+	make:
+		Filename: aslr.shp
+		Length: *
+		Tick: 80
+	bib:
+		TilesetFilenames:
+			DESERT: bib3.des
+			WINTER: bib3.win
+			SNOW: bib3.sno
+			TEMPERAT: bib3.tem
+			JUNGLE: bib3.jun
+		Length: *
+	icon:
+		Filename: aslricon.shp
+
+rfnry:
+	Defaults:
+		Filename: rfnry.shp
+	idle:
+		Length: 6
+		Tick: 120
+	damaged-idle:
+		Start: 30
+		Length: 6
+		Tick: 120
+	dead:
+		Start: 60
+	make:
+		Filename: rfnrymake.shp
+		Length: *
+		Tick: 80
+	resources:
+		Filename: proctwr.shp
+		Length: 6
+		Offset: -32,-21
+	damaged-resources:
+		Filename: proctwr.shp
+		Start: 6
+		Length: 6
+		Offset: -32,-21
+	bib:
+		TilesetFilenames:
+			DESERT: bib2.des
+			WINTER: bib2.win
+			SNOW: bib2.sno
+			TEMPERAT: bib2.tem
+			JUNGLE: bib2.jun
+		Length: *
+	icon:
+		Filename: rfnryicnh.shp
+
+fsal:
+	Defaults:
+		Filename: fsal.shp
+	idle:
+	damaged-idle:
+	dead:
+	build-top:
+		Filename: fsal2.shp
+		Length: 8
+	damaged-build-top:
+		Filename: fsal2.shp
+		Length: 8
+	idle-top:
+		Filename: fsal2.shp
+	damaged-idle-top:
+		Filename: fsal2.shp
+		Start: 4
+	make:
+		Filename: fsalmake.shp
+		Length: *
+		Tick: 80
+	bib:
+		TilesetFilenames:
+			DESERT: bib2.des
+			WINTER: bib2.win
+			SNOW: bib2.sno
+			TEMPERAT: bib2.tem
+			JUNGLE: bib2.jun
+		Length: *
+	icon:
+		Filename: fsalicon.shp
+
+tent:
+	Defaults:
+		Filename: tent.shp
+	idle:
+		Length: 1
+	damaged-idle:
+		Start: 1
+		Length: 1
+	dead:
+		Start: 1
+	make:
+		Filename: tentmake.shp
+		Length: *
+		Tick: 80
+	bib:
+		TilesetFilenames:
+			DESERT: bib3.des
+			WINTER: bib3.win
+			SNOW: bib3.sno
+			TEMPERAT: bib3.tem
+			JUNGLE: bib3.jun
+		Length: *
+	icon:
+		Filename: tenticon.shp
+
+mgnst:
+	Defaults:
+		Filename: mgnst.shp
+	# The sprite has 28 drawn facings; 20250330 needs a power of two. 32 facings, each mapped to the nearest drawn frame
+	# (round(i * 28 / 32)). If the turret turns the wrong way in game, use Facings: -32.
+	idle:
+		Facings: 32
+		Frames: 0, 1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 10, 11, 11, 12, 13, 14, 15, 16, 17, 18, 18, 19, 20, 21, 22, 23, 24, 25, 25, 26, 27
+	recoil:
+		Facings: 32
+		Frames: 29, 30, 31, 32, 33, 33, 34, 35, 36, 37, 38, 39, 40, 40, 41, 42, 43, 44, 45, 46, 47, 47, 48, 49, 50, 51, 52, 53, 54, 54, 55, 56
+	damaged-idle:
+		Start: 57
+		Facings: 8
+	damaged-recoil:
+		Start: 64
+		Facings: 8
+	make:
+		Length: 1
+		Tick: 80
+	muzzle:
+		Filename: gunfire2.shp
+		Length: *
+	icon:
+		Filename: mgnsticon.shp
+
+rdst:
+	Defaults:
+		Filename: rdst.shp
+	idle:
+		Length: 1
+		Tick: 100
+	damaged-idle:
+		Start: 1
+		Length: 1
+		Tick: 100
+	dead:
+		Start: 1
+	make:
+		Filename: rdstmake.shp
+		Length: *
+		Tick: 80
+	bib:
+		TilesetFilenames:
+			DESERT: bib3.des
+			WINTER: bib3.win
+			SNOW: bib3.sno
+			TEMPERAT: bib3.tem
+			JUNGLE: bib3.jun
+		Length: *
+	icon:
+		Filename: rdsticon.shp
+
+tsla:
+	Defaults:
+		Filename: tsla.shp
+	idle:
+	damaged-idle:
+		Start: 10
+	active:
+		Start: 1
+		Length: 9
+	damaged-active:
+		Start: 11
+		Length: 9
+	dead:
+		Start: 11
+	make:
+		Filename: tslamake.shp
+		Length: *
+		Tick: 80
+	icon:
+		Filename: tslaicon.shp
+
+grnh:
+	Defaults:
+		Filename: grnh.shp
+	idle:
+	damaged-idle:
+		Start: 1
+	active:
+		Length: 1
+	damaged-active:
+		Start: 1
+		Length: 1
+	dead:
+		Start: 1
+	make:
+		Filename: grnhmake.shp
+		Length: *
+		Tick: 60
+	bib:
+		TilesetFilenames:
+			DESERT: bib2.des
+			WINTER: bib2.win
+			SNOW: bib2.sno
+			TEMPERAT: bib2.tem
+			JUNGLE: bib2.jun
+		Length: *
+	icon:
+		Filename: grnhicon.shp
+
+fsam:
+	Defaults:
+		Filename: fsam.shp
+	idle:
+		Facings: 16
+	damaged-idle:
+		Start: 16
+		Facings: 16
+	dead:
+		Start: 63
+	make:
+		Filename: fsammake.shp
+		Length: 12
+		Tick: 30
+	muzzle:
+		Filename: samfire.shp
+		Length: 18
+		Facings: 8
+	icon:
+		Filename: fsamicon.shp
+
+tfsr:
+	Defaults:
+		Filename: tfsr.shp
+	idle:
+		Length: 7
+		Tick: 100
+	damaged-idle:
+		Length: 7
+		Tick: 100
+	dead:
+		Start: 3
+	make:
+		Length: 1
+		Tick: 80
+	bib:
+		TilesetFilenames:
+			DESERT: bib2.des
+			WINTER: bib2.win
+			SNOW: bib2.sno
+			TEMPERAT: bib2.tem
+			JUNGLE: bib2.jun
+		Length: *
+	icon:
+		Filename: tfsricon.shp
+
+# Destroyed hulks (husks): the live art drawn under units, as stock does for 'mtnk.destroyed'.
+ftch.destroyed:
+	idle:
+		Filename: ftch.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+
+fhtnk.destroyed:
+	idle:
+		Filename: fhtnk.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+	turret:
+		Filename: fhtnk.shp
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+
+bdzr.destroyed:
+	idle:
+		Filename: bdzr.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
