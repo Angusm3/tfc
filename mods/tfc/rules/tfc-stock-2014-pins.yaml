@@ -402,15 +402,30 @@ WEAP:
 		LowPowerModifier: 300
 	-FireWarheadsOnDeath:
 
+# Manual power-down (0.32 CanPowerDown): ^TfcPowerDown from lane 4e; the order is issued only by a button that Phase 5b adds.
 EYE:
+	Inherits@POWERDOWN: ^TfcPowerDown
 	Health:
 		HP: 120000
 	-FireWarheadsOnDeath:
+	WithSpriteBody:
+		PauseOnCondition: lowpower || powerdown
+	ProvidesRadar:
+		RequiresCondition: !lowpower && !powerdown
+	DetectCloaked:
+		RequiresCondition: !lowpower && !powerdown
+	IonCannonPower:
+		PauseOnCondition: lowpower || powerdown
 
 TMPL:
+	Inherits@POWERDOWN: ^TfcPowerDown
 	Health:
 		HP: 200000
 	-FireWarheadsOnDeath:
+	DetectCloaked:
+		RequiresCondition: !lowpower && !powerdown
+	NukePower:
+		PauseOnCondition: lowpower || powerdown
 
 HOSP:
 	Health:
@@ -566,3 +581,8 @@ BRIDGE4:
 TRUCK:
 	Buildable:
 		Prerequisites: ~disabled
+
+# 0.32 drew the blue crystals with their own image (sequences/tfc-overrides.yaml, lane 4e); stock 20250330 uses split3.
+SPLITBLUE:
+	RenderSprites:
+		Image: splitblue
