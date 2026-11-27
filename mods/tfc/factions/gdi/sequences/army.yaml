@@ -1,1 +1,139 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# TFC GDI images (design note section 2.1, lane 4a). Ported from legacy-0.32/factions/gdi/sequences/army.yaml
+# and, for hqgdi, legacy-0.32/sequences/structures.yaml. Frame numbers are unchanged.
+
+medi:
+	Defaults:
+		Filename: medi.shp
+	stand:
+		Facings: 8
+	run:
+		Start: 8
+		Length: 6
+		Facings: 8
+		Tick: 100
+	heal:
+		Start: 56
+		Length: 58
+	standup:
+		Start: 114
+		Length: 2
+		Facings: 8
+	idle1:
+		Start: 163
+		Length: 14
+		Tick: 120
+	idle2:
+		Start: 178
+		Length: 14
+		Tick: 120
+	die1:
+		Start: 193
+		Length: 7
+	die2:
+		Start: 201
+		Length: 8
+	die3:
+		Start: 209
+		Length: 8
+	die4:
+		Start: 217
+		Length: 12
+	die5:
+		Start: 229
+		Length: 18
+	die6:
+		Length: *
+	die-crushed:
+		Filename: e3rot.shp
+		Length: 6
+		Tick: 1600
+		ZOffset: -511
+	prone-stand:
+		Start: 130
+		Length: 4
+		Facings: 8
+	prone-run:
+		Start: 130
+		Length: 4
+		Facings: 8
+		Tick: 100
+	icon:
+		Filename: mediicon.shp
+
+wlvr:
+	Defaults:
+		Filename: wlvr.shp
+	stand:
+		Start: 96
+		Facings: 8
+	shoot:
+		Start: 104
+		Length: 4
+		Facings: -8
+	run:
+		Length: 12
+		Facings: -8
+	die1:
+		Start: 96
+	die2:
+		Start: 96
+	die3:
+		Start: 96
+	die4:
+		Start: 96
+	die5:
+		Start: 96
+	die6:
+		Start: 96
+	icon:
+		Filename: wlvricon.shp
+
+# The 32-facing sprite is the turret only, as for stock GUN: 'idle' is an empty frame so the body draws nothing.
+vlcn:
+	Defaults:
+		Filename: vlcn.shp
+	idle:
+		Filename: gunmake.shp
+	turret:
+		Facings: 32
+		UseClassicFacings: True
+	damaged-turret:
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+	make:
+		Length: 1
+		Tick: 80
+	muzzle:
+		Filename: gunfire2.shp
+		Length: *
+	icon:
+		Filename: vlcnicon.shp
+
+hqgdi:
+	Defaults:
+		Filename: hqgdi.shp
+	idle:
+		Length: 16
+		Tick: 100
+	damaged-idle:
+		Start: 16
+		Length: 16
+		Tick: 100
+	dead:
+		Start: 32
+		Tick: 800
+	make:
+		Filename: hqmake.shp
+		Length: *
+		Tick: 80
+	bib:
+		TilesetFilenames:
+			DESERT: bib3.des
+			WINTER: bib3.win
+			SNOW: bib3.sno
+			TEMPERAT: bib3.tem
+			JUNGLE: bib3.jun
+		Length: *
+	icon:
+		Filename: hqicnh.tem

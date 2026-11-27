@@ -1,1 +1,199 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# Lane 4b: Nod. Images mech, ecdr, spc, hqnod, and icon-nod (the Paratroopers power icon).
+# Resolved from legacy-0.32/factions/nod/sequences/army.yaml (hqnod from legacy-0.32/sequences/structures.yaml);
+# none of these images was defined in an earlier 0.32 sequence file, so there is nothing to merge.
+# 0.32 actor-level 'Scale: 0.7' (mech, ecdr) is now Scale in Defaults; the icon keeps Scale 1.
+
+mech:
+	Defaults:
+		Filename: mech.shp
+		Scale: 0.7
+	stand:
+		Facings: 8
+	run:
+		Start: 8
+		Length: 6
+		Facings: 8
+		Tick: 100
+	heal:
+		Start: 56
+		Length: 58
+	standup:
+		Start: 114
+		Length: 2
+		Facings: 8
+	idle1:
+		Start: 163
+		Length: 14
+		Tick: 120
+	idle2:
+		Start: 178
+		Length: 14
+		Tick: 120
+	die1:
+		Start: 193
+		Length: 7
+	die2:
+		Start: 201
+		Length: 8
+	die3:
+		Start: 209
+		Length: 8
+	die4:
+		Start: 217
+		Length: 12
+	die5:
+		Start: 229
+		Length: 18
+	die6:
+		Start: 229
+		Length: 12
+	die-crushed:
+		Filename: e3rot.shp
+		Length: 6
+		Tick: 1600
+	prone-stand:
+		Start: 130
+		Stride: 4
+		Facings: 8
+	prone-run:
+		Start: 130
+		Length: 4
+		Facings: 8
+		Tick: 100
+	icon:
+		Filename: mechicon.shp
+		Scale: 1
+
+ecdr:
+	Defaults:
+		Filename: ecdr.shp
+		Scale: 0.7
+	stand:
+		Facings: 8
+	run:
+		Start: 9
+		Length: 6
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 165
+		Length: 6
+		Facings: 8
+	# stand -> prone transition
+	liedown:
+		Start: 261
+		Length: 2
+		Facings: 8
+	# prone -> stand transition
+	standup:
+		Start: 277
+		Length: 2
+		Facings: 8
+	prone-stand:
+		Start: 87
+		Stride: 4
+		Facings: 8
+	prone-run:
+		Start: 87
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot:
+		Start: 213
+		Length: 6
+		Facings: 8
+	idle1:
+		Start: 57
+		Length: 15
+		Tick: 120
+	idle2:
+		Start: 72
+		Length: 14
+		Tick: 120
+	idle3:
+		Start: 72
+		Length: 14
+		Tick: 120
+	cheer:
+		Start: 57
+		Length: 15
+		Tick: 120
+	# Shot
+	die1:
+		Start: 135
+		Length: 15
+	# Explode
+	die2:
+		Start: 150
+		Length: 15
+	# Fly and explode in air
+	die3:
+		Start: 150
+		Length: 15
+	# Fly through air squish on ground
+	die4:
+		Start: 150
+		Length: 15
+	# Burn
+	die5:
+		Start: 135
+		Length: 15
+	# Tib
+	die6:
+		Start: 135
+		Length: 15
+	die-crushed:
+		Filename: e1rot.shp
+		Start: 16
+		Length: 4
+		Tick: 1600
+	icon:
+		Filename: ecdricon.shp
+		Scale: 1
+
+spc:
+	Defaults:
+		Filename: spc.shp
+	idle:
+		Facings: 32
+		UseClassicFacings: True
+	close:
+		Start: 30
+	unload:
+		Start: 31
+	icon:
+		Filename: spcicon.shp
+
+hqnod:
+	Defaults:
+		Filename: hqnod.shp
+	idle:
+		Length: 16
+		Tick: 100
+	damaged-idle:
+		Start: 16
+		Length: 16
+		Tick: 100
+	dead:
+		Start: 32
+		Tick: 800
+	make:
+		Filename: hqmake.shp
+		Length: *
+		Tick: 80
+	bib:
+		TilesetFilenames:
+			DESERT: bib3.des
+			WINTER: bib3.win
+			SNOW: bib3.sno
+			TEMPERAT: bib3.tem
+			JUNGLE: bib3.jun
+		Length: *
+	icon:
+		Filename: hqicnh.tem
+
+# 0.32 put 'paratroopers: pinficon' into the stock image 'icon' (lane 4e's). HQNOD points at this image instead,
+# through ParatroopersPower IconImage, so that this lane does not touch lane 4e's sequence file.
+icon-nod:
+	paratroopers:
+		Filename: pinficon.shp

@@ -42,6 +42,72 @@
 # TFC-only locomotors, with the 2014 terrain speeds (ladder hop 4). Bridge copies Road, as stock does.
 # 'lcraft' is not added: stock Locomotor@LANDINGCRAFT already has that name and identical values.
 World:
+	# Stock-named locomotors pinned to their 2014 terrain speeds (design note 3.5). Bridge copies Road, as stock does.
+	Locomotor@FOOT:
+		TerrainSpeeds:
+			Clear: 90
+			Rough: 80
+			Road: 100
+			Bridge: 100
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 80
+	Locomotor@CHEM:
+		TerrainSpeeds:
+			Clear: 90
+			Rough: 80
+			Road: 100
+			Bridge: 100
+			Tiberium: 90
+				PathingCost: 90
+			BlueTiberium: 90
+				PathingCost: 90
+			Beach: 80
+	Locomotor@WHEELED:
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 50
+			Road: 100
+			Bridge: 100
+			Tiberium: 50
+			BlueTiberium: 50
+			Beach: 50
+	Locomotor@HEAVYWHEELED:
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 50
+			Road: 100
+			Bridge: 100
+			Tiberium: 50
+			BlueTiberium: 50
+			Beach: 50
+	Locomotor@TRACKED:
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 70
+			Road: 100
+			Bridge: 100
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 70
+	Locomotor@HEAVYTRACKED:
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 70
+			Road: 100
+			Bridge: 100
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 70
+	Locomotor@CRITTER:
+		TerrainSpeeds:
+			Clear: 90
+			Rough: 80
+			Road: 100
+			Bridge: 100
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 80
 	Locomotor@FORGOTTENFOOT:
 		Name: forgottenfoot
 		Crushes: crate
@@ -88,3 +154,466 @@ World:
 			Tiberium: 100
 			BlueTiberium: 100
 			Beach: 60
+
+# ---------------------------------------------------------------------------------------------------------------
+# Lane 4e: the stock actors and templates TFC changed, written with their 0.32 effective values (design note 2.2).
+# Units: health and damage x100, turn speeds x4. Queue types: 0.32 'Defence.*' is 20250330 'Support.*'.
+# ---------------------------------------------------------------------------------------------------------------
+
+# Veterancy: the 2014 four levels and multipliers for every unit (design note 3.6, question Q-D default (a)).
+# Removals of the stock keys appear here only; no other file may remove them.
+^GainsExperience:
+	GainsExperience:
+		Conditions:
+			-250:
+			-500:
+			-700:
+			200: rank-veteran
+			400: rank-veteran
+			800: rank-veteran
+			1600: rank-veteran
+	GrantCondition@RANK-ELITE:
+		RequiresCondition: rank-veteran >= 4
+	FirepowerMultiplier@RANK-1:
+		Modifier: 110
+	FirepowerMultiplier@RANK-2:
+		Modifier: 115
+	FirepowerMultiplier@RANK-3:
+		RequiresCondition: rank-veteran == 3
+		Modifier: 120
+	FirepowerMultiplier@RANK-ELITE:
+		Modifier: 130
+	DamageMultiplier@RANK-1:
+		RequiresCondition: rank-veteran == 1
+		Modifier: 91
+	DamageMultiplier@RANK-2:
+		Modifier: 87
+	DamageMultiplier@RANK-3:
+		RequiresCondition: rank-veteran == 3
+		Modifier: 83
+	DamageMultiplier@RANK-ELITE:
+		Modifier: 65
+	SpeedMultiplier@RANK-1:
+		RequiresCondition: rank-veteran == 1
+		Modifier: 110
+	SpeedMultiplier@RANK-2:
+		RequiresCondition: rank-veteran == 2
+		Modifier: 115
+	SpeedMultiplier@RANK-3:
+		RequiresCondition: rank-veteran == 3
+		Modifier: 120
+	SpeedMultiplier@RANK-ELITE:
+		Modifier: 150
+	ReloadDelayMultiplier@RANK-1:
+		RequiresCondition: rank-veteran == 1
+		Modifier: 95
+	ReloadDelayMultiplier@RANK-2:
+		RequiresCondition: rank-veteran == 2
+		Modifier: 90
+	ReloadDelayMultiplier@RANK-3:
+		RequiresCondition: rank-veteran == 3
+		Modifier: 85
+	ReloadDelayMultiplier@RANK-ELITE:
+		RequiresCondition: rank-elite
+		Modifier: 75
+	InaccuracyMultiplier@RANK-1:
+		RequiresCondition: rank-veteran == 1
+		Modifier: 90
+	InaccuracyMultiplier@RANK-2:
+		RequiresCondition: rank-veteran == 2
+		Modifier: 80
+	InaccuracyMultiplier@RANK-3:
+		RequiresCondition: rank-veteran == 3
+		Modifier: 70
+	InaccuracyMultiplier@RANK-ELITE:
+		RequiresCondition: rank-elite
+		Modifier: 50
+	-RangeMultiplier@RANK-ELITE:
+	-RevealsShroudMultiplier@RANK-ELITE:
+	ChangesHealth@ELITE:
+		Step: 200
+		PercentageStep: 0
+		Delay: 100
+		StartIfBelow: 100
+		DamageCooldown: 125
+	WithDecoration@RANK-3:
+		Image: rank
+		Sequence: rank-veteran-3
+		Palette: effect
+		Position: BottomRight
+		Margin: 5, 6
+		ValidRelationships: Ally, Enemy, Neutral
+		RequiresCondition: rank-veteran == 3
+
+# The infantry rank pips blink with the hospital and hazmat decorations; the new third rank blinks the same way.
+^InfantryExperienceHospitalHazmatOverrides:
+	WithDecoration@RANK-3:
+		BlinkInterval: 32
+		BlinkPatterns:
+			hospitalheal && hazmatsuits: On, Off, Off
+			hospitalheal || hazmatsuits: On, Off
+
+# 0.32 tanks could be targeted by C4.
+^Tank:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4
+
+# 0.32 husks had 250 health, light armour and no death explosion (the modern one does damage).
+^Husk:
+	-FireWarheadsOnDeath:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+
+APC.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+
+MLRS.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+
+# ---- Infantry ----
+
+# E1, E3, BGGY and LTNK are the HQNOD paradrop's DropItems: 0.32 dropped them with the parachute from parach.shp.
+E1:
+	Mobile:
+		Speed: 56
+	Parachutable:
+		FallRate: 26
+		KilledOnImpassableTerrain: true
+		ParachutingCondition: parachute
+	WithParachute:
+		Image: parach
+		Sequence: idle
+		OpeningSequence: open
+		Offset: 0,0,427
+		RequiresCondition: parachute
+
+E3:
+	Mobile:
+		Speed: 42
+	Parachutable:
+		FallRate: 26
+		KilledOnImpassableTerrain: true
+		ParachutingCondition: parachute
+	WithParachute:
+		Image: parach
+		Sequence: idle
+		OpeningSequence: open
+		Offset: 0,0,427
+		RequiresCondition: parachute
+	DetectCloaked:
+		Range: 1c0
+
+E6:
+	Health:
+		HP: 2500
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+RMBO:
+	Valued:
+		Cost: 0
+	Health:
+		HP: 50000
+	Mobile:
+		Speed: 71
+	AutoTarget:
+		ScanRadius: 5
+	Buildable:
+		BuildLimit: 1
+
+# ---- Vehicles and aircraft ----
+
+HARV:
+	Valued:
+		Cost: 1000
+	Health:
+		HP: 60000
+	Mobile:
+		Speed: 85
+	FireWarheadsOnDeath@EMPTY:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+
+MCV:
+	Valued:
+		Cost: 2000
+	Health:
+		HP: 75000
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 71
+	Buildable:
+		Prerequisites: anyhq, ~techlevel.medium
+
+TRAN:
+	Inherits@EXPERIENCE: ^GainsExperience
+	Health:
+		HP: 9000
+	Aircraft:
+		Speed: 140
+	Buildable:
+		Queue: Aircraft.GDI, Aircraft.Nod, Aircraft.Forgotten
+
+# ---- Structures ----
+
+# The Construction Yard owns the Forgotten queues too (0.32). Low-power slowdown: 0.32 building queues 2, defence queues 3.
+FACT:
+	Valued:
+		Cost: 2000
+	Health:
+		HP: 140000
+	Buildable:
+		Queue: Building.GDI, Building.Nod
+		BuildPaletteOrder: 1000
+		Prerequisites: ~disabled
+	Production:
+		Produces: Building.GDI, Building.Nod, Support.GDI, Support.Nod, Building.Forgotten, Support.Forgotten
+	ProductionQueue@GDIBuilding:
+		LowPowerModifier: 200
+	ProductionQueue@NodBuilding:
+		LowPowerModifier: 200
+	ProductionQueue@GDISupport:
+		LowPowerModifier: 300
+	ProductionQueue@NodSupport:
+		LowPowerModifier: 300
+	ProductionQueue@ForgottenBuilding:
+		Type: Building.Forgotten
+		DisplayOrder: 0
+		Factions: forgotten
+		Group: Building
+		LowPowerModifier: 200
+		ReadyAudio: ConstructionComplete
+		ReadyTextNotification: notification-construction-complete
+		BlockedAudio: NoBuild
+		BlockedTextNotification: notification-unable-to-build-more
+		LimitedAudio: BuildingInProgress
+		LimitedTextNotification: notification-unable-to-comply-building-in-progress
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	ProductionQueue@ForgottenSupport:
+		Type: Support.Forgotten
+		DisplayOrder: 1
+		Factions: forgotten
+		Group: Support
+		LowPowerModifier: 300
+		ReadyAudio: ConstructionComplete
+		ReadyTextNotification: notification-construction-complete
+		BlockedAudio: NoBuild
+		BlockedTextNotification: notification-unable-to-build-more
+		LimitedAudio: BuildingInProgress
+		LimitedTextNotification: notification-unable-to-comply-building-in-progress
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	ProductionBar@BuildingForgotten:
+		ProductionType: Building.Forgotten
+	ProductionBar@SupportForgotten:
+		ProductionType: Support.Forgotten
+		Color: 8A8A8A
+
+NUKE:
+	Health:
+		HP: 50000
+
+NUK2:
+	Buildable:
+		BuildPaletteOrder: 30
+
+PROC:
+	Health:
+		HP: 90000
+	Power:
+		Amount: -50
+	CustomSellValue:
+		Value: 500
+	StoresPlayerResources:
+		Capacity: 2000
+
+SILO:
+	Valued:
+		Cost: 300
+	Health:
+		HP: 40000
+	Buildable:
+		Prerequisites: anyhq
+		Queue: Support.GDI, Support.Nod, Support.Forgotten
+	StoresPlayerResources:
+		Capacity: 2400
+	# 0.32 wrote Building: Power: -10, which the 2014 engine ignored (no such field): no power in 0.32. Stock draws -10; set Amount: -10 to switch it on (open owner question Q-L).
+	Power:
+		Amount: 0
+
+# No 0.32 prerequisite: 'fact' is always present for a player who can use the support queue.
+BRIK:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Heavy
+	Valued:
+		Cost: 100
+	Buildable:
+		Prerequisites: fact
+		Queue: Support.GDI, Support.Nod, Support.Forgotten
+		BuildDuration: -1
+
+# Build times: 0.32 'CustomBuildTimeValue: 1440' x queue 0.4 = BuildDuration 960 x 60 percent; the others use the cost (-1).
+GUN:
+	Health:
+		HP: 40000
+	Armor:
+		Type: Heavy
+	Buildable:
+		Queue: Support.Nod
+		BuildDuration: 960
+	Turreted:
+		InitialFacing: 200
+	Armament:
+		Weapon: TurretLaser
+
+GTWR:
+	Armor:
+		Type: Wood
+	Buildable:
+		Queue: Support.GDI
+		BuildDuration: 960
+	Turreted:
+		TurnSpeed: 1023
+
+ATWR:
+	Health:
+		HP: 60000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 9c0
+	DetectCloaked:
+		Range: 6c0
+	# 0.32 wrote Building: Power: -40, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -40 to switch it on (open owner question Q-L).
+	Power:
+		Amount: 0
+	Buildable:
+		Prerequisites: anyhq
+		Queue: Support.GDI
+		BuildDuration: -1
+	Turreted:
+		TurnSpeed: 1023
+	Armament@PRIMARY:
+		Weapon: TowerMissle
+	Armament@SECONDARY:
+		Weapon: NestMachineGun
+		LocalOffset: 256,0,256
+		LocalYaw: 0
+
+OBLI:
+	Health:
+		HP: 40000
+	Armor:
+		Type: Heavy
+	Power:
+		Amount: -150
+	DetectCloaked:
+		Range: 6c0
+	Buildable:
+		Prerequisites: tmpl
+		Queue: Support.Nod
+		BuildDuration: -1
+	Armament:
+		Weapon: Laser
+		FireDelay: 8
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: Laser2
+		LocalOffset: 0,-85,1280
+		FireDelay: 8
+
+# Manual power-down (^TfcPowerDown): the order is issued only by a button that Phase 5b adds.
+HQ:
+	Inherits@POWERDOWN: ^TfcPowerDown
+	Health:
+		HP: 70000
+	Power:
+		Amount: -40
+	WithSpriteBody:
+		PauseOnCondition: lowpower || powerdown
+	ProvidesRadar:
+		RequiresCondition: !lowpower && !powerdown
+	DetectCloaked:
+		RequiresCondition: !lowpower && !powerdown
+	AirstrikePower:
+		PauseOnCondition: lowpower || powerdown
+
+FIX:
+	Health:
+		HP: 40000
+	Power:
+		Amount: -30
+	Buildable:
+		BuildPaletteOrder: 80
+
+HPAD:
+	Health:
+		HP: 50000
+	Power:
+		Amount: -10
+	Buildable:
+		BuildPaletteOrder: 60
+	ProductionQueue@GDI:
+		LowPowerModifier: 300
+	ProductionQueue@Nod:
+		LowPowerModifier: 300
+
+# The Hand of Nod heals nearby damaged allied infantry (0.32 AutoHeal) with the Heal weapon, as the medic does.
+HAND:
+	Valued:
+		Cost: 300
+	Health:
+		HP: 50000
+	# 0.32 wrote Building: Power: -20, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -20 to switch it on (open owner question Q-L).
+	Power:
+		Amount: 0
+	Buildable:
+		BuildPaletteOrder: 40
+	ProductionQueue:
+		LowPowerModifier: 300
+	Turreted:
+		TurnSpeed: 1023
+	Armament:
+		Weapon: Heal
+		Cursor: ability
+		OutsideRangeCursor: ability
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+	AttackTurreted:
+		PauseOnCondition: build-incomplete
+	AutoTarget:
+		AttackAnythingCondition: stance-attackanything
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything
+		ValidTargets: Heal
+	AutoTargetPriority@ATTACKANYTHING:
+		RequiresCondition: stance-attackanything
+		ValidTargets: Heal
+
+# 0.32 flares burned out: 10 health, 1 damage every 24 ticks.
+FLARE:
+	Health:
+		HP: 1000
+	HitShape:
+	ChangesHealth@BURN:
+		Step: -100
+		StartIfBelow: 101
+		Delay: 24
+	ProximityCaptor:
+		Types: Flare
