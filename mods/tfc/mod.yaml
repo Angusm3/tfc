@@ -63,6 +63,7 @@ Rules:
 	tfc|factions/gdi/rules/assault_apc.yaml
 	tfc|factions/nod/rules/army.yaml
 	tfc|factions/tfa/rules/army.yaml
+	tfc|rules/tfc-shared.yaml
 	tfc|rules/tfc-overrides.yaml
 	tfc|rules/tfc-world.yaml
 	tfc|rules/tfc-ai.yaml
@@ -80,6 +81,7 @@ Sequences:
 	tfc|factions/gdi/sequences/army.yaml
 	tfc|factions/nod/sequences/army.yaml
 	tfc|factions/tfa/sequences/army.yaml
+	tfc|sequences/tfc-weapons.yaml
 	tfc|sequences/tfc-overrides.yaml
 
 TileSets:

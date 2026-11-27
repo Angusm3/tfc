@@ -1,1 +1,90 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# TFC shared scaffolding (design note section 7, step S2). Nothing uses these yet.
+# Later lanes (4a/4b/4c/4e) add the 27 changed stock actors below this block.
+
+# Heal and repair target types: the medic and mechanic weapons only accept damaged allies.
+# Disguise target type: cnc infantry lack it, and Disguise can only copy actors that have it.
+^Infantry:
+	Targetable@HEAL:
+		RequiresCondition: tfc-damaged
+		TargetTypes: Heal
+	Targetable@DISGUISE:
+		TargetTypes: Disguise
+	GrantConditionOnDamageState@TFCDAMAGED:
+		Condition: tfc-damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
+
+^Vehicle:
+	Targetable@REPAIR:
+		RequiresCondition: tfc-damaged
+		TargetTypes: Repair
+	GrantConditionOnDamageState@TFCDAMAGED:
+		Condition: tfc-damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
+
+# Manual power-down (0.32 CanPowerDown). The order is only issued from a button that Phase 5b adds.
+^TfcPowerDown:
+	ToggleConditionOnOrder@POWERDOWN:
+		Condition: powerdown
+		OrderName: PowerDown
+	PowerMultiplier@POWERDOWN:
+		RequiresCondition: powerdown
+		Modifier: 0
+	WithDecoration@POWERDOWN:
+		Image: poweroff
+		Sequence: offline
+		Palette: chrome
+		RequiresCondition: powerdown
+		Position: Center
+	WithColoredOverlay@POWERDOWN:
+		RequiresCondition: powerdown
+		Color: 000000B4
+
+# TFC-only locomotors, with the 2014 terrain speeds (ladder hop 4). Bridge copies Road, as stock does.
+# 'lcraft' is not added: stock Locomotor@LANDINGCRAFT already has that name and identical values.
+World:
+	Locomotor@FORGOTTENFOOT:
+		Name: forgottenfoot
+		Crushes: crate
+		SharesCell: true
+		TerrainSpeeds:
+			Clear: 100
+			Rough: 80
+			Road: 100
+			Bridge: 100
+			Tiberium: 120
+				PathingCost: 100
+			BlueTiberium: 120
+				PathingCost: 0
+			Beach: 80
+	Locomotor@BIKE:
+		Name: bike
+		Crushes: crate
+		TerrainSpeeds:
+			Clear: 70
+			Rough: 35
+			Road: 100
+			Bridge: 100
+			Tiberium: 35
+			BlueTiberium: 35
+			Beach: 35
+	Locomotor@VICE:
+		Name: vice
+		TerrainSpeeds:
+			Clear: 70
+			Rough: 60
+			Road: 70
+			Bridge: 70
+			Tiberium: 100
+			BlueTiberium: 100
+			Beach: 60
+	Locomotor@VICECRUSH:
+		Name: vicecrush
+		Crushes: crate
+		TerrainSpeeds:
+			Clear: 70
+			Rough: 60
+			Road: 70
+			Bridge: 70
+			Tiberium: 100
+			BlueTiberium: 100
+			Beach: 60
