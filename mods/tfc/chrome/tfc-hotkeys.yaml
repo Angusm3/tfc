@@ -1,0 +1,5 @@
+# Hotkey for the sidebar power-down button (add to the Hotkeys list in mod.yaml). Stock cnc defines none; this is the ra default.
+PowerDown: X
+	Description: hotkey-description-powerdown
+	Types: OrderGenerator
+	Contexts: player
