@@ -1,10 +1,11 @@
-param($typeName,$methodName)
+param($typeName,$methodName,$asmFile='OpenRA.Game.exe')
 $p=$PSScriptRoot
-$a=[Reflection.Assembly]::LoadFrom("$p\OpenRA.Game.exe")
+$a=[Reflection.Assembly]::LoadFrom("$p\$asmFile")
 $one=@{};$two=@{}
 foreach($f in [Reflection.Emit.OpCodes].GetFields()){ $o=$f.GetValue($null); if($o -is [Reflection.Emit.OpCode]){ if($o.Size -eq 1){$one[[int]$o.Value]=$o}else{$two[[int]($o.Value -band 0xFF)]=$o} } }
 $t=$a.GetType($typeName)
-$ms=$t.GetMethods([Reflection.BindingFlags]'Public,NonPublic,Static,Instance,DeclaredOnly') | ? {$_.Name -eq $methodName}
+$BFL=[Reflection.BindingFlags]'Public,NonPublic,Static,Instance,DeclaredOnly'
+if($methodName -eq '.ctor'){ $ms=$t.GetConstructors($BFL) } else { $ms=$t.GetMethods($BFL) | ? {$_.Name -eq $methodName} }
 foreach($m in $ms){
  "##### $m"
  $il=$m.GetMethodBody().GetILAsByteArray(); $i=0; $mod=$m.Module
@@ -31,3 +32,4 @@ foreach($m in $ms){
   '{0:x4}: {1} {2}' -f $off,$o.Name,$arg
  }
 }
+
