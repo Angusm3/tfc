@@ -734,10 +734,12 @@ fhtnk:
 	idle:
 		Facings: 32
 		UseClassicFacings: True
+		Scale: 1.2
 	turret:
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
+		Scale: 1.2
 	muzzle:
 		Filename: gunfire2.shp
 		Length: *
