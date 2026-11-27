@@ -25,6 +25,8 @@ Commands
       port for just those names, then compare with the frozen baseline.
       Exits 1 if a listed name is missing from the port, 2 if a name is not in the
       baseline or the engine is not built.
+  air [MODDIR]
+      List the 0.32 weapons whose ValidTargets include Air and say whether the engine lets each one hit an aircraft.
   selftest
       Run the built-in tests (they need the mod at commit ed02790 or the
       frozen CSVs; see tools/test_tfc_stats.py for the resolver checks).
@@ -351,7 +353,8 @@ ACTOR_COLUMNS = [
     "name", "kind", "tooltip", "faction_owner", "buildable", "queue", "prerequisites",
     "build_palette_order", "cost", "build_duration", "build_duration_modifier",
     "hp", "armor", "locomotor", "speed", "rot", "sight_range", "terrain_speeds",
-    "power", "power_drain", "weapons", "other_weapons", "inherits", "source", "traits", "extras",
+    "power", "power_drain", "building_power_ignored", "weapons", "other_weapons", "inherits", "source", "traits",
+    "extras",
 ]
 
 
@@ -386,8 +389,12 @@ def actor_row(name, defn, raw_node, known_weapons):
     r["prerequisites"] = field(defn, "Buildable", "Prerequisites")
     r["faction_owner"] = field(defn, "Buildable", "Owner")
     r["build_palette_order"] = field(defn, "Buildable", "BuildPaletteOrder")
-    r["build_duration"] = field(defn, "Buildable", "BuildDuration")
-    r["build_duration_modifier"] = field(defn, "Buildable", "BuildDurationModifier")
+    # 0.32 build time (proven, tools/probe/probe5.cs): ticks = CustomBuildTimeValueExts.GetBuildTime(actor) x queue
+    # BuildSpeed, and GetBuildTime is the CustomBuildTimeValue trait's Value, or cost x 1.5 when the actor has none.
+    # build_duration holds that Value in 0.32 units; blank = the default (cost x 1.5, i.e. 0.6 x cost ticks at the
+    # .4 BuildSpeed every queue has). The 2014 Buildable trait has no BuildDuration field, so none is read.
+    r["build_duration"] = field(defn, "CustomBuildTimeValue", "Value")
+    r["build_duration_modifier"] = ""
     r["hp"] = field(defn, "Health", "HP")
     r["armor"] = field(defn, "Armor", "Type")
     loco = [t for t in LOCOMOTORS if traits(defn, t)]
@@ -408,6 +415,13 @@ def actor_row(name, defn, raw_node, known_weapons):
     neg = [a for a in amounts if a < 0]
     r["power"] = str(sum(pos)) if pos else ""
     r["power_drain"] = str(sum(neg)) if neg else ""
+    # `Building: Power: n` is written on some buildings (ATWR, SILO, HAND, VLCN...), but the 2014 BuildingInfo
+    # has no Power field (proven, probe5.cs), so the engine ignores it: those buildings drew 0 power in 0.32.
+    # power / power_drain above are therefore only the `Power: Amount:` trait (what the engine applies); the dead
+    # value is kept here for information.
+    bp = [int(t.children["Power"].value) for _, t in traits(defn, "Building")
+          if "Power" in t.children and t.children["Power"].value is not None]
+    r["building_power_ignored"] = str(sum(bp)) if bp else ""
     arm = []
     for _, t in traits(defn, "Armament"):
         w = t.children.get("Weapon")
@@ -643,6 +657,71 @@ def cmd_dump(args):
 
 
 # --------------------------------------------------------------------------
+# air command: which weapons can really hit a flying aircraft in 0.32
+# --------------------------------------------------------------------------
+#
+# PROVEN against the 2014 engine (tools/probe/probe4.cs, probe4-out.txt, IL of Warhead.IsValidAgainst and
+# WeaponInfo.IsValidAgainst):
+#   * a weapon's ValidTargets and every warhead's ValidTargets default to [Ground, Water]; InvalidTargets to [];
+#   * an airborne aircraft carries the target types [Air] (TargetableAircraft; a grounded helicopter carries Ground);
+#   * WeaponInfo.IsValidAgainst(victim) = weapon ValidTargets meets the victim's types, no InvalidTargets meets them,
+#     AND some warhead is valid; Warhead.IsValidAgainst needs a damage warhead (the base class says no), the
+#     same test on the warhead's own ValidTargets / InvalidTargets, and a Versus modifier above 0;
+#   * Armament.CheckFire, AttackBase.HasAnyValidWeapons and ChooseArmamentForTarget all call it, so a weapon that
+#     fails it can neither be ordered to attack the aircraft nor fire at it.
+# So `ValidTargets: Ground, Air` on a weapon whose damage warhead does not also list Air is a weapon that cannot
+# target or damage aircraft.
+
+DEFAULT_TARGETS = ["Ground", "Water"]
+
+
+def target_list(node, name):
+    if name in node.children and node.children[name].value is not None:
+        return [x.strip() for x in node.children[name].value.split(",") if x.strip()]
+    return None
+
+
+def weapon_hits_air(w):
+    """True if the engine lets this resolved weapon target and damage an airborne aircraft (type-gate only: the
+    Versus modifier against the aircraft's armour is not evaluated)."""
+    types = ["Air"]
+    wv = target_list(w, "ValidTargets")
+    wv = DEFAULT_TARGETS if wv is None else wv
+    wi = target_list(w, "InvalidTargets") or []
+    if not set(wv) & set(types) or set(wi) & set(types):
+        return False
+    for k, v in w.children.items():
+        if base_name(k) != "Warhead" or "Damage" not in v.children:
+            continue  # only a damage warhead can damage an actor (Warhead.CanTargetActor is false in the base class)
+        hv = target_list(v, "ValidTargets")
+        hv = DEFAULT_TARGETS if hv is None else hv
+        hi = target_list(v, "InvalidTargets") or []
+        if set(hv) & set(types) and not set(hi) & set(types):
+            return True
+    return False
+
+
+def cmd_air(args):
+    """air MODDIR: weapons whose weapon-level ValidTargets include Air, and whether the 0.32 engine lets them hit a
+    flying aircraft."""
+    if len(args) != 1:
+        print(__doc__)
+        return 2
+    b = build(args[0])
+    dead = []
+    for name, w in b["weapons"].items():
+        wv = target_list(w, "ValidTargets") or []
+        if "Air" not in wv:
+            continue
+        ok = weapon_hits_air(w)
+        print("%-18s ValidTargets=%-14s hits aircraft: %s" % (name, ",".join(wv), "yes" if ok else "NO"))
+        if not ok:
+            dead.append(name)
+    print("%d weapon(s) list Air but cannot target or damage an aircraft" % len(dead))
+    return 0
+
+
+# --------------------------------------------------------------------------
 # port command: the 20250330 side, converted back to 0.32 units
 # --------------------------------------------------------------------------
 #
@@ -651,7 +730,7 @@ def cmd_dump(args):
 #   ChangesHealth Step ............... / 100   (written as SelfHealing Step; Delay is written as Ticks)
 #   TurnSpeed (Mobile, Aircraft,
 #     Turreted), InitialFacing,
-#     AttackAircraft FacingTolerance . / 4     (1023 -> 255.75; 20 -> 5; the 0-255 facing scale became 0-1023)
+#     AttackAircraft FacingTolerance . / 4     (20 -> 5; the 0-255 facing scale became 0-1023; 1023 -> 255, see below)
 #   BurstDelays ...................... first entry only (0.32 had one BurstDelay)
 #   MinRange 0, Burst 1 .............. the defaults; written as an empty cell, as the baseline does
 #   DamageTypes ...................... the *Death name -> DeathType number (BulletDeath 1, RippedApartDeath 2,
@@ -666,8 +745,14 @@ def cmd_dump(args):
 #                                      100 (the default) -> BuildSpeed ".4"; any other value is written as the text
 #                                      "BuildDurationModifier=N" so that it shows as a difference (only the 100 <-> .4
 #                                      pair is documented in the design note, so no other value is guessed)
-#   Buildable BuildDuration -1 and
-#     BuildDurationModifier 60 ....... the modern defaults; written as an empty cell (the baseline cell is empty too)
+#   Buildable BuildDuration,
+#     BuildDurationModifier .......... build_duration = BuildDuration (cost when -1) x modifier% (60) / 0.4: the 0.32
+#                                      CustomBuildTimeValue that gives the same ticks (0.32 ticks = value x .4, value =
+#                                      CustomBuildTimeValue or cost x 1.5). Blank when that is the 0.32 default (cost x 1.5).
+#                                      So modern BuildDuration 960 = 0.32 value 1440 (576 ticks), not 1440.
+#   TurnSpeed, InitialFacing,
+#     FacingTolerance ................ / 4, except 1023 -> 255 (the note's 255 -> 1023 rule), not 255.75
+#   StoresPlayerResources Capacity ... StoresResources.Capacity (a building's storage; the harvester's is Harvester.Capacity)
 #   Aircraft ......................... locomotor "Helicopter" if CanHover is true, else "Plane"
 #   Mobile Locomotor ................. terrain_speeds and Mobile.Crushes come from World's Locomotor@* whose Name
 #                                      matches; the modern Bridge terrain type (0.32 had none) is dropped
@@ -694,6 +779,7 @@ from fractions import Fraction
 MARKER = "<unmapped>"
 UNMAPPED_ACTOR_COLUMNS = {
     "faction_owner": "0.32 Buildable Owner; modern builds are gated by the production queue per faction",
+    "building_power_ignored": "0.32 `Building: Power`, a field the 2014 engine ignored; nothing to compare",
 }
 UNMAPPED_WEAPON_COLUMNS = {
     "charges": "0.32 Charges; the modern engine has no equivalent",
@@ -729,6 +815,36 @@ def fmt(x):
         return str(x.numerator)
     s = "%.4f" % (x.numerator / x.denominator)
     return s.rstrip("0").rstrip(".")
+
+
+def angle_to_old(v):
+    """A modern WAngle value (0-1023) as the 0.32 facing/turn value (0-255): / 4, except that the design note's
+    ReplaceFacingAngles rule maps 255 -> 1023 (the top of the scale, not 255 x 4 = 1020), so 1023 maps back to
+    255 and not to 255.75. Every other value is / 4 (20 -> 5, 16 -> 4, 40 -> 10)."""
+    f = frac(v) if v not in (None, "") else None
+    if f is not None and f == 1023:
+        return "255"
+    return divide(v, 4)
+
+
+def build_duration_to_old(bd, bm, cost):
+    """Modern Buildable BuildDuration / BuildDurationModifier as the 0.32 build_duration cell.
+
+    Modern ticks = (BuildDuration, or cost when it is -1) x modifier% (default 60) x queue modifier%.
+    0.32 ticks = value x .4, value = CustomBuildTimeValue or cost x 1.5 (proven, probe5.cs). With the queue at
+    its default (modern 100%, 0.32 .4) the 0.32 value that gives the same ticks is  duration x modifier% / 0.4.
+    Returns '' when that equals the 0.32 default (cost x 1.5), the number as text otherwise."""
+    d = frac(bd) if bd not in (None, "-1", "") else None
+    m = frac(bm) if bm not in (None, "") else Fraction(60)
+    c = frac(cost) if cost not in (None, "") else None
+    if d is None:
+        d = c
+    if d is None or m is None:
+        return ""
+    v = d * m / 100 / Fraction(2, 5)
+    if c is not None and v == c * Fraction(3, 2):
+        return ""
+    return fmt(v)
 
 
 def divide(v, k):
@@ -1024,8 +1140,8 @@ def port_extras(defn, aclass, loco_node, msgs):
         ("ChangesHealth", "Delay", "SelfHealing", "Ticks", None),
         ("TakeCover", "SpeedModifier", "TakeCover", "ProneSpeed", lambda v: divide(v, 100)),
         ("Transforms", "IntoActor", "Transforms", "IntoActor", None),
-        ("Turreted", "TurnSpeed", "Turreted", "ROT", lambda v: divide(v, 4)),
-        ("Turreted", "InitialFacing", "Turreted", "InitialFacing", lambda v: divide(v, 4)),
+        ("Turreted", "TurnSpeed", "Turreted", "ROT", angle_to_old),
+        ("Turreted", "InitialFacing", "Turreted", "InitialFacing", angle_to_old),
         ("Turreted", "Offset", "Turreted", "Offset", None),
     ]
     for nt, nf, ot, of, conv in table:
@@ -1037,11 +1153,15 @@ def port_extras(defn, aclass, loco_node, msgs):
     for tk, t in traits(defn, "SpawnActorOnDeath"):
         if "Actor" in t.children and t.children["Actor"].value and "Probability" not in t.children:
             put("LeavesHusk" + suffix(tk), "HuskActor", t.children["Actor"].value)
-    # Harvester capacity lives on StoresResources
+    # Harvester capacity lives on the modern StoresResources; a building's storage (0.32 `StoresResources: Capacity`,
+    # PROC 2000, SILO 2400, RFNRY 1500) is the modern StoresPlayerResources trait
     has_harv = bool(traits(defn, "Harvester"))
     for tk, t in traits(defn, "StoresResources"):
         if "Capacity" in t.children and t.children["Capacity"].value is not None:
             put("Harvester" if has_harv else "StoresResources", "Capacity", t.children["Capacity"].value)
+    for tk, t in traits(defn, "StoresPlayerResources"):
+        if "Capacity" in t.children and t.children["Capacity"].value is not None:
+            put("StoresResources", "Capacity", t.children["Capacity"].value)
     # production queues
     for tk, t in traits(defn, "ProductionQueue"):
         sfx = suffix(tk)
@@ -1056,7 +1176,7 @@ def port_extras(defn, aclass, loco_node, msgs):
     if aclass:
         for _, t in traits(defn, "Aircraft"):
             if aclass == "Plane" and "TurnSpeed" in t.children:
-                put("Plane", "ROT", divide(t.children["TurnSpeed"].value, 4))
+                put("Plane", "ROT", angle_to_old(t.children["TurnSpeed"].value))
         rp = pfield(defn, "Repairable", "RepairActors")
         if rp is not None:
             put(aclass, "RepairBuildings", rp)
@@ -1065,7 +1185,7 @@ def port_extras(defn, aclass, loco_node, msgs):
             put(aclass, "RearmBuildings", ra)
         ft = pfield(defn, "AttackAircraft", "FacingTolerance")
         if ft is not None:
-            put("AttackHeli" if aclass == "Helicopter" else "AttackPlane", "FacingTolerance", divide(ft, 4))
+            put("AttackHeli" if aclass == "Helicopter" else "AttackPlane", "FacingTolerance", angle_to_old(ft))
     # crushes come from the locomotor
     if loco_node is not None and "Crushes" in loco_node.children and loco_node.children["Crushes"].value:
         put("Mobile", "Crushes", loco_node.children["Crushes"].value)
@@ -1083,15 +1203,15 @@ def port_actor_row(name, defn, sources, inherits, locos, msgs):
     tn = pfield(defn, "Tooltip", "Name")
     r["tooltip"] = fluent_text(msgs, tn) if tn else ""
     r["faction_owner"] = MARKER
+    r["building_power_ignored"] = MARKER
     r["buildable"] = "yes" if traits(defn, "Buildable") else "no"
     r["queue"] = pfield(defn, "Buildable", "Queue") or ""
     r["prerequisites"] = pfield(defn, "Buildable", "Prerequisites") or ""
     r["build_palette_order"] = pfield(defn, "Buildable", "BuildPaletteOrder") or ""
     r["cost"] = pfield(defn, "Valued", "Cost") or ""
-    bd = pfield(defn, "Buildable", "BuildDuration")
-    r["build_duration"] = "" if bd in (None, "-1") else bd
-    bm = pfield(defn, "Buildable", "BuildDurationModifier")
-    r["build_duration_modifier"] = "" if bm in (None, "60") else bm
+    r["build_duration"] = build_duration_to_old(pfield(defn, "Buildable", "BuildDuration"),
+                                                 pfield(defn, "Buildable", "BuildDurationModifier"), r["cost"])
+    r["build_duration_modifier"] = ""  # folded into build_duration
     r["hp"] = divide(pfield(defn, "Health", "HP"), 100)
     r["armor"] = pfield(defn, "Armor", "Type") or ""
     aclass = aircraft_class(defn)
@@ -1105,7 +1225,7 @@ def port_actor_row(name, defn, sources, inherits, locos, msgs):
     ts = pfield(defn, "Mobile", "TurnSpeed")
     if ts is None:
         ts = pfield(defn, "Aircraft", "TurnSpeed")
-    r["rot"] = divide(ts, 4) if ts is not None else ""
+    r["rot"] = angle_to_old(ts) if ts is not None else ""
     r["sight_range"] = pfield(defn, "RevealsShroud", "Range") or ""
     loco_node = None
     ln = pfield(defn, "Mobile", "Locomotor")
@@ -1326,6 +1446,12 @@ def split_items(v):
     return out
 
 
+# A blank armour cell is an actor with no Armor trait: 0.32 applied 100 percent from every weapon to it, but an
+# `Armor: Type: None` takes the weapon's own `None` Versus entry (120mm None 30, Flamethrower None 90...). Proven in
+# tools/probe/probe4-out.txt, so the two are NOT treated as equal here.
+ARMOR_NOTE = "   (no Armor trait = 100% from every weapon; Armor None = each weapon's own None modifier)"
+
+
 def norm_cell(col, v):
     if col.startswith("vs_") and v == "":
         return "100"  # a missing armour type took 100 percent in both engines
@@ -1401,7 +1527,7 @@ def diff_sets(label, base_cols, base, new_cols, new, out, ignore=(), only=None, 
         w2 = max(len(c[1]) for c in changed)
         out.append("  %-*s  %-*s  %s" % (w1, label[:-1].lower(), w2, "field", "baseline -> new"))
         for n, c, a, b in changed:
-            out.append("  %-*s  %-*s  %r -> %r" % (w1, n, w2, c, a, b))
+            out.append("  %-*s  %-*s  %r -> %r%s" % (w1, n, w2, c, a, b, ARMOR_NOTE if c == "armor" and "" in (a, b) else ""))
     out.append("keys only the port has (extras / terrain_speeds, not counted as changes): %d" % len(plus))
     if plus and detail:
         for n, c, a, b in plus:
@@ -1552,6 +1678,8 @@ def main(argv):
         return cmd_baseline(rest)
     if cmd == "dump":
         return cmd_dump(rest)
+    if cmd == "air":
+        return cmd_air(rest)
     if cmd == "compare":
         return cmd_compare(rest)
     if cmd in ("port", "extract2025"):
