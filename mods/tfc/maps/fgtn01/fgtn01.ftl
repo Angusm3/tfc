@@ -1,0 +1,1 @@
+mission-accomplished = Mission accomplished

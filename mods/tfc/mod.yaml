@@ -114,7 +114,7 @@ Chrome:
 Assemblies: OpenRA.Mods.Common.dll, OpenRA.Mods.Cnc.dll
 
 ChromeLayout:
-	tfc|chrome/mainmenu.yaml
+	tfc|chrome/tfc-mainmenu.yaml
 	tfc|chrome/mainmenu-prompts.yaml
 	tfc|chrome/playerprofile.yaml
 	tfc|chrome/encyclopedia.yaml
@@ -124,7 +124,7 @@ ChromeLayout:
 	tfc|chrome/multiplayer-directconnect.yaml
 	tfc|chrome/lobby.yaml
 	tfc|chrome/lobby-mappreview.yaml
-	tfc|chrome/lobby-players.yaml
+	tfc|chrome/tfc-lobby-players.yaml
 	tfc|chrome/lobby-options.yaml
 	tfc|chrome/lobby-music.yaml
 	tfc|chrome/lobby-servers.yaml
@@ -135,7 +135,7 @@ ChromeLayout:
 	tfc|chrome/replaybrowser.yaml
 	tfc|chrome/gamesave-browser.yaml
 	tfc|chrome/gamesave-loading.yaml
-	tfc|chrome/ingame.yaml
+	tfc|chrome/tfc-ingame.yaml
 	tfc|chrome/ingame-chat.yaml
 	common|chrome/ingame-transients.yaml
 	tfc|chrome/ingame-menu.yaml
@@ -157,7 +157,7 @@ ChromeLayout:
 	tfc|chrome/settings-hotkeys.yaml
 	tfc|chrome/settings-advanced.yaml
 	tfc|chrome/credits.yaml
-	tfc|chrome/dialogs.yaml
+	tfc|chrome/tfc-dialogs.yaml
 	tfc|chrome/tooltips.yaml
 	tfc|chrome/assetbrowser.yaml
 	tfc|chrome/missionbrowser.yaml
@@ -207,6 +207,7 @@ Hotkeys:
 	common|hotkeys/editor.yaml
 	common|hotkeys/control-groups.yaml
 	tfc|hotkeys.yaml
+	tfc|chrome/tfc-hotkeys.yaml
 
 LoadScreen: CncLoadScreen
 	Image: tfc|uibits/chrome.png

@@ -273,6 +273,7 @@ mltvinf:
 mrtr:
 	Defaults:
 		Filename: mrtr.shp
+		Scale: 0.7
 	stand:
 		Facings: 8
 	stand2:
@@ -342,8 +343,10 @@ mrtr:
 		Start: 16
 		Length: 4
 		Tick: 1600
+		Scale: 1
 	icon:
 		Filename: mrtricon.shp
+		Scale: 1
 
 snpr:
 	Defaults:
@@ -514,7 +517,7 @@ snprd:
 cmbt:
 	Defaults:
 		Filename: cmbt.shp
-		Scale: 0.7
+		Scale: 0.5
 	stand:
 		Facings: 8
 	stand2:
@@ -599,13 +602,15 @@ cmbt:
 		Start: 16
 		Length: 4
 		Tick: 1600
+		Scale: 1
 	icon:
 		Filename: cmbticon.shp
+		Scale: 1
 
 hjkr:
 	Defaults:
 		Filename: hjkr.shp
-		Scale: 0.7
+		Scale: 0.6
 	stand:
 		Facings: 8
 	run:
@@ -672,8 +677,10 @@ hjkr:
 		Start: 16
 		Length: 4
 		Tick: 1600
+		Scale: 1
 	icon:
 		Filename: hjkricon.shp
+		Scale: 1
 
 fmcv:
 	idle:
@@ -727,10 +734,12 @@ fhtnk:
 	idle:
 		Facings: 32
 		UseClassicFacings: True
+		Scale: 1.2
 	turret:
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
+		Scale: 1.2
 	muzzle:
 		Filename: gunfire2.shp
 		Length: *
@@ -763,10 +772,12 @@ slar:
 	damaged-idle:
 		Length: 1
 		Tick: 1000
+		Start: 1
 	dead:
 		Tick: 1000
+		Start: 1
 	make:
-		Filename: slar.shp
+		Filename: slarmake.shp
 		Length: *
 		Tick: 80
 	bib:
@@ -789,10 +800,12 @@ aslr:
 	damaged-idle:
 		Length: 1
 		Tick: 1000
+		Start: 1
 	dead:
 		Tick: 1000
+		Start: 1
 	make:
-		Filename: aslr.shp
+		Filename: aslrmake.shp
 		Length: *
 		Tick: 80
 	bib:
@@ -904,14 +917,16 @@ mgnst:
 		Filename: mgnst.shp
 	# The sprite has 28 drawn facings; 20250330 needs a power of two. 32 facings, each mapped to the nearest drawn frame
 	# (round(i * 28 / 32)). If the turret turns the wrong way in game, use Facings: -32.
+	# The file is idle 0-27, recoil 28-55 (idle plus muzzle flash), damaged-idle 56-63, damaged-recoil 64-71 (8 facings each);
+	# 0.32 read recoil from 29 and damaged-idle from 57, one frame late.
 	idle:
 		Facings: 32
 		Frames: 0, 1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 10, 11, 11, 12, 13, 14, 15, 16, 17, 18, 18, 19, 20, 21, 22, 23, 24, 25, 25, 26, 27
 	recoil:
 		Facings: 32
-		Frames: 29, 30, 31, 32, 33, 33, 34, 35, 36, 37, 38, 39, 40, 40, 41, 42, 43, 44, 45, 46, 47, 47, 48, 49, 50, 51, 52, 53, 54, 54, 55, 56
+		Frames: 28, 29, 30, 31, 32, 32, 33, 34, 35, 36, 37, 38, 39, 39, 40, 41, 42, 43, 44, 45, 46, 46, 47, 48, 49, 50, 51, 52, 53, 53, 54, 55
 	damaged-idle:
-		Start: 57
+		Start: 56
 		Facings: 8
 	damaged-recoil:
 		Start: 64
@@ -1074,3 +1089,41 @@ bdzr.destroyed:
 		Facings: 32
 		UseClassicFacings: True
 		ZOffset: -512
+
+# p7: own art for the 'Tib farm' (it used the Tiberium Silo sprite): a fenced plot with Tiberium crystals.
+tibfarm:
+	Defaults:
+		Filename: tibfarm.shp
+	idle:
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+		Tick: 800
+	make:
+		Filename: tibfarmmake.shp
+		Length: *
+		Tick: 80
+	icon:
+		Filename: tibfarmicon.shp
+
+# p7: own art for the Pillbox (it used the Guard Tower sprite): a concrete dome in a sandbag ring.
+foxhole:
+	Defaults:
+		Filename: foxhole.shp
+	idle:
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+		Tick: 800
+	make:
+		Filename: foxholemake.shp
+		Length: *
+		Tick: 80
+	muzzle:
+		Filename: minigun.shp
+		Length: 6
+		Facings: 8
+	icon:
+		Filename: foxholeicon.shp

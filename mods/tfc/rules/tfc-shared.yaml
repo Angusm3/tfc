@@ -18,7 +18,7 @@ TANYA:
 		BuildLimit: 1
 		Description: actor-tanya.description
 	RenderSprites:
-		Image: rmbo
+		Image: tanya
 	Mobile:
 		Speed: 71
 	Health:
@@ -60,7 +60,7 @@ SEAL:
 		BuildLimit: 1
 		Description: actor-seal.description
 	RenderSprites:
-		Image: rmbo
+		Image: seal
 	Mobile:
 		Speed: 71
 	Health:
@@ -99,7 +99,7 @@ SHOCKTROOPER:
 		BuildLimit: 1
 		Description: actor-shocktrooper.description
 	RenderSprites:
-		Image: rmbo
+		Image: shok
 	Mobile:
 		Speed: 71
 	Health:
@@ -136,7 +136,7 @@ LASERSNIPER:
 		BuildLimit: 1
 		Description: actor-lasersniper.description
 	RenderSprites:
-		Image: rmbo
+		Image: lsnp
 	Mobile:
 		Speed: 71
 	Health:
@@ -177,7 +177,7 @@ IVAN:
 		BuildLimit: 1
 		Description: actor-ivan.description
 	RenderSprites:
-		Image: rmbo
+		Image: ivan
 	Mobile:
 		Speed: 71
 	Health:

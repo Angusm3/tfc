@@ -67,7 +67,7 @@ mech:
 ecdr:
 	Defaults:
 		Filename: ecdr.shp
-		Scale: 0.7
+		Scale: 0.6
 	stand:
 		Facings: 8
 	run:
@@ -147,6 +147,7 @@ ecdr:
 		Start: 16
 		Length: 4
 		Tick: 1600
+		Scale: 1
 	icon:
 		Filename: ecdricon.shp
 		Scale: 1
