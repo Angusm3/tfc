@@ -1,1 +1,28 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# Images that only weapons use. Everything else about a weapon's look (dragon, smokey, 120mm, bomb, bomblet,
+# patriot, missile, laserfire, fb4) is stock 20250330 cnc, or ported by 4e in tfc-overrides.yaml.
+
+# Flamer projectile (0.32 sequences/misc.yaml): 32 facings of 15x15.
+fb3:
+	idle:
+		Filename: fb3.shp
+		Start: 0
+		Facings: 32
+
+# Molotov projectile (0.32 sequences/misc.yaml).
+mltv:
+	idle:
+		Filename: mltv.shp
+		Start: 0
+		Length: *
+
+# TeslaZap projectile (MiniTeslaZap, LightTesla, MedTesla, HeavyTesla, TeslaZap). The TeslaZap projectile
+# asks for image "litning" with the sequences "bright" and "dim"; stock cnc has no such image (RA does).
+litning:
+	Defaults:
+		Filename: litning.shp
+	bright:
+		Start: 0
+		Length: 4
+	dim:
+		Start: 4
+		Length: 4
