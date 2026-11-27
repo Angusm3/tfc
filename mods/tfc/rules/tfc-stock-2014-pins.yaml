@@ -257,35 +257,30 @@ ARTY.Husk:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 BGGY.Husk:
 	Health:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 BIKE.Husk:
 	Health:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 FTNK.Husk:
 	Health:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 HARV.Husk:
 	Health:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 HELI.Husk:
 	Health:
@@ -298,42 +293,36 @@ HTNK.Husk:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 JEEP.Husk:
 	Health:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 LTNK.Husk:
 	Health:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 MCV.Husk:
 	Health:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 MSAM.Husk:
 	Health:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 MTNK.Husk:
 	Health:
 		HP: 25000
 	Armor:
 		Type: Light
-	-FireWarheadsOnDeath:
 
 ORCA.Husk:
 	Health:
