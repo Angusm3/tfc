@@ -772,10 +772,12 @@ slar:
 	damaged-idle:
 		Length: 1
 		Tick: 1000
+		Start: 1
 	dead:
 		Tick: 1000
+		Start: 1
 	make:
-		Filename: slar.shp
+		Filename: slarmake.shp
 		Length: *
 		Tick: 80
 	bib:
@@ -798,10 +800,12 @@ aslr:
 	damaged-idle:
 		Length: 1
 		Tick: 1000
+		Start: 1
 	dead:
 		Tick: 1000
+		Start: 1
 	make:
-		Filename: aslr.shp
+		Filename: aslrmake.shp
 		Length: *
 		Tick: 80
 	bib:
