@@ -418,7 +418,8 @@ class PortRowTests(unittest.TestCase):
         self.assertEqual((self.mtnk["build_duration"], self.mtnk["build_duration_modifier"]), ("", ""))
         r = T.port_actor_row("X", T.parse_text("Buildable:\n\tBuildDuration: 2080\n\tBuildDurationModifier: 50\n"),
                              {}, {}, self.locos, self.msgs)
-        self.assertEqual((r["build_duration"], r["build_duration_modifier"]), ("2080", "50"))
+        # 2080 ticks-units x 50 percent = 1040 ticks; the 0.32 value for 1040 ticks is 1040 / 0.4 = 2600
+        self.assertEqual((r["build_duration"], r["build_duration_modifier"]), ("2600", ""))
 
     def test_terrain_speeds_come_from_the_world_locomotor_and_drop_bridge(self):
         self.assertEqual(self.mtnk["terrain_speeds"],
@@ -976,6 +977,174 @@ class RoundTripTests(unittest.TestCase):
         self.assertIn("'450' -> '460'", out)
         self.assertIn("present and differing   1", out)
         self.assertIn("changed values: 1 in 1 row(s)", out)
+
+
+PROBE_DIR = os.path.join(HERE, "probe")
+
+
+def probe_text(name):
+    with open(os.path.join(PROBE_DIR, name), encoding="utf-8-sig") as f:
+        return f.read()
+
+
+class ProbeProvenTests(unittest.TestCase):
+    """What tools/probe/*.cs proved against the real 2014 OpenRA.Game.exe, pinned (the probe outputs are committed)."""
+
+    def test_probe_outputs_state_the_engine_defaults(self):
+        p4 = probe_text("probe4-out.txt")
+        # A.1: a warhead (and a weapon) defaults to [Ground,Water]; an airborne aircraft carries [Air]
+        self.assertIn("new SpreadDamageWarhead(): ValidTargets=[Ground,Water] InvalidTargets=[]", p4)
+        self.assertIn("TargetableAircraftInfo airborne=[Air]", p4)
+        # A.2: no Armor trait takes 100 from every weapon, Armor None takes the weapon's None entry
+        self.assertIn("vs camera         Armor=<no trait> -> DamageVersus = 100", p4)
+        self.assertIn("vs e1             Armor=None       -> DamageVersus = 30", p4)
+        self.assertIn("vs spc            Armor=light      -> DamageVersus = 100", p4)
+        # A.3: weapon defaults
+        self.assertIn("bare weapon: Burst=1 BurstDelay=5 ReloadDelay=1", p4)
+        p5 = probe_text("probe5-out.txt")
+        self.assertIn("BuildingInfo has a field named Power: False", p5)
+        self.assertIn("gun    PowerInfo amount=  -20  Cost=  600 CustomBuildTimeValue=1440 engine GetBuildTime=1440", p5)
+        self.assertIn("atwr   PowerInfo amount=    0  Cost= 1000 CustomBuildTimeValue=<none> engine GetBuildTime=1500", p5)
+
+    def test_the_17_weapons_cannot_hit_aircraft(self):
+        want = {"TowerMissle", "Deagle", "TechMachineGun", "Dozergun", "Frockets", "Hrockets", "TSARocket",
+                "OsirisMissiles", "OsirisMissiles2", "MarMG", "MarPanzershrek", "QuadCannon", "Glauncher",
+                "NestMachineGunAA", "LMG", "MammothMissiles2", "MachineGun2"}
+        air = {n for n, w in B["weapons"].items() if "Air" in (T.target_list(w, "ValidTargets") or [])}
+        dead = {n for n in air if not T.weapon_hits_air(B["weapons"][n])}
+        self.assertEqual(dead, want)  # 17, and exactly these
+        self.assertEqual(len(dead), 17)
+        # TowerMissle's damage warhead has an explicit ValidTargets: Ground (from weaponsV.yaml); the others rely on the default
+        self.assertEqual(T.target_list(B["weapons"]["TowerMissle"].children["Warhead@1Dam"], "ValidTargets"), ["Ground"])
+        self.assertIsNone(T.target_list(B["weapons"]["LMG"].children["Warhead@1Dam"], "ValidTargets"))
+        # weapons that do hit aircraft: the AA weapons and the ones whose damage warhead lists Air
+        for n in ("SAMMissile", "Patriot", "OrcaAAMissiles", "HeliAAGun", "MammothMissiles", "Rockets"):
+            self.assertTrue(T.weapon_hits_air(B["weapons"][n]), n)
+
+    def test_air_rule_on_tiny_weapons(self):
+        def w(text):
+            return T.parse_text(text)
+        self.assertFalse(T.weapon_hits_air(w("ValidTargets: Ground, Air\nWarhead@1Dam: SpreadDamage\n\tDamage: 5\n")))
+        self.assertTrue(T.weapon_hits_air(w("ValidTargets: Ground, Air\nWarhead@1Dam: SpreadDamage\n\tDamage: 5\n\tValidTargets: Air\n")))
+        self.assertFalse(T.weapon_hits_air(w("ValidTargets: Air\nWarhead@1Dam: SpreadDamage\n\tDamage: 5\n\tValidTargets: Air\n\tInvalidTargets: Air\n")))
+        self.assertFalse(T.weapon_hits_air(w("ValidTargets: Ground\nWarhead@1Dam: SpreadDamage\n\tDamage: 5\n\tValidTargets: Air\n")))
+        # an effect warhead (no Damage) cannot make a weapon valid
+        self.assertFalse(T.weapon_hits_air(w("ValidTargets: Air\nWarhead@1Eff: CreateEffect\n\tValidTargets: Air\n")))
+
+
+class BaselineGapTests(unittest.TestCase):
+    """Part B of the gap fixes: power, build time and storage as the 0.32 engine really read them."""
+
+    def row(self, name):
+        return actor(name)
+
+    def test_building_power_is_dead_yaml_and_kept_in_its_own_column(self):
+        # 2014 BuildingInfo has no Power field (probe5): `Building: Power: n` did nothing, only `Power: Amount:` counts
+        for name, dead in (("ATWR", "-40"), ("SILO", "-10"), ("HAND", "-20"), ("VLCN", "-20")):
+            r = self.row(name)
+            self.assertEqual((r["power"], r["power_drain"], r["building_power_ignored"]), ("", "", dead), name)
+        # GUN has the real trait only; HQ keeps its -40 from `Power: Amount`
+        self.assertEqual((self.row("GUN")["power_drain"], self.row("GUN")["building_power_ignored"]), ("-20", ""))
+        self.assertEqual(self.row("PROC")["power_drain"], "-50")
+        self.assertEqual(self.row("NUKE")["power"], "100")
+
+    def test_both_power_spellings_on_text(self):
+        d = T.parse_text("Building:\n\tPower: -20\n")
+        r = T.actor_row("X", d, d, {})
+        self.assertEqual((r["power_drain"], r["building_power_ignored"]), ("", "-20"))
+        d = T.parse_text("Power:\n\tAmount: -30\nBuilding:\n\tPower: -20\n")
+        r = T.actor_row("X", d, d, {})
+        self.assertEqual((r["power_drain"], r["building_power_ignored"]), ("-30", "-20"))
+
+    def test_custom_build_time_value_is_captured(self):
+        # engine: ticks = (CustomBuildTimeValue or cost x 1.5) x BuildSpeed .4 -> GUN/GTWR 1440 x .4 = 576 ticks,
+        # SAM 2160 x .4 = 864, and a plain 600-cost unit 900 x .4 = 360
+        for name, v in (("GUN", "1440"), ("GTWR", "1440"), ("SAM", "2160"), ("E1", ""), ("ATWR", ""), ("MTNK", "")):
+            self.assertEqual(self.row(name)["build_duration"], v, name)
+        self.assertEqual(self.row("GUN")["build_duration_modifier"], "")
+        self.assertEqual(sum(1 for r in B["actor_rows"] if r["build_duration"]), 3)
+
+    def test_building_storage_is_in_extras(self):
+        for name, cap in (("PROC", "2000"), ("SILO", "2400"), ("RFNRY", "1500")):
+            self.assertIn("StoresResources.Capacity=" + cap, self.row(name)["extras"], name)
+
+    def test_the_changed_baseline_cells(self):
+        # only the 16 dead `Building: Power` values and the 3 CustomBuildTimeValue cells differ from the old baseline
+        ign = {r["name"]: r["building_power_ignored"] for r in B["actor_rows"] if r["building_power_ignored"]}
+        self.assertEqual(len(ign), 16)
+        self.assertEqual(ign["TSLA"], "-200")
+        self.assertEqual(ign["SLAR"], "50")
+
+
+class PortGapTests(unittest.TestCase):
+    """Port-side conversions for the gap fixes, hand-derived (no engine needed)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.locos = T.world_locomotors(T.parse_text(STOCK_WORLD))
+
+    def prow(self, text, name="X"):
+        return T.port_actor_row(name, T.parse_text(text), {}, {}, self.locos, {})
+
+    def test_build_duration_arithmetic(self):
+        f = T.build_duration_to_old
+        # 0.32: GUN/GTWR 1440 x .4 = 576 ticks. Modern ticks = BuildDuration x 60 percent, so BuildDuration must be
+        # 576 / 0.6 = 960 (and 960 x 0.6 / 0.4 = 1440 comes back). 1440 would be 864 ticks, 1.5 times too slow.
+        self.assertEqual(f("960", None, "600"), "1440")
+        self.assertEqual(f("1440", None, "600"), "2160")
+        # SAM: 2160 x .4 = 864 ticks = 1440 x 0.6
+        self.assertEqual(f("1440", None, "750"), "2160")
+        # defaults: no BuildDuration (or -1) and modifier 60 give cost x 0.6 ticks = the 0.32 default -> blank
+        self.assertEqual(f(None, None, "600"), "")
+        self.assertEqual(f("-1", "60", "1000"), "")
+        # an explicit duration equal to the cost is the same as the default: 600 x .6 = 360 ticks, 360 / .4 = 900 = 600 x 1.5
+        self.assertEqual(f("600", None, "600"), "")
+        # a different modifier: cost 1000 at 50 percent = 500 ticks -> 1250 in 0.32 units (default would be 1500)
+        self.assertEqual(f(None, "50", "1000"), "1250")
+        self.assertEqual(f("2080", "50", "1500"), "2600")
+
+    def test_build_duration_in_a_port_row(self):
+        r = self.prow("Valued:\n\tCost: 600\nBuildable:\n\tBuildDuration: 960\n")
+        self.assertEqual((r["build_duration"], r["build_duration_modifier"]), ("1440", ""))
+        # the value the lane wrote, 1440, converts to 2160 and so shows up against the baseline's 1440
+        r = self.prow("Valued:\n\tCost: 600\nBuildable:\n\tBuildDuration: 1440\n")
+        self.assertEqual(r["build_duration"], "2160")
+
+    def test_angle_conversion_and_the_255_rule(self):
+        f = T.angle_to_old
+        self.assertEqual([f(v) for v in ("1023", "1020", "20", "16", "40", "1022", "")],
+                         ["255", "255", "5", "4", "10", "255.5", ""])
+        self.assertEqual(self.prow("Aircraft:\n\tTurnSpeed: 1023\n\tSpeed: 100\n")["rot"], "255")
+        self.assertEqual(self.prow("Mobile:\n\tTurnSpeed: 1023\n")["rot"], "255")
+        self.assertEqual(self.prow("Mobile:\n\tTurnSpeed: 20\n")["rot"], "5")
+        self.assertIn("Turreted.ROT=255", self.prow("Turreted:\n\tTurnSpeed: 1023\n")["extras"])
+        self.assertIn("Turreted.InitialFacing=108", self.prow("Turreted:\n\tInitialFacing: 432\n")["extras"])
+        self.assertIn("Plane.ROT=255", self.prow("Aircraft:\n\tTurnSpeed: 1023\n\tSpeed: 300\n")["extras"])
+
+    def test_building_storage_maps_to_stores_resources(self):
+        self.assertIn("StoresResources.Capacity=2400", self.prow("StoresPlayerResources:\n\tCapacity: 2400\n")["extras"])
+        # a harvester's own capacity is still Harvester.Capacity
+        ex = self.prow("Harvester:\n\tResources: Tiberium\nStoresResources:\n\tCapacity: 20\n")["extras"]
+        self.assertIn("Harvester.Capacity=20", ex)
+        self.assertNotIn("StoresResources.Capacity", ex)
+
+    def test_dead_building_power_column_is_unmapped_not_a_difference(self):
+        r = self.prow("Power:\n\tAmount: -20\n")
+        self.assertEqual((r["power_drain"], r["building_power_ignored"]), ("-20", T.MARKER))
+        self.assertEqual(T.row_changes("building_power_ignored", "-40", T.MARKER, ()), [("building_power_ignored", "-40", T.MARKER, "n/a")])
+
+    def test_blank_armour_is_not_none(self):
+        # no Armor trait (blank) and Armor Type None differ: 120mm does 100 to the first and 30 to the second
+        self.assertEqual(T.row_changes("armor", "", "None", ()), [("armor", "", "None", "changed")])
+        self.assertEqual(T.row_changes("armor", "None", "", ()), [("armor", "None", "", "changed")])
+        self.assertEqual(T.row_changes("armor", "", "", ()), [])
+        out = []
+        T.diff_sets("Actors", ["name", "armor"], {"BRIDGE1": {"name": "BRIDGE1", "armor": ""}},
+                    ["name", "armor"], {"BRIDGE1": {"name": "BRIDGE1", "armor": "None"}}, out)
+        self.assertTrue(any("no Armor trait = 100% from every weapon" in ln for ln in out), out)
+        # a case difference between real types stays case-insensitive-free: Light vs light is a change
+        self.assertEqual(T.row_changes("armor", "Light", "light", ()), [("armor", "Light", "light", "changed")])
+
 
 
 def run(argv=()):

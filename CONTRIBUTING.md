@@ -86,9 +86,9 @@ case-insensitively); a blank `vs_*` cell equals 100 and a blank `burst_delay` eq
 |---|---|---|
 | `hp` | `Health: HP` | / 100 |
 | `damage` (first damaging warhead) | `Warhead@..: Damage` | / 100 (heal damage is negative) |
-| `rot`, `Turreted.ROT`, `Plane.ROT` | `Mobile` / `Aircraft` / `Turreted: TurnSpeed` | / 4 (1023 is 255.75; a result that is not whole is written as a decimal) |
-| `Turreted.InitialFacing` | `Turreted: InitialFacing` | / 4 |
-| `AttackHeli.FacingTolerance` | `AttackAircraft: FacingTolerance` | / 4 (`AttackPlane.` on a plane) |
+| `rot`, `Turreted.ROT`, `Plane.ROT` | `Mobile` / `Aircraft` / `Turreted: TurnSpeed` | / 4, except **1023 becomes 255** (the design note's `255 -> 1023` rule maps the top of the scale, so 255 x 4 = 1020 is not what 0.32's 255 became; 1020 also gives 255). Any other value that is not a multiple of 4 is written as a decimal |
+| `Turreted.InitialFacing` | `Turreted: InitialFacing` | / 4 (same 1023 -> 255 rule) |
+| `AttackHeli.FacingTolerance` | `AttackAircraft: FacingTolerance` | / 4 (same rule; `AttackPlane.` on a plane) |
 | `SelfHealing[@X].Step` | `ChangesHealth[@X]: Step` | / 100 (`PercentageStep` is not shown) |
 | `SelfHealing[@X].Ticks` | `ChangesHealth[@X]: Delay` | unchanged |
 | `burst_delay` | `BurstDelays` | first entry only (0.32 had one value) |
@@ -98,15 +98,17 @@ case-insensitively); a blank `vs_*` cell equals 100 and a blank `burst_delay` eq
 | `TakeCover.ProneSpeed` | `TakeCover: SpeedModifier` | / 100 |
 | `ProductionQueue[@X].LowPowerSlowdown` | `LowPowerModifier` | / 100; absent is the default 100, so `1` |
 | `ProductionQueue[@X].BuildSpeed` | queue `BuildDurationModifier` | 100 (the default) is `.4`; any other value is written as the text `BuildDurationModifier=N` so it shows as a difference (the design note documents only the 100 / .4 pair) |
-| `build_duration`, `build_duration_modifier` | `Buildable` | the modern defaults (-1 and 60) are blank, as in the baseline |
+| `build_duration`, `build_duration_modifier` | `Buildable: BuildDuration`, `BuildDurationModifier` | `build_duration` = (BuildDuration, or the cost when absent or -1) x modifier% (default 60) / 0.4: the 0.32 `CustomBuildTimeValue` that gives the same ticks. Blank when that equals the 0.32 default (cost x 1.5). `build_duration_modifier` is always blank (folded in). See "Build time" below |
 | `locomotor` | `Mobile` / `Aircraft` | `Mobile`; an `Aircraft` with `CanHover: true` is `Helicopter`, otherwise `Plane` |
 | `terrain_speeds`, `Mobile.Crushes` | `World` `Locomotor@*` whose `Name` is the actor's `Mobile: Locomotor` | same keys; the modern `Bridge` type (0.32 had none) is dropped. An unknown locomotor is written `<missing-locomotor:name>` |
 | `LimitedAmmo.Ammo`, `Reloads.Count`, `Reloads.Period` | `AmmoPool: Ammo`, `ReloadAmmoPool: Count`, `Delay` | unchanged |
 | `Harvester.Capacity` | `StoresResources: Capacity` (on an actor that has `Harvester`) | unchanged; other actors keep the key `StoresResources.Capacity` |
+| `StoresResources.Capacity` (a building's storage: PROC 2000, SILO 2400, RFNRY 1500) | `StoresPlayerResources: Capacity` | unchanged |
 | `other_weapons`, `Explodes.Weapon`, `Explodes.EmptyWeapon` | `FireWarheadsOnDeath` | unchanged (instances keep their `@suffix`) |
 | `LeavesHusk.HuskActor` | `SpawnActorOnDeath: Actor` without `Probability` (those are the Vice mutation) | unchanged |
 | `<Helicopter or Plane>.RepairBuildings`, `.RearmBuildings` | `Repairable: RepairActors`, `Rearmable: RearmActors` | unchanged |
 | `tooltip`, `Tooltip.GenericName` | `Tooltip: Name`, `GenericName` (Fluent keys) | looked up in the `FluentMessages` files, later file wins; an unknown key is written `<fluent:key>` |
+| `building_power_ignored` | none (0.32's `Building: Power` was ignored by the engine) | the cell is `<unmapped>` on the port side |
 | `power`, `power_drain`, `cost`, `speed`, `armor`, `sight_range`, `queue`, `prerequisites`, `build_palette_order`, `weapons`, `vs_*`, `reload_delay`, `burst`, targets, projectile type and speed | same fields | unchanged |
 | `inherits`, `source`, `traits` | the `Rules` files themselves, and the resolved trait names | information only (the resolver output has no `Inherits` lines) |
 
@@ -169,3 +171,39 @@ at any level even if the child defined it itself, and removing a key that is not
 Actor and weapon names are lower-cased for lookup; `Versus` armour names are case-sensitive and an armour
 type with no `Versus` entry takes 100 percent. A weapon only has the warheads that are top-level `Warhead*`
 keys, so a `Warhead@2Eff` indented inside `Warhead@1Dam` is never read.
+
+### Second probe round: what 0.32 effectively did (gap fixes)
+
+Same method as above (read-only copy of `OpenRA.Game.exe` and the mod DLLs, 32-bit PowerShell and `csc.exe`).
+`probe3.cs`/`probe4.cs`/`probe5.cs` load the **whole 0.32 mod through the engine** (`ModData` +
+`RulesetCache.LoadDefaultRules`: 298 actors, 100 weapons, as the Python resolver counts) and print what the engine
+parsed and what its own methods return. Outputs: `probe4-out.txt`, `probe5-out.txt` (pinned by `ProbeProvenTests`).
+`ilq.ps1`/`il.ps1` decode IL (`.ctor` supported), `find.ps1` finds types, `callers.ps1` finds callers of a method.
+
+- **Warhead targeting.** `Warhead.ValidTargets` defaults to `[Ground, Water]`, `InvalidTargets` to empty, and so does
+  a weapon's. An airborne aircraft carries `[Air]` (`TargetableAircraft`; grounded: `Ground`). `Warhead.IsValidAgainst`
+  needs a damage warhead (the base `CanTargetActor` is a constant false; `DamageWarhead` needs a Health trait and a
+  `Versus` modifier above 0), then the warhead's own ValidTargets/InvalidTargets against the victim's types.
+  `WeaponInfo.IsValidAgainst` = the weapon-level test **and** some warhead valid; `Armament.CheckFire`,
+  `AttackBase.HasAnyValidWeapons` and `ChooseArmamentForTarget` all call it. So a weapon with `ValidTargets: Ground, Air`
+  whose damage warhead lacks Air can neither be ordered to attack an aircraft nor damage it. 17 weapons are like that:
+  TowerMissle (its warhead says `ValidTargets: Ground` explicitly), Deagle, TechMachineGun, Dozergun, Frockets,
+  Hrockets, TSARocket, OsirisMissiles, OsirisMissiles2, MarMG, MarPanzershrek, QuadCannon, Glauncher,
+  NestMachineGunAA (weapon-level `Air` only: it cannot target ground units either, so it can target nothing), LMG,
+  MammothMissiles2, MachineGun2. `python tools/tfc_stats.py air legacy-0.32` lists them.
+- **Armour.** `DamageWarhead.DamageVersus(actor)`: no `Armor` trait, or an `Armor` whose `Type` is unset, gives 100
+  against every weapon; an `Armor: Type: None` gives the weapon's own `None` entry (120mm 30, Flamethrower 90), and a
+  type that matches no key (`light` on SPC) gives 100. So a blank `armor` cell and `None` are different;
+  `compare` reports the difference and says so. Eight 0.32 actors have Health and no Armor trait (the bridges,
+  `camera`, `camera.small`, `flare`).
+- **Weapon defaults.** `Burst` 1, `BurstDelay` 5, `ReloadDelay` 1, `Range` 0, `MinRange` 0, `Charges` false.
+- **Power.** The 2014 `Building` trait has no `Power` field, so `Building: Power: -20` is silently ignored; only
+  `Power: Amount:` counts. ATWR, SILO, HAND, VLCN and 12 other buildings carry such dead values (two of them 0) and drew 0 power in
+  0.32. `power`/`power_drain` hold what the engine applies; the dead values are in `building_power_ignored`.
+- **Build time.** Ticks = `GetBuildTime(actor)` x the queue's `BuildSpeed` (.4), and `GetBuildTime` is
+  `CustomBuildTimeValue.Value`, or cost x 1.5 when the actor has none. `build_duration` is that `Value` for the three
+  actors that set it (GUN 1440, GTWR 1440, SAM 2160) and blank otherwise. Modern ticks = `BuildDuration` x 60 percent,
+  so GUN/GTWR (576 ticks) need `BuildDuration: 960` and SAM (864 ticks) `1440`; writing the 0.32 number 1440 on GUN
+  gives 864 ticks.
+- **Storage.** Building storage was already captured as `StoresResources.Capacity`; the port side now maps modern
+  `StoresPlayerResources: Capacity` to it.

@@ -1,0 +1,188 @@
+loaded: actors=298 weapons=100
+
+=== A.1 defaults
+new SpreadDamageWarhead(): ValidTargets=[Ground,Water] InvalidTargets=[]
+Warhead.CanTargetActor base class returns constant false; DamageWarhead.CanTargetActor = has Health && DamageVersus>0
+
+=== aircraft target types (TargetableAircraft: airborne uses TargetTypes, grounded uses GroundedTargetTypes)
+TargetableAircraftInfo airborne=[Air]  <- 5 actors (^helicopter,tran,orca,heli,huey...)
+TargetableUnitInfo airborne=[Air]  <- 1 actors (^plane...)
+
+=== per weapon (engine-parsed). 'hits air' = WeaponCanTarget vs a flying orca (Health + Armor Light, types [Air])
+TowerMissle: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=2 BurstDelay=16 ReloadDelay=24
+    SpreadDamageWarhead ValidTargets=[Ground] Invalid=[] Damage=45 versusLight=100
+    LeaveSmudgeWarhead ValidTargets=[Ground,Water] Invalid=[]
+    CreateEffectWarhead ValidTargets=[Ground,Water] Invalid=[]
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+Deagle: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=1 BurstDelay=5 ReloadDelay=5
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=20 versusLight=10
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+TechMachineGun: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=4 BurstDelay=5 ReloadDelay=15
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=25 versusLight=50
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+Dozergun: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=4 BurstDelay=5 ReloadDelay=15
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=20 versusLight=50
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+Frockets: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=1 BurstDelay=5 ReloadDelay=50
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=20 versusLight=100
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+Hrockets: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=2 BurstDelay=5 ReloadDelay=100
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=30 versusLight=100
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+TSARocket: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=1 BurstDelay=5 ReloadDelay=50
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=30 versusLight=100
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+OsirisMissiles: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=6 BurstDelay=5 ReloadDelay=150
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=8 versusLight=100
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+OsirisMissiles2: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=4 BurstDelay=5 ReloadDelay=100
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=8 versusLight=100
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+MarMG: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=3 BurstDelay=5 ReloadDelay=10
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=10 versusLight=50
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+MarPanzershrek: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=1 BurstDelay=5 ReloadDelay=50
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=30 versusLight=100
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+QuadCannon: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=4 BurstDelay=5 ReloadDelay=5
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=10 versusLight=50
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+Glauncher: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=1 BurstDelay=5 ReloadDelay=50
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=80 versusLight=100
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+NestMachineGunAA: weapon ValidTargets=[Air] Invalid=[]  Burst=3 BurstDelay=5 ReloadDelay=80
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=10 versusLight=100
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+LMG: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=3 BurstDelay=5 ReloadDelay=10
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=10 versusLight=50
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+MammothMissiles2: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=4 BurstDelay=5 ReloadDelay=50
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=75 versusLight=75
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+MachineGun2: weapon ValidTargets=[Ground,Air] Invalid=[]  Burst=4 BurstDelay=5 ReloadDelay=15
+    SpreadDamageWarhead ValidTargets=[Ground,Water] Invalid=[] Damage=25 versusLight=75
+    => weapon may target a flying aircraft: True; some warhead damages it: False
+    => WeaponInfo-level valid vs flying aircraft (target test AND some warhead): False
+
+=== whole mod: weapons whose weapon-level ValidTargets include Air, and whether the engine lets them hit a flying aircraft
+    227mm.stnk         weaponTargets=[Ground,Air]     canTargetOrDamageAir=True
+    apcgun.aa          weaponTargets=[Air]            canTargetOrDamageAir=True
+    atomic             weaponTargets=[Ground,Air]     canTargetOrDamageAir=True
+    bikerockets        weaponTargets=[Ground,Air]     canTargetOrDamageAir=True
+    deagle             weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    dozergun           weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    frockets           weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    glauncher          weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    heliaagun          weaponTargets=[Air]            canTargetOrDamageAir=True
+    hrockets           weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    ioncannon          weaponTargets=[Ground,Air]     canTargetOrDamageAir=True
+    lmg                weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    machinegun2        weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    mammothmissiles    weaponTargets=[Ground,Air]     canTargetOrDamageAir=True
+    mammothmissiles2   weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    marmg              weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    marpanzershrek     weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    nestmachinegunaa   weaponTargets=[Air]            canTargetOrDamageAir=False
+    orcaaamissiles     weaponTargets=[Air]            canTargetOrDamageAir=True
+    osirismissiles     weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    osirismissiles2    weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    patriot            weaponTargets=[Air]            canTargetOrDamageAir=True
+    quadcannon         weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    rockets            weaponTargets=[Ground,Air]     canTargetOrDamageAir=True
+    sammissile         weaponTargets=[Air]            canTargetOrDamageAir=True
+    techmachinegun     weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    towermissle        weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+    tsarocket          weaponTargets=[Ground,Air]     canTargetOrDamageAir=False
+
+=== A.2 armour modifier (DamageWarhead.DamageVersus, the engine's own method)
+new ArmorInfo().Type = <null>
+actors with Health but no Armor trait: 8 (camera,camera.small,flare,^bridge,bridge1,bridge2,bridge3,bridge4...); Armor trait with no Type: 0
+120mm: Versus table={None=30, Wood=75, Light=100, Heavy=100, Concrete=50}
+    vs camera         Armor=<no trait> -> DamageVersus = 100
+    vs e1             Armor=None       -> DamageVersus = 30
+    vs mtnk           Armor=Heavy      -> DamageVersus = 100
+    vs spc            Armor=light      -> DamageVersus = 100
+    vs fact           Armor=Wood       -> DamageVersus = 75
+Sniper: Versus table={None=100, Wood=5, Light=100, Heavy=20}
+    vs camera         Armor=<no trait> -> DamageVersus = 100
+    vs e1             Armor=None       -> DamageVersus = 100
+    vs mtnk           Armor=Heavy      -> DamageVersus = 20
+    vs spc            Armor=light      -> DamageVersus = 100
+    vs fact           Armor=Wood       -> DamageVersus = 5
+70mm: Versus table={None=30, Wood=75, Light=100, Heavy=100, Concrete=50}
+    vs camera         Armor=<no trait> -> DamageVersus = 100
+    vs e1             Armor=None       -> DamageVersus = 30
+    vs mtnk           Armor=Heavy      -> DamageVersus = 100
+    vs spc            Armor=light      -> DamageVersus = 100
+    vs fact           Armor=Wood       -> DamageVersus = 75
+M16: Versus table={None=100, Wood=25, Light=30, Heavy=10}
+    vs camera         Armor=<no trait> -> DamageVersus = 100
+    vs e1             Armor=None       -> DamageVersus = 100
+    vs mtnk           Armor=Heavy      -> DamageVersus = 10
+    vs spc            Armor=light      -> DamageVersus = 100
+    vs fact           Armor=Wood       -> DamageVersus = 25
+Flamethrower: Versus table={None=90, Wood=100, Light=75, Heavy=25}
+    vs camera         Armor=<no trait> -> DamageVersus = 100
+    vs e1             Armor=None       -> DamageVersus = 90
+    vs mtnk           Armor=Heavy      -> DamageVersus = 25
+    vs spc            Armor=light      -> DamageVersus = 100
+    vs fact           Armor=Wood       -> DamageVersus = 100
+
+=== A.3 weapon defaults (real engine: a weapon that sets none of them)
+bare weapon: Burst=1 BurstDelay=5 ReloadDelay=1 Range=0 MinRange=0 Charges=False ValidTargets=[Ground,Water]
+weapons in the mod that set BurstDelay explicitly vs not (Burst>1 only):
+    105mmdual: Burst=2 BurstDelay=4
+    120mmdual: Burst=2 BurstDelay=5
+    125mmdual: Burst=2 BurstDelay=5
+    227mm: Burst=4 BurstDelay=4
+    227mm.stnk: Burst=4 BurstDelay=10
+    bigflamer: Burst=2 BurstDelay=25
+    bikerockets: Burst=2 BurstDelay=10
+    boatmissile: Burst=2 BurstDelay=7
+    coaxial: Burst=6 BurstDelay=5
+    dozergun: Burst=4 BurstDelay=5
+    flamer: Burst=15 BurstDelay=1
+    heliaagun: Burst=2 BurstDelay=0
+    heliaggun: Burst=2 BurstDelay=0
+    hrockets: Burst=2 BurstDelay=5
+    laser2: Burst=6 BurstDelay=5
+    lmg: Burst=3 BurstDelay=5
+    machinegun: Burst=4 BurstDelay=5
+    machinegun2: Burst=4 BurstDelay=5
+    mammothmissiles: Burst=2 BurstDelay=15
+    mammothmissiles2: Burst=4 BurstDelay=5
+    mammothrockets: Burst=10 BurstDelay=5
+    marmg: Burst=3 BurstDelay=5
+    mortarshell2: Burst=5 BurstDelay=5
+    napalm: Burst=2 BurstDelay=2
+    nestmachinegun: Burst=3 BurstDelay=5
+    nestmachinegunaa: Burst=3 BurstDelay=5
+    orcaaamissiles: Burst=2 BurstDelay=15
+    orcaagmissiles: Burst=2 BurstDelay=15
+    osirismissiles: Burst=6 BurstDelay=5
+    osirismissiles2: Burst=4 BurstDelay=5
+    patriot: Burst=2 BurstDelay=15
+    prifle: Burst=3 BurstDelay=5
+    quadcannon: Burst=4 BurstDelay=5
+    scoutcampaign: Burst=4 BurstDelay=5
+    techmachinegun: Burst=4 BurstDelay=5
+    towermissle: Burst=2 BurstDelay=16
+    tsaburstrifle: Burst=3 BurstDelay=5
+    vulcan: Burst=3 BurstDelay=5
+    wolverinegun: Burst=10 BurstDelay=5

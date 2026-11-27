@@ -1,0 +1,57 @@
+loaded: actors=298 weapons=100
+
+=== fields of the engine's BuildingInfo (the `Building:` trait), as loaded by the mod's own assembly
+    String[] TerrainTypes
+    Int32 Adjacent
+    String Footprint
+    CVec Dimensions
+    Boolean RequiresBaseProvider
+    Boolean AllowInvalidPlacement
+    String[] BuildSounds
+    String[] UndeploySounds
+BuildingInfo has a field named Power: False
+fields of PowerInfo (the `Power:` trait): Amount
+
+=== power the engine applies (sum of PowerInfo.Amount), actors with any Power trait
+    afld         Power traits=1 amount=-30
+    eye          Power traits=1 amount=-200
+    fact         Power traits=1 amount=0
+    fix          Power traits=1 amount=-30
+    gtwr         Power traits=1 amount=-10
+    gun          Power traits=1 amount=-20
+    hpad         Power traits=1 amount=-10
+    hq           Power traits=1 amount=-40
+    hqgdi        Power traits=1 amount=-40
+    hqnod        Power traits=1 amount=-40
+    nuk2         Power traits=1 amount=200
+    nuke         Power traits=1 amount=100
+    obli         Power traits=1 amount=-150
+    proc         Power traits=1 amount=-50
+    pyle         Power traits=1 amount=-20
+    rdst         Power traits=1 amount=-20
+    sam          Power traits=1 amount=-20
+    tmpl         Power traits=1 amount=-150
+    weap         Power traits=1 amount=-30
+
+=== named buildings
+    atwr   PowerInfo amount=    0  Cost= 1000 CustomBuildTimeValue=<none> engine GetBuildTime=1500 StoresResources.Capacity=<none>
+    silo   PowerInfo amount=    0  Cost=  300 CustomBuildTimeValue=<none> engine GetBuildTime=450 StoresResources.Capacity=2400
+    hand   PowerInfo amount=    0  Cost=  300 CustomBuildTimeValue=<none> engine GetBuildTime=450 StoresResources.Capacity=<none>
+    vlcn   PowerInfo amount=    0  Cost=  500 CustomBuildTimeValue=<none> engine GetBuildTime=750 StoresResources.Capacity=<none>
+    gtwr   PowerInfo amount=  -10  Cost=  600 CustomBuildTimeValue=1440 engine GetBuildTime=1440 StoresResources.Capacity=<none>
+    gun    PowerInfo amount=  -20  Cost=  600 CustomBuildTimeValue=1440 engine GetBuildTime=1440 StoresResources.Capacity=<none>
+    sam    PowerInfo amount=  -20  Cost=  750 CustomBuildTimeValue=2160 engine GetBuildTime=2160 StoresResources.Capacity=<none>
+    proc   PowerInfo amount=  -50  Cost= 1500 CustomBuildTimeValue=<none> engine GetBuildTime=2250 StoresResources.Capacity=2000
+    nuke   PowerInfo amount=  100  Cost=  500 CustomBuildTimeValue=<none> engine GetBuildTime=750 StoresResources.Capacity=<none>
+    hq     PowerInfo amount=  -40  Cost= 1000 CustomBuildTimeValue=<none> engine GetBuildTime=1500 StoresResources.Capacity=<none>
+    obli   PowerInfo amount= -150  Cost= 1500 CustomBuildTimeValue=<none> engine GetBuildTime=2250 StoresResources.Capacity=<none>
+    pyle   PowerInfo amount=  -20  Cost=  500 CustomBuildTimeValue=<none> engine GetBuildTime=750 StoresResources.Capacity=<none>
+    weap   PowerInfo amount=  -30  Cost= 2000 CustomBuildTimeValue=<none> engine GetBuildTime=3000 StoresResources.Capacity=<none>
+
+=== all actors with StoresResources / CustomBuildTimeValue
+    gtwr       Capacity=- CustomBuildTimeValue=1440 Cost=600 engine GetBuildTime=1440
+    gun        Capacity=- CustomBuildTimeValue=1440 Cost=600 engine GetBuildTime=1440
+    proc       Capacity=2000 CustomBuildTimeValue=- Cost=1500 engine GetBuildTime=2250
+    rfnry      Capacity=1500 CustomBuildTimeValue=- Cost=1500 engine GetBuildTime=2250
+    sam        Capacity=- CustomBuildTimeValue=2160 Cost=750 engine GetBuildTime=2160
+    silo       Capacity=2400 CustomBuildTimeValue=- Cost=300 engine GetBuildTime=450
