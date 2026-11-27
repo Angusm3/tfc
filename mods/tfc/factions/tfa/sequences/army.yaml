@@ -273,6 +273,7 @@ mltvinf:
 mrtr:
 	Defaults:
 		Filename: mrtr.shp
+		Scale: 0.7
 	stand:
 		Facings: 8
 	stand2:
@@ -342,8 +343,10 @@ mrtr:
 		Start: 16
 		Length: 4
 		Tick: 1600
+		Scale: 1
 	icon:
 		Filename: mrtricon.shp
+		Scale: 1
 
 snpr:
 	Defaults:
@@ -514,7 +517,7 @@ snprd:
 cmbt:
 	Defaults:
 		Filename: cmbt.shp
-		Scale: 0.7
+		Scale: 0.5
 	stand:
 		Facings: 8
 	stand2:
@@ -599,13 +602,15 @@ cmbt:
 		Start: 16
 		Length: 4
 		Tick: 1600
+		Scale: 1
 	icon:
 		Filename: cmbticon.shp
+		Scale: 1
 
 hjkr:
 	Defaults:
 		Filename: hjkr.shp
-		Scale: 0.7
+		Scale: 0.6
 	stand:
 		Facings: 8
 	run:
@@ -672,8 +677,10 @@ hjkr:
 		Start: 16
 		Length: 4
 		Tick: 1600
+		Scale: 1
 	icon:
 		Filename: hjkricon.shp
+		Scale: 1
 
 fmcv:
 	idle:

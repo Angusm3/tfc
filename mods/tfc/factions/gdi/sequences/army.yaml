@@ -4,6 +4,7 @@
 medi:
 	Defaults:
 		Filename: medi.shp
+		Scale: 0.7
 	stand:
 		Facings: 8
 	run:
@@ -48,6 +49,7 @@ medi:
 		Length: 6
 		Tick: 1600
 		ZOffset: -511
+		Scale: 1
 	prone-stand:
 		Start: 130
 		Length: 4
@@ -59,10 +61,12 @@ medi:
 		Tick: 100
 	icon:
 		Filename: mediicon.shp
+		Scale: 1
 
 wlvr:
 	Defaults:
 		Filename: wlvr.shp
+		Scale: 0.45
 	stand:
 		Start: 96
 		Facings: 8
@@ -87,6 +91,7 @@ wlvr:
 		Start: 96
 	icon:
 		Filename: wlvricon.shp
+		Scale: 1
 
 # The 32-facing sprite is the turret only, as for stock GUN: 'idle' is an empty frame so the body draws nothing.
 vlcn:
