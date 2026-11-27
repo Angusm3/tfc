@@ -468,7 +468,7 @@ BRIK:
 		Queue: Support.GDI, Support.Nod, Support.Forgotten
 		BuildDuration: -1
 
-# Build times: 0.32 'CustomBuildTimeValue: 1440' became BuildDuration 1440 (ladder); the others use the cost (-1).
+# Build times: 0.32 'CustomBuildTimeValue: 1440' x queue 0.4 = BuildDuration 960 x 60 percent; the others use the cost (-1).
 GUN:
 	Health:
 		HP: 40000
@@ -476,7 +476,7 @@ GUN:
 		Type: Heavy
 	Buildable:
 		Queue: Support.Nod
-		BuildDuration: 1440
+		BuildDuration: 960
 	Turreted:
 		InitialFacing: 200
 	Armament:
@@ -487,7 +487,7 @@ GTWR:
 		Type: Wood
 	Buildable:
 		Queue: Support.GDI
-		BuildDuration: 1440
+		BuildDuration: 960
 	Turreted:
 		TurnSpeed: 1023
 

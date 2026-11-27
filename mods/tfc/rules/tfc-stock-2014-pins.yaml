@@ -569,7 +569,7 @@ SAM:
 	Armor:
 		Type: Heavy
 	Buildable:
-		BuildDuration: -1
+		BuildDuration: 1440
 	-FireWarheadsOnDeath:
 
 # Bridges
