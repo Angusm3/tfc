@@ -717,9 +717,9 @@ SLAR:
 	RevealsShroud:
 		Range: 4c0
 	WithBuildingBib:
-	# 0.32 wrote Building: Power: 50, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: 50 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: 50; the 2014 engine ignored it. Switched on at the owner's request (27 Nov 2026).
 	Power:
-		Amount: 0
+		Amount: 50
 	ProvidesPrerequisite@buildingname:
 
 ASLR:
@@ -743,9 +743,9 @@ ASLR:
 	RevealsShroud:
 		Range: 4c0
 	WithBuildingBib:
-	# 0.32 wrote Building: Power: 100, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: 100 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: 100; the 2014 engine ignored it. Switched on at the owner's request (27 Nov 2026).
 	Power:
-		Amount: 0
+		Amount: 100
 	ProvidesPrerequisite@buildingname:
 
 # FreeActor keeps 0.32's HARV (the GDI/Nod harvester), not FHARV.
@@ -802,9 +802,9 @@ RFNRY:
 		RequiresCondition: !build-incomplete
 	WithResourceStoragePipsDecoration:
 		PipCount: 15
-	# 0.32 wrote Building: Power: -30, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -30 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: -30; the 2014 engine ignored it. Switched on at the owner's request (27 Nov 2026).
 	Power:
-		Amount: 0
+		Amount: -30
 	ProvidesPrerequisite@buildingname:
 
 TENT:
@@ -855,9 +855,9 @@ TENT:
 		CancelledAudio: Cancelled
 	ProductionBar:
 		ProductionType: Infantry.Forgotten
-	# 0.32 wrote Building: Power: -5, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -5 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: -5; the 2014 engine ignored it. Switched on at the owner's request (27 Nov 2026).
 	Power:
-		Amount: 0
+		Amount: -5
 	ProvidesPrerequisite@buildingname:
 
 # AutoHeal: the building's Repair weapon (4d) works on damaged allied vehicles near it, "Use modern mechanics".
@@ -927,9 +927,9 @@ FSAL:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Repair
-	# 0.32 wrote Building: Power: -15, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -15 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: -15; the 2014 engine ignored it. Switched on at the owner's request (27 Nov 2026).
 	Power:
-		Amount: 0
+		Amount: -15
 	ProvidesPrerequisite@buildingname:
 
 # Turret art is baked into the sprite (32 facings from the 28 drawn, see sequences).
@@ -974,7 +974,7 @@ MGNST:
 	RenderDetectionCircle:
 	DetectCloaked:
 		Range: 5c0
-	# 0.32 wrote Building: Power: 0, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: 0 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: 0; the 2014 engine ignored it. Written as 0, so nothing changes (switched on at the owner's request, 27 Nov 2026).
 	Power:
 		Amount: 0
 	ProvidesPrerequisite@buildingname:
@@ -1030,9 +1030,9 @@ FHPD:
 		ProductionType: Aircraft.Forgotten
 	RenderSprites:
 		Image: hpad
-	# 0.32 wrote Building: Power: -10, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -10 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: -10; the 2014 engine ignored it. Switched on at the owner's request (27 Nov 2026).
 	Power:
-		Amount: 0
+		Amount: -10
 	ProvidesPrerequisite@buildingname:
 
 RDST:
@@ -1134,9 +1134,9 @@ TSLA:
 		ChargeAudio: tslachg2.aud
 		PauseOnCondition: build-incomplete
 	RenderRangeCircle:
-	# 0.32 wrote Building: Power: -200, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -200 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: -200; the 2014 engine ignored it. Switched on at the owner's request (27 Nov 2026).
 	Power:
-		Amount: 0
+		Amount: -200
 	ProvidesPrerequisite@buildingname:
 
 GRNH:
@@ -1165,9 +1165,9 @@ GRNH:
 		Footprint: ___ xxx xxx ===
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
-	# 0.32 wrote Building: Power: -50, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -50 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: -50; the 2014 engine ignored it. Switched on at the owner's request (27 Nov 2026).
 	Power:
-		Amount: 0
+		Amount: -50
 	Health:
 		HP: 200000
 	RevealsShroud:
@@ -1239,9 +1239,9 @@ FSAM:
 		PauseOnCondition: lowpower || build-incomplete
 	WithMuzzleOverlay:
 	RenderRangeCircle:
-	# 0.32 wrote Building: Power: -20, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -20 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: -20; the 2014 engine ignored it. Switched on at the owner's request (27 Nov 2026).
 	Power:
-		Amount: 0
+		Amount: -20
 	ProvidesPrerequisite@buildingname:
 
 # 0.32 'Burns: Interval: 20' = 1 hit point every 20 ticks, drawn with the fire overlay (as on a husk).
@@ -1275,9 +1275,9 @@ SPORETREE:
 	Building:
 		Footprint: xx
 		Dimensions: 2,1
-	# 0.32 wrote Building: Power: -20, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -20 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: -20; the 2014 engine ignored it. Switched on at the owner's request (27 Nov 2026).
 	Power:
-		Amount: 0
+		Amount: -20
 	Health:
 		HP: 10000
 	ProvidesPrerequisite@buildingname:
@@ -1313,7 +1313,7 @@ TFSR:
 		RequiresBaseProvider: False
 	RequiresBuildableArea:
 		Adjacent: 12
-	# 0.32 wrote Building: Power: 0, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: 0 to switch it on (open owner question Q-L).
+	# 0.32 wrote Building: Power: 0; the 2014 engine ignored it. Written as 0, so nothing changes (switched on at the owner's request, 27 Nov 2026).
 	Power:
 		Amount: 0
 	Health:
