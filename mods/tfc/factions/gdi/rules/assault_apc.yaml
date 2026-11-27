@@ -1,1 +1,132 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# Assault APC passenger variants (0.32 rules/assault_apc.yaml). The ten loadouts are cosmetic copies of APC with an extra M16.
+# 0.32 did not enable the TransformOnPassenger trigger on the base APC, so these are unbuildable and only placed by maps or scripts.
+
+APC.E1:
+	Inherits: APC
+	Tooltip:
+		Name: actor-apc-e1-name
+	-Buildable:
+	-Encyclopedia:
+	RenderSprites:
+		Image: apc
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+
+APC.E1E1:
+	Inherits: APC
+	Tooltip:
+		Name: actor-apc-e1e1-name
+	-Buildable:
+	-Encyclopedia:
+	RenderSprites:
+		Image: apc
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+
+APC.E1E1E1:
+	Inherits: APC
+	Tooltip:
+		Name: actor-apc-e1e1e1-name
+	-Buildable:
+	-Encyclopedia:
+	RenderSprites:
+		Image: apc
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+
+APC.E1E1E3:
+	Inherits: APC
+	Tooltip:
+		Name: actor-apc-e1e1e3-name
+	-Buildable:
+	-Encyclopedia:
+	RenderSprites:
+		Image: apc
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+
+APC.E1E3:
+	Inherits: APC
+	Tooltip:
+		Name: actor-apc-e1e3-name
+	-Buildable:
+	-Encyclopedia:
+	RenderSprites:
+		Image: apc
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+
+APC.E1E3E3:
+	Inherits: APC
+	Tooltip:
+		Name: actor-apc-e1e3e3-name
+	-Buildable:
+	-Encyclopedia:
+	RenderSprites:
+		Image: apc
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+
+APC.E3:
+	Inherits: APC
+	Tooltip:
+		Name: actor-apc-e3-name
+	-Buildable:
+	-Encyclopedia:
+	RenderSprites:
+		Image: apc
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+
+APC.E3E1:
+	Inherits: APC
+	Tooltip:
+		Name: actor-apc-e3e1-name
+	-Buildable:
+	-Encyclopedia:
+	RenderSprites:
+		Image: apc
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+
+APC.E3E3:
+	Inherits: APC
+	Tooltip:
+		Name: actor-apc-e3e3-name
+	-Buildable:
+	-Encyclopedia:
+	RenderSprites:
+		Image: apc
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88
+
+APC.E3E3E3:
+	Inherits: APC
+	Tooltip:
+		Name: actor-apc-e3e3e3-name
+	-Buildable:
+	-Encyclopedia:
+	RenderSprites:
+		Image: apc
+	Armament@2:
+		Name: 2
+		Weapon: M16
+		LocalOffset: 384,0,88

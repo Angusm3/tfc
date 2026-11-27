@@ -1,1 +1,205 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# TFC GDI actors that are new in 0.32 (design note section 2.1, lane 4a).
+# Stock GDI actors that TFC changed or pinned are in rules/tfc-overrides.yaml (4e) and rules/tfc-stock-2014-pins.yaml (4g).
+
+MEDI:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@DECORATIONS: ^InfantryExperienceHospitalHazmatOverrides
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: actor-medi.name
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 20
+		Queue: Infantry.GDI
+		Prerequisites: anyhq
+		Description: actor-medi.description
+	Health:
+		HP: 8000
+	Mobile:
+		Speed: 56
+	RevealsShroud:
+		Range: 3c0
+	Passenger:
+		CustomPipType: yellow
+	DetectCloaked:
+		Range: 1c0
+	# 0.32 AttackMedic + AutoHeal. Modern mechanics (owner's decision): heals allies carrying the Heal target
+	# type, which ^Infantry grants while damaged (rules/tfc-overrides.yaml).
+	Armament:
+		Weapon: Heal
+		Cursor: ability
+		OutsideRangeCursor: ability
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Heal
+	WithInfantryBody:
+		IdleSequences: idle1, idle2
+		StandSequences: stand
+		DefaultAttackSequence: heal
+
+WLVR:
+	Inherits: ^Vehicle
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@CLOAK: ^AcceptsCloakCrate
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: actor-wlvr.name
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 10
+		Queue: Vehicle.GDI
+		Prerequisites: anyhq
+		Description: actor-wlvr.description
+	Mobile:
+		TurnSpeed: 20
+		Speed: 99
+	Health:
+		HP: 80000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 6c0
+	Armament:
+		Weapon: WolverineGun
+	AttackFrontal:
+		Voice: Attack
+		FacingTolerance: 0
+	AttackMove:
+		Voice: Attack
+	# 0.32 drew this vehicle with RenderInfantry (an infantry-style sprite sheet).
+	-WithFacingSpriteBody:
+	# 0.32 WLVR had no Explodes; stock ^Vehicle now fires UnitExplodeSmall on death.
+	-FireWarheadsOnDeath:
+	WithInfantryBody:
+		StandSequences: stand
+		DefaultAttackSequence: shoot
+	QuantizeFacingsFromSequence:
+		Sequence: stand
+	Voiced:
+		VoiceSet: GenericVoice
+
+VLCN:
+	Inherits: ^Support
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	Selectable:
+		Bounds: 1024, 1024
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: actor-vlcn.name
+	Buildable:
+		BuildPaletteOrder: 45
+		Prerequisites: barracks
+		Queue: Defence.GDI
+		Description: actor-vlcn.description
+	Building:
+	GivesBuildableArea:
+		AreaTypes: building
+	Health:
+		HP: 50000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 7c0
+	Turreted:
+		TurnSpeed: 48
+		InitialFacing: 200
+		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+	WithSpriteTurret:
+		RequiresCondition: !build-incomplete
+		Recoils: false
+	Armament:
+		Weapon: Vulcan
+		LocalOffset: 512,0,112
+		MuzzleSequence: muzzle
+	AttackTurreted:
+		PauseOnCondition: build-incomplete
+	WithMuzzleOverlay:
+	-WithDeathAnimation:
+	DetectCloaked:
+		Range: 5c0
+	Power:
+		Amount: -20
+	-BodyOrientation:
+	ClassicFacingBodyOrientation:
+
+HQGDI:
+	Inherits: ^BaseBuilding
+	Inherits@IDISABLE: ^DisabledOverlay
+	Inherits@POWERDOWN: ^TfcPowerDown
+	HitShape:
+		TargetableOffsets: 0,0,0, 0,512,0, 420,-598,256
+		Type: Rectangle
+			TopLeft: -1024, -384
+			BottomRight: 1024, 1024
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: actor-hqgdi.name
+	ProvidesPrerequisite:
+		Prerequisite: anyhq
+	Buildable:
+		BuildPaletteOrder: 70
+		Prerequisites: proc
+		Queue: Building.GDI
+		Description: actor-hqgdi.description
+	Building:
+		Footprint: X_ xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	Selectable:
+		Bounds: 2048, 1706, 0, 384
+		DecorationBounds: 2048, 2261, 0, -170
+	WithSpriteBody:
+		PauseOnCondition: lowpower || powerdown
+	Health:
+		HP: 75000
+	RevealsShroud:
+		Range: 10c0
+	WithBuildingBib:
+	ProvidesRadar:
+		RequiresCondition: !lowpower && !powerdown
+	RenderDetectionCircle:
+	DetectCloaked:
+		Range: 8c0
+		RequiresCondition: !lowpower && !powerdown
+	AirstrikePower:
+		PauseOnCondition: lowpower || powerdown
+		Icon: airstrike
+		ChargeInterval: 4500
+		SquadSize: 3
+		QuantizedFacings: 8
+		Name: actor-hq.airstrikepower-name
+		Description: actor-hq.airstrikepower-description
+		EndChargeSpeechNotification: AirstrikeReady
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		IncomingSpeechNotification: EnemyPlanesApproaching
+		EndChargeTextNotification: notification-airstrike-ready
+		SelectTargetTextNotification: notification-select-target
+		InsufficientPowerTextNotification: notification-insufficient-power
+		IncomingTextNotification: notification-enemy-planes-approaching
+		UnitType: a10
+		DisplayBeacon: True
+		BeaconPoster: airstrike
+		BeaconPosterPalette: beaconposter
+		DisplayRadarPing: True
+		CameraActor: camera
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: airstrikedirection
+		SupportPowerPaletteOrder: 10
+	SupportPowerChargeBar:
+	Power:
+		Amount: -40
