@@ -36,10 +36,12 @@ Load order matters: every `tfc-*` file is listed after the stock files it overri
 | GDI | `factions/gdi/rules/army.yaml`, `factions/gdi/rules/assault_apc.yaml`, `factions/gdi/sequences/army.yaml` |
 | Nod | `factions/nod/rules/army.yaml`, `factions/nod/sequences/army.yaml` |
 | Forgotten (tfa) | `factions/tfa/rules/army.yaml`, `factions/tfa/sequences/army.yaml` |
+| New TFC actors that belong to no faction (TANYA, SEAL, IVAN...) | `rules/tfc-shared.yaml` |
 | Shared actor changes | `rules/tfc-overrides.yaml` |
 | Stock units pinned to 2014 values (Q3) | `rules/tfc-stock-2014-pins.yaml` (loaded before the overrides) |
 | World, factions, start units | `rules/tfc-world.yaml` |
 | AI | `rules/tfc-ai.yaml` |
+| Sequences of images used only by weapons | `sequences/tfc-weapons.yaml` |
 | Sequences of changed stock actors | `sequences/tfc-overrides.yaml` |
 | Weapons | `weapons/tfc-retuned.yaml` (retuned stock weapons), `weapons/tfc-gdi.yaml`, `weapons/tfc-nod.yaml`, `weapons/tfc-tfa.yaml` (new weapons) |
 | Voices, notifications, music | `audio/tfc-voices.yaml`, `audio/tfc-notifications.yaml`, `audio/tfc-music.yaml` |
