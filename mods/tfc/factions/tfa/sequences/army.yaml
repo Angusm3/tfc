@@ -1089,3 +1089,41 @@ bdzr.destroyed:
 		Facings: 32
 		UseClassicFacings: True
 		ZOffset: -512
+
+# p7: own art for the 'Tib farm' (it used the Tiberium Silo sprite): a fenced plot with Tiberium crystals.
+tibfarm:
+	Defaults:
+		Filename: tibfarm.shp
+	idle:
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+		Tick: 800
+	make:
+		Filename: tibfarmmake.shp
+		Length: *
+		Tick: 80
+	icon:
+		Filename: tibfarmicon.shp
+
+# p7: own art for the Pillbox (it used the Guard Tower sprite): a concrete dome in a sandbag ring.
+foxhole:
+	Defaults:
+		Filename: foxhole.shp
+	idle:
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+		Tick: 800
+	make:
+		Filename: foxholemake.shp
+		Length: *
+		Tick: 80
+	muzzle:
+		Filename: minigun.shp
+		Length: 6
+		Facings: 8
+	icon:
+		Filename: foxholeicon.shp

@@ -1249,7 +1249,7 @@ SPORETREE:
 	Inherits: ^ForgottenBuilding
 	Inherits@shape: ^2x1Shape
 	RenderSprites:
-		Image: silo
+		Image: tibfarm
 	SeedsResource:
 		ResourceType: Tiberium
 		Interval: 2
@@ -1327,7 +1327,7 @@ FOXHOLE:
 	Inherits@AUTOTARGET: ^AutoTargetAll
 	Inherits@TRANSPORT: ^Transport
 	RenderSprites:
-		Image: gtwr
+		Image: foxhole
 	Tooltip:
 		Name: actor-foxhole.name
 	Valued:
