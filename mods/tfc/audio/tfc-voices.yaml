@@ -1,1 +1,73 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# TFC voice sets, ported from legacy-0.32/voices.yaml. Loaded after the stock audio/voices.yaml.
+# 0.32 "Move" is now "Action". Every set also defines what the 20250330 lint requires of it
+# (Select, Action, Attack, Die, Burned, Zapped, Poisoned; Unload for transports), reusing the set's own sounds.
+# Sound files are in audio/ (mounted as tfc|audio) except the stock nuyell*/ramyell1 files.
+
+# The 'forgotten' faction speaks with the same sounds as gdi/nod (the .v01/.v03 variants), as in 0.32.
+GenericVoice:
+	Variants:
+		forgotten: .v01, .v03
+
+VehicleVoice:
+	Variants:
+		forgotten: .v00, .v02
+
+HijackerVoice:
+	Voices:
+		Select: yeah, what, needaride
+		Action: hitit, nokeysnoproblem, needaride
+		Attack: hotwired, fouronthefloor
+		Die: ramyell1
+		Burned: ramyell1
+		Zapped: ramyell1
+		Poisoned: ramyell1
+		# 0.32 named "jackmeup" but the file is jackemup.aud.
+		Build: jackemup
+
+TanyaVoice:
+	Voices:
+		Select: itansea, itanseb, itansec, itansed, itansee
+		Action: itanmoa, itanmob, itanmoc, itanmod, itanmoe, itanmof
+		Attack: itanatc, itanatd
+		Die: iseadib, iseadia, iseadic
+		Build: itanatb
+		Demolish: itanata
+		Burned: itandia
+		Zapped: itandia
+		Poisoned: itandia
+
+SealVoice:
+	Voices:
+		Select: iseaseb, iseased
+		Action: iseamoa, iseamob, iseamoc
+		Attack: iseaata, iseaatb, iseaatc
+		Die: iseadib, iseadia, iseadic
+		Build: iseasea
+		Demolish: iseasec
+		Burned: iseadia
+		Zapped: iseadib
+		Poisoned: iseadia
+
+ShockVoice:
+	Voices:
+		Select: itessea, itessec, itessed, itessee
+		Action: itesmoa, itesmob, itesmoc, itesmod, itesmoe, itesmof
+		Attack: itesata, itesatb, itesatc, itesatd, itesate
+		Die: itesdib, itesdia, itesdic, itesdid
+		Build: itessea
+		Demolish: itessec
+		Burned: itesdia
+		Zapped: itesdib
+		Poisoned: itesdia
+
+IvanVoice:
+	Voices:
+		Select: icrasea, icrasec, icrased, icrasee, icrasef, icraseb
+		Action: icramoa, icramob, icramoc, icramod, icramof
+		Attack: icraata, icraatb, icraatc, icraatd
+		Die: icradib, icradia
+		Build: icrasea
+		Demolish: icrasec
+		Burned: icradia
+		Zapped: icradib
+		Poisoned: icradia
