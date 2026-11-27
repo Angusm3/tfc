@@ -1,1 +1,580 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# TFC: stock actors that TFC never changed, pinned back to their 2014 (0.32) values. Owner decision Q3: "remain pinned".
+# Source of truth: tools/baseline-0.32-actors.csv. Only fields that differ from modern cnc are written.
+# Units: HP x100, turn speeds x4 (255 becomes 1023), ranges as WDist, speeds, costs and build orders unchanged.
+# Nothing here edits a template; rendering, sounds, strings and modern-only traits stay as stock 20250330.
+# Build time: modern stock BuildDuration is reset to -1 (0.6 x cost, as 2014 had it) where it set one.
+# Terrain speeds are pinned on World by lane 4e (rules/tfc-overrides.yaml), not here.
+# A death explosion that 2014 lacked is removed with -FireWarheadsOnDeath; the weapons are lane 4d's.
+
+# Civilian infantry
+C1:
+	Valued:
+		Cost: 70
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+C2:
+	Valued:
+		Cost: 70
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+C3:
+	Valued:
+		Cost: 70
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+C4:
+	Valued:
+		Cost: 70
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+C5:
+	Valued:
+		Cost: 70
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+C6:
+	Valued:
+		Cost: 70
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+C7:
+	Valued:
+		Cost: 70
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+C8:
+	Valued:
+		Cost: 70
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+C9:
+	Valued:
+		Cost: 70
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+C10:
+	Valued:
+		Cost: 70
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+# Infantry
+E2:
+	Mobile:
+		Speed: 71
+	DetectCloaked:
+		Range: 1c0
+
+E4:
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+E5:
+	Mobile:
+		Speed: 56
+	DetectCloaked:
+		Range: 1c0
+
+# Vehicles
+APC:
+	Health:
+		HP: 20000
+	Mobile:
+		TurnSpeed: 32
+	FireWarheadsOnDeath:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+
+ARTY:
+	Mobile:
+		Speed: 85
+		TurnSpeed: 8
+	RevealsShroud:
+		Range: 8c0
+	FireWarheadsOnDeath:
+		Weapon: UnitExplode
+		EmptyWeapon: UnitExplode
+
+BGGY:
+	-FireWarheadsOnDeath:
+
+# Own locomotor (bike), declared on World by S2; modern stock gives it the wheeled one.
+BIKE:
+	Valued:
+		Cost: 600
+	Health:
+		HP: 12000
+	Mobile:
+		Speed: 213
+		Locomotor: bike
+	-FireWarheadsOnDeath:
+
+FTNK:
+	Mobile:
+		Speed: 99
+	RevealsShroud:
+		Range: 5c0
+
+HTNK:
+	Valued:
+		Cost: 1500
+	Health:
+		HP: 80000
+	Mobile:
+		Speed: 56
+		TurnSpeed: 12
+	Turreted:
+		TurnSpeed: 12
+	FireWarheadsOnDeath:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+
+# Modern stock uses MachineGunH.
+JEEP:
+	Mobile:
+		Speed: 156
+	Armament:
+		Weapon: MachineGun
+	-FireWarheadsOnDeath:
+
+LTNK:
+	Valued:
+		Cost: 600
+	Health:
+		HP: 36000
+	Mobile:
+		Speed: 113
+
+MHQ:
+	Mobile:
+		Speed: 85
+
+MLRS:
+	Health:
+		HP: 12000
+	Mobile:
+		Speed: 99
+
+MSAM:
+	Valued:
+		Cost: 1200
+	Mobile:
+		Speed: 85
+	Turreted:
+		TurnSpeed: 1023
+	RevealsShroud:
+		Range: 8c0
+	FireWarheadsOnDeath:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+
+MTNK:
+	Valued:
+		Cost: 800
+	Mobile:
+		Speed: 85
+	FireWarheadsOnDeath:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+
+# 2014 had one armament; modern adds an anti-air secondary.
+STNK:
+	Mobile:
+		Speed: 142
+	Cloak:
+		InitialDelay: 90
+		CloakDelay: 90
+	-FireWarheadsOnDeath:
+	-Armament@SECONDARY:
+
+# Aircraft
+HELI:
+	Aircraft:
+		Speed: 186
+		TurnSpeed: 16
+	ReloadAmmoPool:
+		Count: 10
+		Delay: 200
+
+ORCA:
+	Health:
+		HP: 9000
+	Aircraft:
+		TurnSpeed: 16
+
+C17:
+	Aircraft:
+		Speed: 326
+
+# Ships
+BOAT:
+	Turreted:
+		TurnSpeed: 28
+	-FireWarheadsOnDeath:
+
+# Modern stock sets Cargo Types: disabled; 2014 carried infantry and vehicles. Not buildable in either.
+LST:
+	Mobile:
+		Speed: 142
+	Cargo:
+		Types: Infantry, Vehicle
+	-FireWarheadsOnDeath:
+
+# Husks
+ARTY.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+BGGY.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+BIKE.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+FTNK.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+HARV.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+HELI.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+
+HTNK.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+JEEP.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+LTNK.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+MCV.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+MSAM.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+MTNK.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+ORCA.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+
+STNK.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	-FireWarheadsOnDeath:
+
+TRAN.Husk:
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 8c0
+
+# Creatures
+VICE:
+	Valued:
+		Cost: 1000
+	Armor:
+		Type: Wood
+	Mobile:
+		Speed: 71
+		Locomotor: vice
+
+# Locomotors vice and vicecrush are declared on World by S2.
+# 2014 queue Biolab with no prerequisites is not pinned (see the PR); modern keeps ~disabled.
+PVICE:
+	Valued:
+		Cost: 1000
+	Armor:
+		Type: Wood
+	Mobile:
+		Speed: 71
+		Locomotor: vicecrush
+	Buildable:
+		BuildPaletteOrder: 40
+
+# Production, tech and civilian structures
+AFLD:
+	Health:
+		HP: 100000
+	Power:
+		Amount: -30
+	Buildable:
+		BuildPaletteOrder: 50
+	ProductionQueue:
+		LowPowerModifier: 300
+	-FireWarheadsOnDeath:
+
+PYLE:
+	Health:
+		HP: 50000
+	Power:
+		Amount: -20
+	Buildable:
+		BuildPaletteOrder: 40
+	ProductionQueue:
+		LowPowerModifier: 300
+	-FireWarheadsOnDeath:
+
+WEAP:
+	Health:
+		HP: 100000
+	Power:
+		Amount: -30
+	Buildable:
+		BuildPaletteOrder: 50
+	ProductionQueue:
+		LowPowerModifier: 300
+	-FireWarheadsOnDeath:
+
+EYE:
+	Health:
+		HP: 120000
+	-FireWarheadsOnDeath:
+
+TMPL:
+	Health:
+		HP: 200000
+	-FireWarheadsOnDeath:
+
+HOSP:
+	Health:
+		HP: 100000
+	-FireWarheadsOnDeath:
+
+BIO:
+	Health:
+		HP: 40000
+	-FireWarheadsOnDeath:
+
+MISS:
+	Valued:
+		Cost: 2000
+	Health:
+		HP: 40000
+	-FireWarheadsOnDeath:
+
+ARCO:
+	-FireWarheadsOnDeath:
+
+V01:
+	-FireWarheadsOnDeath:
+
+V02:
+	-FireWarheadsOnDeath:
+
+V03:
+	-FireWarheadsOnDeath:
+
+V04:
+	-FireWarheadsOnDeath:
+
+V05:
+	-FireWarheadsOnDeath:
+
+V06:
+	-FireWarheadsOnDeath:
+
+V07:
+	-FireWarheadsOnDeath:
+
+V08:
+	-FireWarheadsOnDeath:
+
+V09:
+	-FireWarheadsOnDeath:
+
+V10:
+	-FireWarheadsOnDeath:
+
+V11:
+	-FireWarheadsOnDeath:
+
+V19:
+	Health:
+		HP: 40000
+	-FireWarheadsOnDeath:
+
+V20:
+	-FireWarheadsOnDeath:
+
+V21:
+	-FireWarheadsOnDeath:
+
+V22:
+	-FireWarheadsOnDeath:
+
+V23:
+	-FireWarheadsOnDeath:
+
+V24:
+	-FireWarheadsOnDeath:
+
+V25:
+	-FireWarheadsOnDeath:
+
+V26:
+	-FireWarheadsOnDeath:
+
+V27:
+	-FireWarheadsOnDeath:
+
+V28:
+	-FireWarheadsOnDeath:
+
+V29:
+	-FireWarheadsOnDeath:
+
+V30:
+	-FireWarheadsOnDeath:
+
+V31:
+	-FireWarheadsOnDeath:
+
+V32:
+	-FireWarheadsOnDeath:
+
+V33:
+	-FireWarheadsOnDeath:
+
+V34:
+	-FireWarheadsOnDeath:
+
+V35:
+	-FireWarheadsOnDeath:
+
+V36:
+	-FireWarheadsOnDeath:
+
+V37:
+	-FireWarheadsOnDeath:
+
+# Defences
+# Pending lane 4d: 2014 used Armament Weapon: SAMMissile, which 20250330 stock does not define (stock uses Dragon).
+# Add when 4d's weapons/tfc-retuned.yaml is merged:
+#	Armament:
+#		Weapon: SAMMissile
+SAM:
+	Valued:
+		Cost: 750
+	Armor:
+		Type: Heavy
+	Buildable:
+		BuildDuration: -1
+	-FireWarheadsOnDeath:
+
+# Bridges
+BRIDGE1:
+	Health:
+		HP: 50000
+	Armor:
+		Type: None
+
+BRIDGE2:
+	Health:
+		HP: 50000
+	Armor:
+		Type: None
+
+BRIDGE3:
+	Health:
+		HP: 50000
+	Armor:
+		Type: None
+
+BRIDGE4:
+	Health:
+		HP: 50000
+	Armor:
+		Type: None
+
+# Modern-only stock units stay unbuildable (design note Q-F, default (a)): TRUCK, the supply truck, did not exist in 2014.
+TRUCK:
+	Buildable:
+		Prerequisites: ~disabled
