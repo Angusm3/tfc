@@ -1,1 +1,60 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# Phase 5a: the third faction (the Forgotten), its starting units, and the 2014 (0.32) starting-unit sets.
+# Layering: this file comes after tfc-overrides.yaml, so it wins. Lists (Factions, SupportActors, RandomFactionMembers) are replaced whole.
+# Chat and developer commands (ChatCommands, DevCommands, ...) are NOT removed: they stay as in stock 20250330 (owner decision, needed for testing).
+World:
+	# 0.32 had no Random list: every selectable country was in it, so the Forgotten were too.
+	Faction@Random:
+		RandomFactionMembers: gdi, nod, forgotten
+	Faction@forgotten:
+		Name: faction-forgotten.name
+		InternalName: forgotten
+		Description: faction-forgotten.description
+	# Starting units. 0.32 (and 2014 stock) offered these sets; every set of the chosen class is a candidate and one is picked at random.
+	StartingUnits@mcvonly:
+		Factions: gdi, nod, forgotten
+	# The 0.32 sets for GDI and Nod that stock 20250330 changed or dropped (Q3: keep the 2014 values).
+	StartingUnits@defaultgdib:
+		Class: light
+		ClassName: options-starting-units.light-support
+		Factions: gdi
+		BaseActor: mcv
+		SupportActors: e1,e1,e1,e1,e1,e1,e3,apc
+	StartingUnits@defaultnoda:
+		SupportActors: e1,e1,e1,e1,e3,bggy,bike
+	StartingUnits@defaultnodb:
+		Class: light
+		ClassName: options-starting-units.light-support
+		Factions: nod
+		BaseActor: mcv
+		SupportActors: e1,e1,e1,e3,e3,e3,bggy
+	StartingUnits@defaultnodc:
+		Class: light
+		ClassName: options-starting-units.light-support
+		Factions: nod
+		BaseActor: mcv
+		SupportActors: e1,e1,e1,e1,e1,e1,e1,e3,bike
+	# The Forgotten sets from 0.32. As in 0.32 the base unit is the ordinary MCV (it deploys into FACT, which carries the Forgotten queues).
+	StartingUnits@defaultforgottena:
+		Class: light
+		ClassName: options-starting-units.light-support
+		Factions: forgotten
+		BaseActor: mcv
+		SupportActors: sniper,militia,militia,militia
+	StartingUnits@defaultforgottenb:
+		Class: light
+		ClassName: options-starting-units.light-support
+		Factions: forgotten
+		BaseActor: mcv
+		SupportActors: sniper,militia,militia,militia,smaw
+	StartingUnits@heavyforgottena:
+		Class: heavy
+		ClassName: options-starting-units.heavy-support
+		Factions: forgotten
+		BaseActor: mcv
+		SupportActors: sniper,militia,smaw,smaw,ftch,fhtnk
+	StartingUnits@heavyforgottenb:
+		Class: heavy
+		ClassName: options-starting-units.heavy-support
+		Factions: forgotten
+		BaseActor: mcv
+		SupportActors: sniper,militia,militia,smaw,smaw,smaw,smaw,ftch,fhtnk,fhtnk
