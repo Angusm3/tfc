@@ -451,6 +451,9 @@ SILO:
 		Queue: Support.GDI, Support.Nod, Support.Forgotten
 	StoresPlayerResources:
 		Capacity: 2400
+	# 0.32 wrote Building: Power: -10, which the 2014 engine ignored (no such field): no power in 0.32. Stock draws -10; set Amount: -10 to switch it on (open owner question Q-L).
+	Power:
+		Amount: 0
 
 # No 0.32 prerequisite: 'fact' is always present for a player who can use the support queue.
 BRIK:
@@ -497,8 +500,9 @@ ATWR:
 		Range: 9c0
 	DetectCloaked:
 		Range: 6c0
+	# 0.32 wrote Building: Power: -40, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -40 to switch it on (open owner question Q-L).
 	Power:
-		Amount: -40
+		Amount: 0
 	Buildable:
 		Prerequisites: anyhq
 		Queue: Support.GDI
@@ -576,8 +580,9 @@ HAND:
 		Cost: 300
 	Health:
 		HP: 50000
+	# 0.32 wrote Building: Power: -20, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -20 to switch it on (open owner question Q-L).
 	Power:
-		Amount: -20
+		Amount: 0
 	Buildable:
 		BuildPaletteOrder: 40
 	ProductionQueue:

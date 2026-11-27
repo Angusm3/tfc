@@ -127,8 +127,9 @@ VLCN:
 	-WithDeathAnimation:
 	DetectCloaked:
 		Range: 5c0
+	# 0.32 wrote Building: Power: -20, which the 2014 engine ignored (no such field): no power in 0.32. Set Amount: -20 to switch it on (open owner question Q-L).
 	Power:
-		Amount: -20
+		Amount: 0
 	-BodyOrientation:
 	ClassicFacingBodyOrientation:
 
