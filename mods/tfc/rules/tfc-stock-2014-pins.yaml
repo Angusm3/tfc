@@ -128,6 +128,16 @@ ARTY:
 
 BGGY:
 	-FireWarheadsOnDeath:
+	Parachutable:
+		FallRate: 26
+		KilledOnImpassableTerrain: true
+		ParachutingCondition: parachute
+	WithParachute:
+		Image: parach
+		Sequence: idle
+		OpeningSequence: open
+		Offset: 0,0,200
+		RequiresCondition: parachute
 
 # Own locomotor (bike), declared on World by S2; modern stock gives it the wheeled one.
 BIKE:
@@ -169,6 +179,16 @@ JEEP:
 	-FireWarheadsOnDeath:
 
 LTNK:
+	Parachutable:
+		FallRate: 26
+		KilledOnImpassableTerrain: true
+		ParachutingCondition: parachute
+	WithParachute:
+		Image: parach
+		Sequence: idle
+		OpeningSequence: open
+		Offset: 0,0,200
+		RequiresCondition: parachute
 	Valued:
 		Cost: 600
 	Health:

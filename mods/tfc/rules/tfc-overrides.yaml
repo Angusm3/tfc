@@ -280,13 +280,34 @@ MLRS.Husk:
 
 # ---- Infantry ----
 
+# E1, E3, BGGY and LTNK are the HQNOD paradrop's DropItems: 0.32 dropped them with the parachute from parach.shp.
 E1:
 	Mobile:
 		Speed: 56
+	Parachutable:
+		FallRate: 26
+		KilledOnImpassableTerrain: true
+		ParachutingCondition: parachute
+	WithParachute:
+		Image: parach
+		Sequence: idle
+		OpeningSequence: open
+		Offset: 0,0,427
+		RequiresCondition: parachute
 
 E3:
 	Mobile:
 		Speed: 42
+	Parachutable:
+		FallRate: 26
+		KilledOnImpassableTerrain: true
+		ParachutingCondition: parachute
+	WithParachute:
+		Image: parach
+		Sequence: idle
+		OpeningSequence: open
+		Offset: 0,0,427
+		RequiresCondition: parachute
 	DetectCloaked:
 		Range: 1c0
 

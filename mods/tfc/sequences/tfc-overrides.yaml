@@ -49,3 +49,13 @@ icon:
 	paratroopers:
 		Filename: pinficon.shp
 		Start: 0
+
+# The paradrop parachute (0.32 sequences/misc.yaml; stock cnc has no parach image). Used by E1, E3, BGGY and LTNK.
+parach:
+	Defaults:
+		Filename: parach.shp
+	open:
+		Length: 5
+	idle:
+		Start: 5
+		Length: 11
