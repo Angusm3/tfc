@@ -525,11 +525,10 @@ V37:
 	-FireWarheadsOnDeath:
 
 # Defences
-# Pending lane 4d: 2014 used Armament Weapon: SAMMissile, which 20250330 stock does not define (stock uses Dragon).
-# Add when 4d's weapons/tfc-retuned.yaml is merged:
-#	Armament:
-#		Weapon: SAMMissile
+# 2014 used Armament Weapon: SAMMissile (lane 4d, weapons/tfc-retuned.yaml); 20250330 stock uses Dragon.
 SAM:
+	Armament:
+		Weapon: SAMMissile
 	Valued:
 		Cost: 750
 	Armor:
