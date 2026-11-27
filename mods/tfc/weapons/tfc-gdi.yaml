@@ -1,1 +1,73 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# New TFC weapons first used by a GDI actor (0.32 weapons.yaml), or by a shared GDI-side infantry actor.
+
+Colt45:
+	ReloadDelay: 5
+	Range: 7c0
+	Report: itanatta.aud,itanattb.aud
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 5000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+P90:
+	ReloadDelay: 8
+	Range: 7c0
+	Report: iseaatta.aud,iseaattb.aud
+	ValidTargets: Ground
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 10000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+NestMachineGun:
+	ReloadDelay: 80
+	Range: 7c0
+	Report: mgun11.aud
+	ValidTargets: Ground
+	Burst: 3
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2500
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 25
+			Heavy: 25
+			Concrete: 10
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+WolverineGun:
+	ReloadDelay: 5
+	Range: 5c0
+	Report: wlvrgun.wav
+	Burst: 10
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 170
+		Damage: 800
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 25
+			Heavy: 10
+			Concrete: 10
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath

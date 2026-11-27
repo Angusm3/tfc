@@ -1,1 +1,110 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# New TFC weapons first used by a Nod actor (0.32 weapons.yaml), or by a shared Nod-side infantry actor.
+
+MiniTeslaZap:
+	ReloadDelay: 5
+	Range: 4c512
+	Report: itesatta.aud,itesat2a.aud,itesat2b.aud
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 4000
+		Versus:
+			None: 100
+			Wood: 60
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+LaserSniper:
+	ReloadDelay: 20
+	Range: 10c0
+	Report: ramgun2.aud
+	Projectile: LaserZap
+		Width: 43
+		HitAnim: laserfire
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 10000
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 20
+			Heavy: 10
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+
+PRifle:
+	ReloadDelay: 10
+	Range: 5c0
+	Report: prifle.wav
+	Burst: 3
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 4000
+		Versus:
+			None: 100
+			Wood: 30
+			Light: 50
+			Heavy: 30
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+
+Repair:
+	ReloadDelay: 60
+	Range: 4c0
+	Report: fixit1.aud
+	ValidTargets: Repair
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Damage: -2000
+		ValidRelationships: Ally
+		ValidTargets: Repair
+		Versus:
+			None: 0
+			Wood: 0
+			Light: 100
+			Heavy: 100
+			Concrete: 0
+
+Laser2:
+	ReloadDelay: 120
+	Range: 8c512
+	Report: obelray1.aud
+	Burst: 6
+	Projectile: LaserZap
+		Width: 43
+		HitAnim: laserfire
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 8000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+
+TurretLaser:
+	ReloadDelay: 20
+	Range: 8c512
+	Report: obelray1.aud
+	Burst: 1
+	Projectile: LaserZap
+		Width: 43
+		HitAnim: laserfire
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 4000
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 20
+			Heavy: 10
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath

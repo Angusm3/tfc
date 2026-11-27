@@ -1,1 +1,794 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# New TFC weapons first used by a Forgotten actor (0.32 weapons.yaml).
+
+Scout:
+	ReloadDelay: 100
+	Range: 10c0
+	Report: sv98.wav
+	Projectile: Bullet
+		Speed: 1c682
+		ContrailLength: 32
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 10000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+
+Scout2:
+	ReloadDelay: 40
+	Range: 12c0
+	Report: sv98.wav
+	Projectile: Bullet
+		Speed: 1c682
+		ContrailLength: 32
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 20000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 50
+			Heavy: 0
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+SKS:
+	ReloadDelay: 10
+	Range: 5c0
+	Report: sks.wav
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 1000
+		Versus:
+			None: 100
+			Wood: 20
+			Light: 20
+			Heavy: 20
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+Deagle:
+	ReloadDelay: 5
+	Range: 4c0
+	Report: deagle.wav
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 10
+			Heavy: 0
+			Concrete: 0
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+105mmdual:
+	ReloadDelay: 50
+	Range: 4c768
+	Report: tnkfire4.aud
+	Burst: 2
+	BurstDelays: 4
+	Projectile: Bullet
+		Speed: 682
+		Image: 120MM
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 3000
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 75
+			Heavy: 100
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+Tiberium2:
+	ReloadDelay: 4
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: -100
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+		DamageTypes: TiberiumDeath
+
+TechMachineGun:
+	ReloadDelay: 15
+	Range: 5c0
+	Report: mgun11.aud
+	ValidTargets: Ground, Air
+	Burst: 4
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2500
+		Versus:
+			None: 100
+			Wood: 5
+			Light: 50
+			Heavy: 5
+			Concrete: 5
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+Dozergun:
+	ReloadDelay: 15
+	Range: 5c0
+	Report: mgun11.aud
+	ValidTargets: Ground, Air
+	Burst: 4
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2000
+		Versus:
+			None: 100
+			Wood: 80
+			Light: 50
+			Heavy: 10
+			Concrete: 50
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+TeslaZap:
+	ReloadDelay: 3
+	Range: 8c512
+	Report: tesla1.aud
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 10000
+		Versus:
+			None: 100
+			Wood: 60
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, TiberiumDeath
+
+Molotov:
+	ReloadDelay: 100
+	Range: 5c0
+	Report: toss1.aud
+	Projectile: Bullet
+		Speed: 204
+		Inaccuracy: 213
+		Image: MLTV
+		LaunchAngle: 62
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 5000
+		Versus:
+			None: 90
+			Wood: 100
+			Light: 75
+			Heavy: 20
+			Concrete: 75
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+
+MortarShell:
+	ReloadDelay: 120
+	Range: 10c512
+	MinRange: 3c0
+	Report: tnkfire2.aud
+	Projectile: Bullet
+		Speed: 204
+		Inaccuracy: 1c256
+		Image: 120MM
+		LaunchAngle: 110
+		Blockable: false
+		ContrailLength: 60
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 15000
+		Versus:
+			None: 90
+			Wood: 50
+			Light: 60
+			Heavy: 25
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+
+Frockets:
+	ReloadDelay: 50
+	Range: 6c0
+	Report: bazook1.aud
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 597
+		Inaccuracy: 512
+		Image: DRAGON
+		Blockable: false
+		Shadow: false
+		TrailImage: smokey
+		ContrailLength: 8
+	Warhead@1Dam: SpreadDamage
+		Spread: 64
+		Damage: 2000
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+Hrockets:
+	ReloadDelay: 100
+	Range: 6c0
+	Report: bazook1.aud
+	ValidTargets: Ground, Air
+	Burst: 2
+	Projectile: Bullet
+		Speed: 597
+		Inaccuracy: 128
+		Image: DRAGON
+		Blockable: false
+		Shadow: false
+		TrailImage: smokey
+		ContrailLength: 8
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 3000
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+# Unused in 0.32: no actor of the 0.32 mod fires these (kept so the baseline stays complete).
+
+LightTesla:
+	ReloadDelay: 30
+	Range: 4c512
+	Report: itesatta.aud,itesat2a.aud,itesat2b.aud
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 4000
+		Versus:
+			None: 100
+			Wood: 60
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+MedTesla:
+	ReloadDelay: 40
+	Range: 4c512
+	Report: itesatta.aud,itesat2a.aud,itesat2b.aud
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 7000
+		Versus:
+			None: 100
+			Wood: 60
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+HeavyTesla:
+	ReloadDelay: 50
+	Range: 4c512
+	Report: itesatta.aud,itesat2a.aud,itesat2b.aud
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 10000
+		Versus:
+			None: 100
+			Wood: 60
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+ATSniper:
+	ReloadDelay: 100
+	Range: 9c0
+	Report: deagle.wav
+	ValidTargets: Ground
+	Projectile: Bullet
+		Speed: 1c170
+		Inaccuracy: 42
+		Image: DRAGON
+		Blockable: false
+		Shadow: false
+		TrailImage: smokey
+		ContrailLength: 8
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 8000
+		Versus:
+			None: 50
+			Wood: 25
+			Light: 100
+			Heavy: 20
+			Concrete: 25
+			Mech: 150
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+ScoutCampaign:
+	ReloadDelay: 100
+	Range: 10c0
+	Report: gun18.aud
+	Burst: 4
+	Projectile: Bullet
+		Speed: 1c682
+		ContrailLength: 32
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 10000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+TSARifle:
+	ReloadDelay: 20
+	Range: 4c0
+	Report: mgun2.aud
+	Projectile: Bullet
+		Speed: 1c682
+		Inaccuracy: 1
+	Warhead@1Dam: SpreadDamage
+		Spread: 64
+		Damage: 1500
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 30
+			Heavy: 10
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+TSARocket:
+	ReloadDelay: 50
+	Range: 6c0
+	Report: bazook1.aud
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 597
+		Inaccuracy: 128
+		Image: DRAGON
+		Blockable: false
+		Shadow: false
+		TrailImage: smokey
+		ContrailLength: 8
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 3000
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+TSABurstRifle:
+	ReloadDelay: 100
+	Range: 10c0
+	Report: sv98.wav
+	Burst: 3
+	Projectile: Bullet
+		Speed: 1c682
+		ContrailLength: 32
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 10000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+
+OsirisMissiles:
+	ReloadDelay: 150
+	Range: 4c0
+	Report: bazook1.aud
+	ValidTargets: Ground, Air
+	Burst: 6
+	Projectile: Bullet
+		Speed: 597
+		Inaccuracy: 128
+		Image: DRAGON
+		Blockable: false
+		Shadow: false
+		TrailImage: smokey
+		ContrailLength: 8
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 800
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+OsirisMissiles2:
+	ReloadDelay: 100
+	Range: 4c0
+	Report: bazook1.aud
+	ValidTargets: Ground, Air
+	Burst: 4
+	Projectile: Bullet
+		Speed: 597
+		Inaccuracy: 128
+		Image: DRAGON
+		Blockable: false
+		Shadow: false
+		TrailImage: smokey
+		ContrailLength: 8
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 800
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+MarMG:
+	ReloadDelay: 10
+	Range: 5c0
+	Report: mgun11.aud
+	ValidTargets: Ground, Air
+	Burst: 3
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 1000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 50
+			Heavy: 10
+			Concrete: 0
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+MarFlamethrower:
+	ReloadDelay: 25
+	Range: 2c0
+	Report: flamer2.aud
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 3500
+		Versus:
+			None: 90
+			Wood: 100
+			Light: 75
+			Heavy: 25
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+
+MarPanzershrek:
+	ReloadDelay: 50
+	Range: 6c0
+	Report: bazook1.aud
+	ValidTargets: Ground, Air
+	Projectile: Bullet
+		Speed: 597
+		Inaccuracy: 128
+		Image: DRAGON
+		Blockable: false
+		Shadow: false
+		TrailImage: smokey
+		ContrailLength: 8
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 3000
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+QuadCannon:
+	ReloadDelay: 5
+	Range: 5c0
+	Report: mgun11.aud
+	ValidTargets: Ground, Air
+	Burst: 4
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 1000
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 50
+			Heavy: 30
+			Concrete: 0
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+LeoCannon:
+	ReloadDelay: 60
+	Range: 7c0
+	Report: tnkfire6.aud
+	Projectile: Bullet
+		Speed: 1c0
+		Image: DRAGON
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 12000
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 100
+			Heavy: 100
+			Concrete: 50
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+ChurchillCannon:
+	ReloadDelay: 30
+	Range: 7c0
+	Report: tnkfire6.aud
+	Projectile: Bullet
+		Speed: 1c0
+		Image: DRAGON
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 6000
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 100
+			Heavy: 100
+			Concrete: 50
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+Glauncher:
+	ReloadDelay: 50
+	Range: 6c0
+	Report: bazook1.aud
+	ValidTargets: Ground, Air
+	Projectile: Missile
+		Speed: 512
+		Arm: 0
+		Inaccuracy: 0
+		Image: DRAGON
+		HorizontalRateOfTurn: 60
+		Blockable: false
+		Shadow: false
+		TrailImage: smokey
+		RangeLimit: 7c204
+	Warhead@1Dam: SpreadDamage
+		Damage: 8000
+		Versus:
+			None: 50
+			Wood: 85
+			Light: 100
+			Heavy: 100
+			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+Flamer:
+	ReloadDelay: 50
+	Range: 5c0
+	Burst: 15
+	BurstDelays: 1
+	Projectile: Bullet
+		Speed: 170
+		Inaccuracy: 853
+		Image: fb3
+		LaunchAngle: 62
+		TrailImage: fb4
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 800
+		Versus:
+			None: 90
+			Wood: 100
+			Light: 60
+			Heavy: 25
+			Concrete: 50
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+
+MammothRockets:
+	ReloadDelay: 15
+	Range: 10c0
+	Report: missile6.aud
+	ValidTargets: Ground
+	Burst: 10
+	Projectile: Missile
+		Speed: 256
+		Arm: 2
+		Inaccuracy: 2c85
+		Image: DRAGON
+		HorizontalRateOfTurn: 40
+		Blockable: false
+		Shadow: false
+		ContrailLength: 10
+		RangeLimit: 10c0
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 2200
+		Versus:
+			None: 100
+			Wood: 75
+			Light: 60
+			Heavy: 33
+			Concrete: 10
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+Coaxial:
+	ReloadDelay: 40
+	Range: 5c0
+	Report: mgun11.aud
+	ValidTargets: Ground
+	Burst: 6
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+NestMachineGunAA:
+	ReloadDelay: 80
+	Range: 7c0
+	Report: mgun11.aud
+	ValidTargets: Air
+	Burst: 3
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 1000
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 100
+			Heavy: 25
+			Concrete: 10
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+LMG:
+	ReloadDelay: 10
+	Range: 5c0
+	Report: mgun11.aud
+	ValidTargets: Ground, Air
+	Burst: 3
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 1000
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 50
+			Heavy: 10
+			Concrete: 0
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
+
+125mmDual:
+	ReloadDelay: 40
+	Range: 4c768
+	Report: tnkfire6.aud
+	Burst: 2
+	BurstDelays: 5
+	Projectile: Bullet
+		Speed: 682
+		Image: 120MM
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 6000
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+MammothMissiles2:
+	ReloadDelay: 50
+	Range: 5c0
+	Report: rocket1.aud
+	ValidTargets: Ground, Air
+	Burst: 4
+	Projectile: Missile
+		Speed: 213
+		Arm: 0
+		Inaccuracy: 128
+		Image: DRAGON
+		HorizontalRateOfTurn: 40
+		Blockable: false
+		Shadow: false
+		TrailImage: smokey
+		ContrailLength: 8
+		RangeLimit: 8c409
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 7500
+		Versus:
+			None: 40
+			Wood: 75
+			Light: 75
+			Heavy: 50
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+MortarShell2:
+	ReloadDelay: 120
+	Range: 10c512
+	MinRange: 3c0
+	Report: tnkfire2.aud
+	Burst: 5
+	Projectile: Bullet
+		Speed: 204
+		Inaccuracy: 1c256
+		Image: 120MM
+		LaunchAngle: 110
+		Blockable: false
+		ContrailLength: 60
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 15000
+		Versus:
+			None: 90
+			Wood: 50
+			Light: 60
+			Heavy: 25
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+
+MachineGun2:
+	ReloadDelay: 15
+	Range: 10c0
+	Report: mgun11.aud
+	ValidTargets: Ground, Air
+	Burst: 4
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2500
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 75
+			Heavy: 25
+			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, RippedApartDeath
