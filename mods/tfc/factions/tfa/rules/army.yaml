@@ -555,7 +555,7 @@ FTCH:
 		Range: 6c0
 	Turreted:
 		TurnSpeed: 20
-		Offset: -360,0,210
+		Offset: -360,0,60
 	Armament:
 		Weapon: TechMachineGun
 		Recoil: 64
@@ -653,11 +653,11 @@ BDZR:
 	# name 'primary'; it is dropped (see PR notes).
 	Turreted@PRIMARY:
 		Turret: primary
-		Offset: -864,0,128
+		Offset: -320,0,128
 		TurnSpeed: 12
 	Turreted@SECONDARY:
 		Turret: secondary
-		Offset: 768,0,128
+		Offset: 320,0,128
 		TurnSpeed: 12
 	Armament@PRIMARY:
 		Turret: primary
