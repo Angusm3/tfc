@@ -1,1 +1,5 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# TFC notifications, ported from legacy-0.32/notifications.yaml. The only change against stock 2014 cnc was the
+# 'forgotten' speech prefix (the stock 20250330 set already covers the other notifications).
+Speech:
+	Prefixes:
+		forgotten: fgtn
