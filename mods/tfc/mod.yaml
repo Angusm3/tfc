@@ -35,6 +35,7 @@ FileSystem: ContentInstallerFileSystem
 		tfc|bits/jungle
 		tfc|bits/desert
 		tfc|bits/ss
+		tfc|audio
 	ContentInstallerMod: cnc-content
 
 MapFolders:
