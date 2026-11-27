@@ -576,26 +576,26 @@ SAM:
 BRIDGE1:
 	Health:
 		HP: 50000
-	Armor:
-		Type: None
+	# 0.32 had no Armor trait: every weapon does 100 percent (Armor Type: None would take each weapon's None percentage).
+	-Armor:
 
 BRIDGE2:
 	Health:
 		HP: 50000
-	Armor:
-		Type: None
+	# 0.32 had no Armor trait: every weapon does 100 percent (Armor Type: None would take each weapon's None percentage).
+	-Armor:
 
 BRIDGE3:
 	Health:
 		HP: 50000
-	Armor:
-		Type: None
+	# 0.32 had no Armor trait: every weapon does 100 percent (Armor Type: None would take each weapon's None percentage).
+	-Armor:
 
 BRIDGE4:
 	Health:
 		HP: 50000
-	Armor:
-		Type: None
+	# 0.32 had no Armor trait: every weapon does 100 percent (Armor Type: None would take each weapon's None percentage).
+	-Armor:
 
 # Modern-only stock units stay unbuildable (design note Q-F, default (a)): TRUCK, the supply truck, did not exist in 2014.
 TRUCK:
