@@ -1,1 +1,51 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# Lane 4e: real TFC changes to stock images (found by a per-image diff of the 0.32 sequences against the 2014 cnc ones;
+# in 0.32 the earliest file won, so the faction files' copies of e1, e3, ... never took effect).
+# Later files win field by field, so each image below states only what differs from the stock 20250330 image.
+
+# 0.32 drew the 'split3' crystals with the split2 art (and kept split3's offset).
+split3:
+	Defaults:
+		Filename: split2.tem
+		TilesetFilenames:
+			DESERT: split2.tem
+			WINTER: split2.win
+			SNOW: split2.sno
+			TEMPERAT: split2.tem
+			JUNGLE: split2.jun
+
+# New in 0.32: the blue crystals, with the art that stock 20250330 gives split3.
+# The SPLITBLUE actor (lane 4g) must use 'Image: splitblue' to show it.
+splitblue:
+	Defaults:
+		TilesetFilenames:
+			DESERT: split3.des
+			WINTER: split3.win
+			SNOW: split3.sno
+			TEMPERAT: split3.tem
+			JUNGLE: split3.jun
+		Offset: 7, -13
+	make:
+		Length: 30
+		Tick: 120
+	active:
+		Start: 30
+		Length: 24
+	idle:
+		Start: 54
+
+# 0.32 drew the flare with fpls.shp, looping all its frames.
+smokland:
+	open:
+		Filename: fpls.shp
+		Start: 0
+		Length: *
+	idle:
+		Filename: fpls.shp
+		Start: 0
+		Length: *
+
+# The paratroopers support power icon (used by the Nod paratrooper actor, lane 4b).
+icon:
+	paratroopers:
+		Filename: pinficon.shp
+		Start: 0

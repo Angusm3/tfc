@@ -1,1 +1,213 @@
-# TFC placeholder: intentionally empty until its port lane fills it. Listed in mod.yaml already.
+# Lane 4e: TFC actors that belong to no faction (design note 2.2). In 0.32 these five commandos were work in progress:
+# no art, no build queue (cost 0, at most 1). Question Q-E default (a): they are ported unbuildable and use the stock
+# Commando art (image rmbo) as a placeholder, so that the stats check is complete and the lint passes.
+
+TANYA:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@DECORATIONS: ^InfantryExperienceHospitalHazmatOverrides
+	Valued:
+		Cost: 0
+	Tooltip:
+		Name: actor-tanya.name
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 120
+		BuildLimit: 1
+		Description: actor-tanya.description
+	RenderSprites:
+		Image: rmbo
+	Mobile:
+		Speed: 71
+	Health:
+		HP: 50000
+	Passenger:
+		CustomPipType: red
+	RevealsShroud:
+		Range: 6c0
+	DetectCloaked:
+		Range: 1c0
+	AutoTarget:
+		ScanRadius: 4
+	Demolition:
+		DetonationDelay: 45
+	Armament@PRIMARY:
+		Weapon: Colt45
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: Colt45
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		IdleSequences: idle1,idle2,idle3
+	Voiced:
+		VoiceSet: TanyaVoice
+
+SEAL:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@DECORATIONS: ^InfantryExperienceHospitalHazmatOverrides
+	Valued:
+		Cost: 0
+	Tooltip:
+		Name: actor-seal.name
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 120
+		BuildLimit: 1
+		Description: actor-seal.description
+	RenderSprites:
+		Image: rmbo
+	Mobile:
+		Speed: 71
+	Health:
+		HP: 50000
+	Passenger:
+		CustomPipType: red
+	RevealsShroud:
+		Range: 6c0
+	DetectCloaked:
+		Range: 1c0
+	AutoTarget:
+		ScanRadius: 4
+	Demolition:
+		DetonationDelay: 45
+	Armament:
+		Weapon: P90
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		IdleSequences: idle1,idle2,idle3
+	Voiced:
+		VoiceSet: SealVoice
+
+SHOCKTROOPER:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@DECORATIONS: ^InfantryExperienceHospitalHazmatOverrides
+	Valued:
+		Cost: 0
+	Tooltip:
+		Name: actor-shocktrooper.name
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 120
+		BuildLimit: 1
+		Description: actor-shocktrooper.description
+	RenderSprites:
+		Image: rmbo
+	Mobile:
+		Speed: 71
+	Health:
+		HP: 50000
+	Passenger:
+		CustomPipType: red
+	RevealsShroud:
+		Range: 6c0
+	DetectCloaked:
+		Range: 1c0
+	AutoTarget:
+		ScanRadius: 4
+	Armament:
+		Weapon: MiniTeslaZap
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		IdleSequences: idle1,idle2,idle3
+	Voiced:
+		VoiceSet: ShockVoice
+
+LASERSNIPER:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@DECORATIONS: ^InfantryExperienceHospitalHazmatOverrides
+	Valued:
+		Cost: 0
+	Tooltip:
+		Name: actor-lasersniper.name
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 120
+		BuildLimit: 1
+		Description: actor-lasersniper.description
+	RenderSprites:
+		Image: rmbo
+	Mobile:
+		Speed: 71
+	Health:
+		HP: 50000
+	Passenger:
+		CustomPipType: red
+	RevealsShroud:
+		Range: 6c0
+	DetectCloaked:
+		Range: 1c0
+	AutoTarget:
+		ScanRadius: 4
+	Armament:
+		Weapon: LaserSniper
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		IdleSequences: idle1,idle2,idle3
+	Voiced:
+		# 0.32 gave the laser sniper Tanya's voice.
+		VoiceSet: TanyaVoice
+
+# Modern disguise mechanics (Q: owner chose "use modern mechanics"): Ivan copies another infantry unit until he attacks.
+IVAN:
+	Inherits: ^Soldier
+	Inherits@selection: ^SelectableSupportUnit
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@DECORATIONS: ^InfantryExperienceHospitalHazmatOverrides
+	Valued:
+		Cost: 0
+	-Tooltip:
+	DisguiseTooltip:
+		Name: actor-ivan.name
+		GenericName: meta-soldier-generic-name
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 120
+		BuildLimit: 1
+		Description: actor-ivan.description
+	RenderSprites:
+		Image: rmbo
+	Mobile:
+		Speed: 71
+	Health:
+		HP: 50000
+	Passenger:
+		CustomPipType: red
+	RevealsShroud:
+		Range: 6c0
+	DetectCloaked:
+		Range: 1c0
+	Demolition:
+		DetonationDelay: 15
+	-AttackFrontal:
+	Cloak:
+		InitialDelay: 100
+		CloakDelay: 25
+		CloakStyle: Palette
+		CloakedPalette: cloak
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move
+	Disguise:
+		DisguisedCondition: disguise
+	-WithInfantryBody:
+	WithDisguisingInfantryBody:
+		DefaultAttackSequence: shoot
+		IdleSequences: idle1,idle2,idle3
+		StandSequences: stand,stand2
+	WithDecoration@disguise:
+		Image: pips
+		Sequence: pip-gray
+		Position: Top
+		RequiresCondition: disguise
+	Voiced:
+		VoiceSet: IvanVoice
