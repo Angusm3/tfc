@@ -5,14 +5,14 @@
 #  - the HackyAI percentages are plain integers in the modular bot ('e1: 14%' is 'e1: 14'), the typo 'aslr: 10%%' is fixed to 10;
 #  - 0.32's 'mlta' (the image name of the militia, no such actor) is the actor 'militia';
 #  - 0.32 gave Watson and HAL 9001 Forgotten unit queues but no Forgotten units, buildings or queues to build with. They now use Cabal's Forgotten values.
-#  - PowerTypes is 0.32's: nuke, nuk2, slar, aslr. Solar arrays make no power (0.32 and here), and the modular bot builds the best
-#    PowerType whenever it wants a refinery but 'would be low power', so slar and aslr get BuildingLimits (slar 2, aslr 1; 0.32 had
-#    none), otherwise a Forgotten AI would queue solar arrays forever. The same PowerTypes also make the bot hold back unit
-#    production until the first refinery stands (HasAdequateRefineryCount), which a Forgotten AI needs to get an economy.
-#  - BuildingDelays tent: 1500, mgnst: 1500 (new, all three bots; 0.32 had none). The Forgotten have no power plant to put first (solar
-#    arrays make no power), so the bot's random pick could start with a barracks, a defence and an army and spend the whole starting
-#    cash before the solar array and the refinery (which needs the array), leaving a Forgotten AI with no income for the whole game.
-#    Held for 1500 ticks (one game minute) the first things it can build are the solar array and then the refinery.
+#  - PowerTypes is 0.32's: nuke, nuk2, slar, aslr. Solar arrays used to make no power (the 2014 engine ignored the written value), so this
+#    file capped them (BuildingLimits slar 2, aslr 1; otherwise a Forgotten AI would queue arrays forever) and delayed the tent and the
+#    machine gun nest. They make power now (slar +50, aslr +100, switched on 27 Nov 2026), so all of that is gone: the modular bot builds the
+#    best PowerType whenever it wants a building that would put it into low power and stops once the excess is back. Keeping the caps
+#    would now strand a Forgotten AI in low power for good (200 power at most, and one Tesla Coil draws 200). The same PowerTypes
+#    also make the bot hold back unit production until the first refinery stands (HasAdequateRefineryCount), which a Forgotten AI needs.
+#  - Known and left alone: the defence queue cannot build power, so a bot can sit in low power for a minute or two after it builds a
+#    power-hungry defence (Tesla Coil 200, Obelisk of Light 150) until its building queue and its cash catch up. It recovers by itself.
 #  - Not set here, so stock cnc values stay: MinimumExcessPower and the other power options, UnitLimits (harv: 8), every delay and radius.
 Player:
 	SupportPowerBotModule:
@@ -50,16 +50,11 @@ Player:
 			tmpl: 1
 			fix: 0
 			silo: 1
-			# Forgotten: no 0.32 limits. These mirror the GDI/Nod equivalents (refinery, barracks, factory, HQ); slar and aslr: see the header.
+			# Forgotten: no 0.32 limits. These mirror the GDI/Nod equivalents (refinery, barracks, factory, HQ).
 			rfnry: 4
 			tent: 3
 			fsal: 3
 			rdst: 1
-			slar: 2
-			aslr: 1
-		BuildingDelays:
-			tent: 1500
-			mgnst: 1500
 		BuildingFractions:
 			proc: 20
 			nuke: 9
@@ -111,16 +106,11 @@ Player:
 			tmpl: 1
 			fix: 0
 			silo: 1
-			# Forgotten: no 0.32 limits. These mirror the GDI/Nod equivalents (refinery, barracks, factory, HQ); slar and aslr: see the header.
+			# Forgotten: no 0.32 limits. These mirror the GDI/Nod equivalents (refinery, barracks, factory, HQ).
 			rfnry: 4
 			tent: 3
 			fsal: 3
 			rdst: 1
-			slar: 2
-			aslr: 1
-		BuildingDelays:
-			tent: 1500
-			mgnst: 1500
 		BuildingFractions:
 			proc: 17
 			nuke: 1
@@ -171,16 +161,11 @@ Player:
 			tmpl: 1
 			fix: 0
 			silo: 1
-			# Forgotten: no 0.32 limits. These mirror the GDI/Nod equivalents (refinery, barracks, factory, HQ); slar and aslr: see the header.
+			# Forgotten: no 0.32 limits. These mirror the GDI/Nod equivalents (refinery, barracks, factory, HQ).
 			rfnry: 4
 			tent: 4
 			fsal: 4
 			rdst: 1
-			slar: 2
-			aslr: 1
-		BuildingDelays:
-			tent: 1500
-			mgnst: 1500
 		BuildingFractions:
 			proc: 17
 			nuke: 10
