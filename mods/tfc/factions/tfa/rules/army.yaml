@@ -145,7 +145,8 @@ militia:
 smaw:
 	Inherits: ^ForgottenInfantry
 	Inherits@EXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	# Aircraft added to auto-targeting at the owner's request (28 Nov 2026).
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@DECORATIONS: ^InfantryExperienceHospitalHazmatOverrides
 	Valued:
 		Cost: 250
@@ -346,7 +347,8 @@ sniperD:
 cmbt:
 	Inherits: ^ForgottenInfantry
 	Inherits@EXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	# Aircraft added to auto-targeting at the owner's request (28 Nov 2026).
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@DECORATIONS: ^InfantryExperienceHospitalHazmatOverrides
 	Valued:
 		Cost: 1500
@@ -534,7 +536,8 @@ FTCH:
 	Inherits: ^Vehicle
 	Inherits@EXPERIENCE: ^GainsExperience
 	Inherits@CLOAK: ^AcceptsCloakCrate
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	# Aircraft added to auto-targeting at the owner's request (28 Nov 2026).
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Valued:
 		Cost: 300
 	Tooltip:
@@ -629,7 +632,8 @@ BDZR:
 	Inherits: ^Tank
 	Inherits@EXPERIENCE: ^GainsExperience
 	Inherits@CLOAK: ^AcceptsCloakCrate
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	# Aircraft added to auto-targeting at the owner's request (28 Nov 2026).
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Valued:
 		Cost: 900
 	Tooltip:
