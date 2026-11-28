@@ -756,10 +756,13 @@ bdzr:
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
+	# Own flash, one per turret facing: each frame starts at the barrel tips of the matching turret frame
+	# (the stock minigun.shp has 8 facings and sits about 4 px beyond the Armament muzzle point).
 	muzzle:
-		Filename: minigun.shp
+		Filename: bdzrmuzzle.shp
 		Length: 6
-		Facings: 8
+		Facings: 32
+		UseClassicFacings: True
 	icon:
 		Filename: bdzricon.shp
 
