@@ -61,6 +61,8 @@ Deagle:
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 2000
 		Versus:
@@ -113,6 +115,8 @@ TechMachineGun:
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 2500
 		Versus:
@@ -132,6 +136,8 @@ Dozergun:
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 2000
 		Versus:
@@ -216,6 +222,8 @@ Frockets:
 		TrailImage: smokey
 		ContrailLength: 8
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 64
 		Damage: 2000
 		Versus:
@@ -241,6 +249,8 @@ Hrockets:
 		TrailImage: smokey
 		ContrailLength: 8
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 3000
 		Versus:
@@ -377,6 +387,8 @@ TSARocket:
 		TrailImage: smokey
 		ContrailLength: 8
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 3000
 		Versus:
@@ -421,6 +433,8 @@ OsirisMissiles:
 		TrailImage: smokey
 		ContrailLength: 8
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 800
 		Versus:
@@ -446,6 +460,8 @@ OsirisMissiles2:
 		TrailImage: smokey
 		ContrailLength: 8
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 800
 		Versus:
@@ -465,6 +481,8 @@ MarMG:
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 1000
 		Versus:
@@ -506,6 +524,8 @@ MarPanzershrek:
 		TrailImage: smokey
 		ContrailLength: 8
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 3000
 		Versus:
@@ -525,6 +545,8 @@ QuadCannon:
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 1000
 		Versus:
@@ -587,6 +609,8 @@ Glauncher:
 		TrailImage: smokey
 		RangeLimit: 7c204
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Damage: 8000
 		Versus:
 			None: 50
@@ -673,6 +697,8 @@ NestMachineGunAA:
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 1000
 		Versus:
@@ -692,6 +718,8 @@ LMG:
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 1000
 		Versus:
@@ -740,6 +768,8 @@ MammothMissiles2:
 		ContrailLength: 8
 		RangeLimit: 8c409
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 256
 		Damage: 7500
 		Versus:
@@ -783,6 +813,8 @@ MachineGun2:
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
+		# Air added at the owner's request (27 Nov 2026): 0.32 listed Air on the weapon but could not damage aircraft.
+		ValidTargets: Ground, Water, Air
 		Spread: 128
 		Damage: 2500
 		Versus:
